@@ -4,3 +4,9 @@ CMPT 276
 Spring 2019 
 Group11
 
+Group Members:
+- Nicholas Vasiu
+-
+-
+-
+-
