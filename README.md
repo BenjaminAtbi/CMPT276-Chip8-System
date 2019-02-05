@@ -1,7 +1,7 @@
 # CMPT276-Chip8-System
 
-CMPT 276 
-Spring 2019 
+CMPT 276
+Spring 2019
 Group11
 
 Group Members:
@@ -9,5 +9,4 @@ Group Members:
 - Ronit Chawla
 - Rakim Zubair
 - Benjamin Atbi
--
-
+- Marko Miletic
