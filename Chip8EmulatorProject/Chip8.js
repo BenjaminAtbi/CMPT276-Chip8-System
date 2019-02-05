@@ -98,6 +98,10 @@ var chip8 = {
             case 0x0000:
                 // 0nnn - SYS addr
                 // 00E0 - CLS
+                if(opcode == 0x00E0) {
+                  chip8.clearDisplay();
+                }
+
                 // 00EE - RET
                 break;
             case 0x1000:
