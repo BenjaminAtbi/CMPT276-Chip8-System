@@ -46,7 +46,6 @@ var chip8 = {
     emulateCycle() {
         for (var i = 0; i < chip8.CYCLES; i++) {
             if(!chip8.PAUSE) {
-                //get opcode in format 0x0000
                 var opcode = chip8.MEMORY[chip8.PC] << 8 | chip8.MEMORY[chip8.PC + 1]; // Decode command
                 chip8.PC += 2;
                 chip8.execute(opcode); // Execute command
@@ -83,7 +82,7 @@ var chip8 = {
 
     // Reset the display
     clearDisplay() {
-    		chip8.DISPLAY = chip8.DISPLAY.map(()=>0);
+        chip8.DISPLAY = chip8.DISPLAY.map(()=>0);
     },
 
     beep() {
@@ -95,44 +94,40 @@ var chip8 = {
     },
 
     execute(opcode) {
-        switch (opcode & 0xF000) { // check first part of number (ie 0xA1B2 & 0xF000 = 0xA000)
-            case 0x0000:
-            		switch (opcode & 0x00FF) { // check last two parts
-                		// 0nnn - SYS addr idk what this does probably don't need it
-										// 00E0 - Clears the screen
-										case 0x00E0:
-												chip8.clearDisplay();
-												break;
+        // Using AND on an opcode with 0xF000 will give back the opcode with only the digit corresponding to F, with the other digits = 0
+        var x = (opcode & 0x0F00) >> 8; // After extracting x, it is shifted to the second digit space
+        var y = (opcode & 0x00F0) >> 4; // After extrcting y, it is shifted to the third digit space
 
-										// 00EE - Returns from a subroutine this one's pretty hard to grasp have to make sure it works correctly
-										// 	need to set program counter to top of stack and decrement stack pointer
-										case 0x00EE:
-												chip8.PC = ???
-												chip8.SP--;
+        switch (opcode & 0xF000) { // Get the first digit of the opcode
+            case 0x0000:
+                switch (opcode) {
+                    // 0nnn - SYS addr - THIS COMMAND IS NOT NECESSARY
+                    case 0x00E0:
+                        chip8.clearDisplay();
+                        break;
+                    case 0x00EE:
+                        chip8.PC = ???
+                        chip8.SP--
+                        break;
                 }
                 break;
-
-          	case 0x1000:
-                // 1nnn - Jump to address (aka set program counter to address nnn)
-								chip8.PC = opcode & 0x0FFF;
+            case 0x1000:
+                chip8.PC = opcode & 0x0FFF;
                 break;
-
             case 0x2000:
-                // 2nnn - Call a subroutine at address nnn similar stuff to return
-								chip8.SP++;
-								chip8.STACK[chip8.SP] = chip8.PC;
-								chip8.PC = opcode & 0x0FFF;
+                chip8.SP++;
+                chip8.STACK[chip8.SP] = chip8.PC;
+                chip8.PC = opcode & 0x0FFF;
                 break;
-
             case 0x3000:
                 // 3xkk - SE Vx, byte
                 break;
-
             case 0x4000:
                 // 4xkk - SNE Vx, byte
                 break;
-
             case 0x5000:
+                // 5xy0 - SE Vx, Vy
+                break;
             case 0x6000:
                 // 6xkk - LD Vx, byte
                 break;
@@ -140,15 +135,35 @@ var chip8 = {
                 // 7xkk - ADD Vx, byte
                 break;
             case 0x8000:
-                // 8xy0 - LD Vx, Vy
-                // 8xy1 - OR Vx, Vy
-                // 8xy2 - AND Vx, Vy
-                // 8xy3 - XOR Vx, Vy
-                // 8xy4 - ADD Vx, Vy
-                // 8xy5 - SUB Vx, Vy
-                // 8xy6 - SHR Vx {, Vy}
-                // 8xy7 - SUBN Vx, Vy
-                // 8xyE - SHL Vx {, Vy}
+                switch (opcode & 0x000F) { // Get the last digit of the opcode, the second and third digits are variable
+                    case 0x0000:
+                        // 8xy0 - LD Vx, Vy
+                        break;
+                    case 0x0001:
+                        // 8xy1 - OR Vx, Vy
+                        break;
+                    case 0x0002:
+                        // 8xy2 - AND Vx, Vy
+                        break;
+                    case 0x0003:
+                        // 8xy3 - XOR Vx, Vy
+                        break;
+                    case 0x0004:
+                        // 8xy4 - ADD Vx, Vy
+                        break;
+                    case 0x0005:
+                        // 8xy5 - SUB Vx, Vy
+                        break;
+                    case 0x0006:
+                        // 8xy6 - SHR Vx {, Vy}
+                        break;
+                    case 0x0007:
+                        // 8xy7 - SUBN Vx, Vy
+                        break;
+                    case 0x000E:
+                        // 8xyE - SHL Vx {, Vy}
+                        break;
+                }
                 break;
             case 0x9000:
                 // 9xy0 - SNE Vx, Vy
@@ -166,19 +181,45 @@ var chip8 = {
                 // Dxyn - DRW Vx, Vy, nibble
                 break;
             case 0xE000:
-                // Ex9E - SKP Vx
-                // ExA1 - SKNP Vx
+                switch (opcode & 0x00FF) {
+                    case 0x009E:
+                        // Ex9E - SKP Vx
+                        break;
+                    case 0x00A1:
+                        // ExA1 - SKNP Vx
+                        break;
+                }
                 break;
             case 0xF000:
-                // Fx07 - LD Vx, DT
-                // Fx0A - LD Vx, K
-                // Fx15 - LD DT, Vx
-                // Fx18 - LD ST, Vx
-                // Fx1E - ADD I, Vx
-                // Fx29 - LD F, Vx
-                // Fx33 - LD B, Vx
-                // Fx55 - LD [I], Vx
-                // Fx65 - LD Vx, [I]
+                switch (opcode & 0x00FF) {
+                    case 0x0007:
+                        // Fx07 - LD Vx, DT
+                        break;
+                    case 0x000A:
+                        // Fx0A - LD Vx, K
+                        break;
+                    case 0x0015:
+                        // Fx15 - LD DT, Vx
+                        break;
+                    case 0x0018:
+                        // Fx18 - LD ST, Vx
+                        break;
+                    case 0x001E:
+                        // Fx1E - ADD I, Vx
+                        break;
+                    case 0x0029:
+                        // Fx29 - LD F, Vx
+                        break;
+                    case 0x0033:
+                        // Fx33 - LD B, Vx
+                        break;
+                    case 0x0055:
+                        // Fx55 - LD [I], Vx
+                        break;
+                    case 0x0065:
+                        // Fx65 - LD Vx, [I]
+                        break;
+                }
                 break;
             default:
                 throw new Error("Invalid opcode: " + opcode.toString(16));
