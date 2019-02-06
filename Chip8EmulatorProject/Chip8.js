@@ -95,8 +95,8 @@ var chip8 = {
 
     execute(opcode) {
         // Using AND on an opcode with 0xF000 will give back the opcode with only the digit corresponding to F, with the other digits = 0
-        var x = (opcode & 0x0F00) >> 8; // After extracting x, it is shifted to the second digit space
-        var y = (opcode & 0x00F0) >> 4; // After extracting y, it is shifted to the third digit space
+        var x = (opcode & 0x0F00) >> 8; // After extracting x, it is shifted to the second digit space (ie 0xA1C3 -> 0x0001)
+        var y = (opcode & 0x00F0) >> 4; // After extracting y, it is shifted to the third digit space (ie 0xA1C3 -> 0x000C)
 
         switch (opcode & 0xF000) { // Get the first digit of the opcode
             case 0x0000:
@@ -116,7 +116,7 @@ var chip8 = {
                 break;
 
             case 0x1000:
-                // command to jump to instruction at 0x0nnn
+                // command to jump to instruction at nnn
                 chip8.PC = opcode & 0x0FFF;
                 break;
 
@@ -128,20 +128,36 @@ var chip8 = {
                 break;
 
             case 0x3000:
-                // 3xkk - SE Vx, byte
+                // 3xkk - Skip to next line if register Vx is equal to the byte kk
+                if (chip8.VREGISTER[x] == opcode & 0x00FF) {
+                  chip8.PC += 2;
+                }
                 break;
+
             case 0x4000:
-                // 4xkk - SNE Vx, byte
+                // 4xkk - Skip to next line if register Vx is not equal to the byte kk
+                if (chip8.VREGISTER[x] != opcode & 0x00FF) {
+                    chip8.PC += 2;
+                }
                 break;
+
             case 0x5000:
-                // 5xy0 - SE Vx, Vy
+                // 5xy0 - Skip to next line if register Vx is equal to Vy
+                if (chip8.VREGISTER[x] == chip8.VREGISTER[y]) {
+                    chip8.PC += 2;
+                }
                 break;
+
             case 0x6000:
-                // 6xkk - LD Vx, byte
+                // 6xkk - Loads value kk into register Vx
+                chip8.VREGISTER[x] = (opcode & 0x00FF);
                 break;
+
             case 0x7000:
                 // 7xkk - ADD Vx, byte
+                chip8.VREGISTER[x] = chip8.VREGISTER[x] + (opcode & 0x00FF);
                 break;
+
             case 0x8000:
                 switch (opcode & 0x000F) { // Get the last digit of the opcode, the second and third digits are variable
                     case 0x0000:
