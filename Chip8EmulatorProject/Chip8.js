@@ -32,7 +32,6 @@ var chip8 = {
         chip8.DISPLAY = chip8.DISPLAY.map(()=>0);
 
         chip8.PAUSE = 0;
-        console.log(chip8.PAUSE);
     },
 
     // Load a given program into memory
@@ -122,7 +121,7 @@ var chip8 = {
             case 0x2000:
                 // command to call function at nnn
                 chip8.SP++;
-                chip8.STACK???[chip8.SP???] = chip8.PC;
+                chip8.STACK[chip8.SP] = chip8.PC;
                 chip8.PC = opcode & 0x0FFF;
                 break;
 
