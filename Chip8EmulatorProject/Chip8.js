@@ -32,7 +32,6 @@ var chip8 = {
         chip8.DISPLAY = chip8.DISPLAY.map(()=>0);
 
         chip8.PAUSE = 0;
-        console.log(chip8.PAUSE);
     },
 
     // Load a given program into memory
@@ -122,7 +121,7 @@ var chip8 = {
             case 0x2000:
                 // command to call function at nnn
                 chip8.SP++;
-                chip8.STACK???[chip8.SP???] = chip8.PC;
+                chip8.STACK[chip8.SP] = chip8.PC;
                 chip8.PC = opcode & 0x0FFF;
                 break;
 
@@ -160,48 +159,121 @@ var chip8 = {
             case 0x8000:
                 switch (opcode & 0x000F) { // Get the last digit of the opcode, the second and third digits are variable
                     case 0x0000:
-                        // 8xy0 - LD Vx, Vy
+                        // 8xy0 - set Vx = Vy
+                        chip8.VREGISTER[x] = chip8.VREGISTER[y];
                         break;
+
                     case 0x0001:
-                        // 8xy1 - OR Vx, Vy
+                        // 8xy1 - set Vx = Vx | Vy
+                        chip8.VREGISTER[x] = chip8.VREGISTER[x] | chip8.VREGISTER[y];
                         break;
+
                     case 0x0002:
-                        // 8xy2 - AND Vx, Vy
+                        // 8xy2 - set Vx = Vx & Vy
+                        chip8.VREGISTER[x] = chip8.VREGISTER[x] & chip8.VREGISTER[y];
                         break;
+
                     case 0x0003:
-                        // 8xy3 - XOR Vx, Vy
+                        // 8xy3 - set Vx = Vx ^ Vy
+                        chip8.VREGISTER[x] = chip8.VREGISTER[x] ^ chip8.VREGISTER[y];
                         break;
+
                     case 0x0004:
-                        // 8xy4 - ADD Vx, Vy
+                        // 8xy4 - set Vx = Vx + Vy, set carry flag VF = 1 if result is > 255, only lowest 8 bits of result
+                        if ((chip8.VREGISTER[x] + chip8.VREGISTER[y]) > 255) {
+                            chip8.VREGISTER[15] = 1;
+                        }
+                        else {
+                            chip8.VREGISTER[15] = 0;
+                        }
+                        chip8.VREGISTER[x] = (chip8.VREGISTER[x] + chip8.VREGISTER[y]) & 0x00FF;
                         break;
+
                     case 0x0005:
-                        // 8xy5 - SUB Vx, Vy
+                        // 8xy5 - set Vx = Vx - Vy, set carry flag VF = 1 when not borrowing (Vy < Vx)
+                        if (chip8.VREGISTER[x] > chip8.VREGISTER[y]) {
+                            chip8.VREGISTER[15] = 1;
+                        }
+                        else {
+                            chip8.VREGISTER[15] = 0;
+                        }
+                        chip8.VREGISTER[x] = chip8.VREGISTER[x] - chip8.VREGISTER[y];
                         break;
+
                     case 0x0006:
-                        // 8xy6 - SHR Vx {, Vy}
+                        // 8xy6 - set Vx = Vx >> 1 (Vx /= 2), set VF = 1 if lowest bit of Vx is 1
+                        if (chip8.VREGISTER[x] & 0x0001 == 1) {
+                            chip8.VREGISTER[15] = 1;
+                        }
+                        else {
+                            chip8.VREGISTER[15] = 0;
+                        }
+                        chip8.VREGISTER[x] = chip8.VREGISTER[x] >> 1;
                         break;
+
                     case 0x0007:
-                        // 8xy7 - SUBN Vx, Vy
+                        // 8xy7 - set Vx = Vy - Vx, set carry flag VF = 1 when not borrowing (Vy > Vx)
+                        if (chip8.VREGISTER[x] < chip8.VREGISTER[y]) {
+                            chip8.VREGISTER[15] = 1;
+                        }
+                        else {
+                            chip8.VREGISTER[15] = 0;
+                        }
+                        chip8.VREGISTER[x] = chip8.VREGISTER[y] - chip8.VREGISTER[x];
                         break;
+
                     case 0x000E:
-                        // 8xyE - SHL Vx {, Vy}
+                        // 8xyE - set Vx = Vx << 1 (Vx *= 2), set VF = 1 if largest bit of Vx is 1
+                        if ((chip8.VREGISTER[x] & 0x80) == 1) {
+                            chip8.VREGISTER[15] = 1;
+                        }
+                        else {
+                            chip8.VREGISTER[15] = 0;
+                        }
+                        chip8.VREGISTER[x] = chip8.VREGISTER[x] << 1;
                         break;
                 }
                 break;
             case 0x9000:
                 // 9xy0 - SNE Vx, Vy
+                if (chip8.VREGISTER[x] != chip8.VREGISTER[y]) {
+                  chip8.PC += 2;
+                }
                 break;
             case 0xA000:
                 // Annn - LD I, addr
+                chip8.IREGISTER = (opcode & 0x0FFF);
                 break;
             case 0xB000:
                 // Bnnn - JP V0, addr
+                chip8.PC = (opcode & 0x0FFF) + chip8.VREGISTER[0];
                 break;
             case 0xC000:
                 // Cxkk - RND Vx, byte
+                chip8.VREGISTER[x] = ( (Math.floor((Math.random()*255))) & (opcode & 0x00FF) );
                 break;
             case 0xD000:
                 // Dxyn - DRW Vx, Vy, nibble
+                var N = (opcode & 0x000F); // The height of the sprite
+                var startX = chip8.VREGISTER[x]; // The x coordinate of the sprite
+                var startY = chip8.VREGISTER[y]; // The y coordinate of the sprite
+                chip8.VREGISTER[0xF] = 0; // The VF register will act as a flag for if a pixel on the display is unset
+                var pixel; // The value of a pixel, taken from memory
+
+                for (var yCoord = 0; y < N; y++) { // There are N rows of length 8 pixels
+                    pixel = chip8.MEMORY[chip8.IREGISTER + yCoord]; // The value of the current pixel is taken from memory
+                    for (var xCoord = 0; x < 8; x++) {
+                        if ((pixel & 0x80) >= 0) { // If the current pixel is not empty
+                            if (chip8.DISPLAY[startX + (64*startY)] == 0) { // Check if the current pixel is already set or not
+                                chip8.DISPLAY[startX + (64*startY)] = 1; // Set the current pixel if it is unset
+                            } else {
+                                chip8.DISPLAY[startX + (64*startY)] = 0; // Unset the pixel if it is already set
+                                chip8.VREGISTER[0xF] = 1; // Unsetting a pixel will set the VF register
+                            }
+                        }
+                    }
+                }
+
                 break;
             case 0xE000:
                 switch (opcode & 0x00FF) {
