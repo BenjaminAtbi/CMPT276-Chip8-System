@@ -121,9 +121,9 @@ var chip8 = {
 
             case 0x2000:
                 // command to call function at nnn
-                //chip8.SP++;
-                //chip8.STACK???[chip8.SP???] = chip8.PC;
-                //chip8.PC = opcode & 0x0FFF;
+                chip8.SP++;
+                chip8.STACK???[chip8.SP???] = chip8.PC;
+                chip8.PC = opcode & 0x0FFF;
                 break;
 
             case 0x3000:
@@ -237,18 +237,44 @@ var chip8 = {
                 break;
             case 0x9000:
                 // 9xy0 - SNE Vx, Vy
+                if (chip8.VREGISTER[x] != chip8.VREGISTER[y]) {
+                  chip8.PC += 2;
+                }
                 break;
             case 0xA000:
                 // Annn - LD I, addr
+                chip8.IREGISTER = (opcode & 0x0FFF);
                 break;
             case 0xB000:
                 // Bnnn - JP V0, addr
+                chip8.PC = (opcode & 0x0FFF) + chip8.VREGISTER[0];
                 break;
             case 0xC000:
                 // Cxkk - RND Vx, byte
+                chip8.VREGISTER[x] = ( (Math.floor((Math.random()*255))) & (opcode & 0x00FF) );
                 break;
             case 0xD000:
                 // Dxyn - DRW Vx, Vy, nibble
+                var N = (opcode & 0x000F); // The height of the sprite
+                var startX = chip8.VREGISTER[x]; // The x coordinate of the sprite
+                var startY = chip8.VREGISTER[y]; // The y coordinate of the sprite
+                chip8.VREGISTER[0xF] = 0; // The VF register will act as a flag for if a pixel on the display is unset
+                var pixel; // The value of a pixel, taken from memory
+
+                for (var yCoord = 0; y < N; y++) { // There are N rows of length 8 pixels
+                    pixel = chip8.MEMORY[chip8.IREGISTER + yCoord]; // The value of the current pixel is taken from memory
+                    for (var xCoord = 0; x < 8; x++) {
+                        if ((pixel & 0x80) >= 0) { // If the current pixel is not empty
+                            if (chip8.DISPLAY[startX + (64*startY)] == 0) { // Check if the current pixel is already set or not
+                                chip8.DISPLAY[startX + (64*startY)] = 1; // Set the current pixel if it is unset
+                            } else {
+                                chip8.DISPLAY[startX + (64*startY)] = 0; // Unset the pixel if it is already set
+                                chip8.VREGISTER[0xF] = 1; // Unsetting a pixel will set the VF register
+                            }
+                        }
+                    }
+                }
+
                 break;
             case 0xE000:
                 switch (opcode & 0x00FF) {
