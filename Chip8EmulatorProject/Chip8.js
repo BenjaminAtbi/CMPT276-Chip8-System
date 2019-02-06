@@ -96,29 +96,37 @@ var chip8 = {
     execute(opcode) {
         // Using AND on an opcode with 0xF000 will give back the opcode with only the digit corresponding to F, with the other digits = 0
         var x = (opcode & 0x0F00) >> 8; // After extracting x, it is shifted to the second digit space
-        var y = (opcode & 0x00F0) >> 4; // After extrcting y, it is shifted to the third digit space
+        var y = (opcode & 0x00F0) >> 4; // After extracting y, it is shifted to the third digit space
 
         switch (opcode & 0xF000) { // Get the first digit of the opcode
             case 0x0000:
                 switch (opcode) {
                     // 0nnn - SYS addr - THIS COMMAND IS NOT NECESSARY
                     case 0x00E0:
+                        // command to clear screen
                         chip8.clearDisplay();
                         break;
+
                     case 0x00EE:
+                        // command to return from function
                         chip8.PC = ???
                         chip8.SP--
                         break;
                 }
                 break;
+
             case 0x1000:
+                // command to jump to instruction at 0x0nnn
                 chip8.PC = opcode & 0x0FFF;
                 break;
+
             case 0x2000:
+                // command to call function at nnn
                 chip8.SP++;
-                chip8.STACK[chip8.SP] = chip8.PC;
+                chip8.STACK???[chip8.SP???] = chip8.PC;
                 chip8.PC = opcode & 0x0FFF;
                 break;
+
             case 0x3000:
                 // 3xkk - SE Vx, byte
                 break;
