@@ -46,6 +46,7 @@ var chip8 = {
     emulateCycle() {
         for (var i = 0; i < chip8.CYCLES; i++) {
             if(!chip8.PAUSE) {
+                //get opcode in format 0x0000
                 var opcode = chip8.MEMORY[chip8.PC] << 8 | chip8.MEMORY[chip8.PC + 1]; // Decode command
                 chip8.PC += 2;
                 chip8.execute(opcode); // Execute command
@@ -82,7 +83,7 @@ var chip8 = {
 
     // Reset the display
     clearDisplay() {
-        chip8.DISPLAY = chip8.DISPLAY.map(()=>0);
+    		chip8.DISPLAY = chip8.DISPLAY.map(()=>0);
     },
 
     beep() {
@@ -94,31 +95,44 @@ var chip8 = {
     },
 
     execute(opcode) {
-        switch (opcode) {
+        switch (opcode & 0xF000) { // check first part of number (ie 0xA1B2 & 0xF000 = 0xA000)
             case 0x0000:
-                // 0nnn - SYS addr
-                // 00E0 - CLS
-                if(opcode == 0x00E0) {
-                  chip8.clearDisplay();
-                }
+            		switch (opcode & 0x00FF) { // check last two parts
+                		// 0nnn - SYS addr idk what this does probably don't need it
+										// 00E0 - Clears the screen
+										case 0x00E0:
+												chip8.clearDisplay();
+												break;
 
-                // 00EE - RET
+										// 00EE - Returns from a subroutine this one's pretty hard to grasp have to make sure it works correctly
+										// 	need to set program counter to top of stack and decrement stack pointer
+										case 0x00EE:
+												chip8.PC = ???
+												chip8.SP--;
+                }
                 break;
-            case 0x1000:
-                // 1nnn - JP addr
+
+          	case 0x1000:
+                // 1nnn - Jump to address (aka set program counter to address nnn)
+								chip8.PC = opcode & 0x0FFF;
                 break;
+
             case 0x2000:
-                // 2nnn - CALL addr
+                // 2nnn - Call a subroutine at address nnn similar stuff to return
+								chip8.SP++;
+								chip8.STACK[chip8.SP] = chip8.PC;
+								chip8.PC = opcode & 0x0FFF;
                 break;
+
             case 0x3000:
                 // 3xkk - SE Vx, byte
                 break;
+
             case 0x4000:
                 // 4xkk - SNE Vx, byte
                 break;
+
             case 0x5000:
-                // 5xy0 - SE Vx, Vy
-                break;
             case 0x6000:
                 // 6xkk - LD Vx, byte
                 break;
