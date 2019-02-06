@@ -289,24 +289,30 @@ var chip8 = {
                 switch (opcode & 0x00FF) {
                     case 0x0007:
                         // Fx07 - LD Vx, DT
+                        chip8.VREGISTER[x] = chip8.DELAYTIMER; 
                         break;
                     case 0x000A:
                         // Fx0A - LD Vx, K
                         break;
                     case 0x0015:
                         // Fx15 - LD DT, Vx
+                        chip8.DELAYTIMER = chip8.VREGISTER[x];
                         break;
                     case 0x0018:
                         // Fx18 - LD ST, Vx
+                        chip8.SOUNDTIMER = chip8.VREGISTER[x];
                         break;
                     case 0x001E:
                         // Fx1E - ADD I, Vx
+                        chip8.IREGISTER += chip8.VREGISTER[x];
                         break;
                     case 0x0029:
                         // Fx29 - LD F, Vx
+                        
                         break;
                     case 0x0033:
                         // Fx33 - LD B, Vx
+
                         break;
                     case 0x0055:
                         // Fx55 - LD [I], Vx
@@ -345,6 +351,7 @@ var chip8 = {
 
         }
     },
+
     // prints out all fields of a state object
     statePrint(state){
         var printout = "REGISTERS\n---------\n";
