@@ -108,10 +108,9 @@ var chip8 = {
                         break;
 
                     case 0x00EE:
-                        // command to return from function
-                        chip8.PC = ???
-                        chip8.SP--
-                        break;
+                        // chip8.PC = ???
+                        // chip8.SP--
+                        // break;
                 }
                 break;
 
@@ -248,6 +247,56 @@ var chip8 = {
             default:
                 throw new Error("Invalid opcode: " + opcode.toString(16));
         }
+    },
+
+    // Test Functions
+    stateDump(){
+        return {
+            PC: chip8.PC, // The program counter
+            MEMORY: chip8.MEMORY, // Chip 8 memory, 4096 bytes long, Chip 8 programs are stored starting from the 512th byte (0x200)
+            VREGISTER: chip8.VREGISTER, // 8 bit data registers, there are 16, VF doubles as a flag
+            IREGISTER: chip8.IREGISTER, // 16 bit data register, used for memory operations
+
+            STACK: chip8.STACK, // The stack has 16 levels
+            SP: chip8.SP, // The stack pointer
+
+            DELAYTIMER: chip8.DELAYTIMER, // Timer used for timing events
+            SOUNDTIMER: chip8.SOUNDTIMER, // Timer used for sound effects, a beep is made when the timer is nonzero
+
+            DISPLAY: chip8.DISPLAY, // The display resolution is 64 * 32, color is monochrome
+            SCALE: chip8.SCALE, // Because 64*32 is quite small the entire display is multiplied by SCALE, to fill up more of the webpage
+
+            CYCLES: chip8.CYCLES, // The number of cycles to run at a time per loop
+            PAUSE: chip8.PAUSE, // Whether or not the emulator cycles are paused
+
+        }
+    },
+
+    statePrint(state){
+        var printout = "REGISTERS\n---------\n";
+        for(var i = 0; i<16; i++){
+            printout += "reg" + i + ": " + state.VREGISTER[i]+"\n";
+        }
+        printout += "ireg: " + state.IREGISTER + "\n";
+        printout += "TIMERS\n----------\n";
+        printout += "delay timer: " + state.DELAYTIMER + "\n";
+        printout += "sound timer: " + state.SOUNDTIMER + "\n";
+        printout += "STACK\n----------\n";
+        printout += "SP: "+state.SP+"\n 0 -> [";
+        for(var i = 0; i < 16; i++){
+            printout += state.STACK[i] + ".";
+        }
+        printout += "] <-16\n";
+        printout += "MEMORY\n----------\n 0 -> [";
+        printout += "PC: "+ state.PC + "\n";
+        for(var i = 0; i < 128; i++){
+            printout += (i * 32)+"-> [";
+            for(var j = 0; j < 32; j++){
+                printout += state.MEMORY[32*i + j] + ".";
+            }
+            printout += "] <-" + ((i+1) * 32) + "\n";
+        }
+        return printout;
     },
 
 };
