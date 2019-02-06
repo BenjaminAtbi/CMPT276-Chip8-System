@@ -250,6 +250,8 @@ var chip8 = {
     },
 
     // Test Functions
+
+    //returns object containing current value of all state fields
     stateDump(){
         return {
             PC: chip8.PC, // The program counter
@@ -271,7 +273,7 @@ var chip8 = {
 
         }
     },
-
+    // prints out all fields of a state object
     statePrint(state){
         var printout = "REGISTERS\n---------\n";
         for(var i = 0; i<16; i++){
@@ -287,7 +289,7 @@ var chip8 = {
             printout += state.STACK[i] + ".";
         }
         printout += "] <-16\n";
-        printout += "MEMORY\n----------\n 0 -> [";
+        printout += "MEMORY\n----------\n";
         printout += "PC: "+ state.PC + "\n";
         for(var i = 0; i < 128; i++){
             printout += (i * 32)+"-> [";
@@ -296,7 +298,38 @@ var chip8 = {
             }
             printout += "] <-" + ((i+1) * 32) + "\n";
         }
+        console.log(printout)
         return printout;
+    },
+
+    //returns state object with fields equal to the difference between input states
+    stateCompare(state1, state2){
+        var comp = {};
+        comp.PC = state2.PC - state1.PC;
+        comp.IREGISTER = state2.IREGISTER - state1.IREGISTER;
+        comp.SP = state2.SP - state1.SP;
+        comp.DELAYTIMER = state2.DELAYTIMER - state1.DELAYTIMER;
+        comp.SOUNDTIMER = state2.SOUNDTIMER - state1.SOUNDTIMER;
+        comp.STACK = new Uint8Array(16);
+        comp.VREGISTER = new Uint8Array(16);
+        comp.MEMORY = new Uint8Array(4096);
+        for(var i = 0; i < 16; i++){
+            comp.STACK[i] = state2.STACK[i] - state1.STACK[i];
+            comp.VREGISTER[i] = state2.VREGISTER[i] - state1.VREGISTER[i];
+        }
+        for(var i = 0; i < 2096; i++){
+            comp.MEMORY[i] = state2.MEMORY[i] - state1.MEMORY[i];
+        }
+        return comp;
+    },
+
+    //prints difference between states before and after running an opcode
+    testOpcode(opcode){
+        state1 = chip8.stateDump();
+        chip8.execute(opcode);
+        state2 = chip8.stateDump();
+        comp = chip8.stateCompare(state1,state2)
+        chip8.statePrint(chip8.stateCompare(state1,state2));
     },
 
 };
