@@ -2,9 +2,10 @@
  
 ## Updates since Release 0
 - Added updates section
-- Updated all sections to include goals/details for release 2
+- Updated all sections to include information for release 2
 - Weekly meetings changed from Mondays to Fridays at the same time as before
-- Added section describing development methodology under "Software Methodology"
+- Added section describing development methodology under Software Methodology
+- Added new technologies under Software Methodology (Jest, CircleCI, Octo)
 - Added goals for release 2 in Use Cases
 
 ## Introduction
@@ -39,7 +40,7 @@ Communication will be done through weekly meetings, Github, and Discord.
 
 ## Software Methodology
 <p>Our software development will follow the incremental model. This means we will perform analysis, design, coding, and testing for every release cycle. In addition, we have implemented agile-like development practices such as setting short term deliverables and continuous integration.</p>
-<p>We will use git as our version control software, with a github repository. Typescript, HTML, and the CHIP-8 instruction set are our languages of choice to develop the games and tools necessary. In addition, we may use JQuery while integrating the presentation website. We will develop automated tests using Jest, and use CircleCI to aid us in continuous integration.</p>
+<p>We will use git as our version control software, with a github repository. Typescript, HTML, and the CHIP-8 instruction set are our languages of choice to develop the games and tools necessary. In addition, we may use JQuery while integrating the presentation website. We will develop automated tests using Jest, and use CircleCI to aid us in continuous integration. Finally, we will use Octo to help us with programming the games.</p>
 <p>Our team of 5 is divided into separate groups for the work that needs to be done. There is one main project manager (who has the most experience with Git), 3 people specializing in emulator design and 2 general programmers (responsible for the games and tools). Furthermore, there are 3 people dedicated to design the website for the emulator and keeping track of the documentation of our project. Each person has more than one role that they are not necessarily limited to.</p>
 The following table shows the roles that each group member has.
 
@@ -59,15 +60,13 @@ The following table shows the roles that each group member has.
 We will test that our games and tools on an already completed emulator to ensure that our emulator runs in the same way. We will create a test program that will go through each of the CHIP-8 commands with several test cases to verify that they work properly. To test the games and tools someone would have to play or utilize them. Eventually, CircleCI will be implemented to automatically test the repository after every push. This is to ensure the validity of the code and make sure it matches the style that we have set for our project.
 
 ## Use Cases
-<p>The most important feature we have for Release 2 is the final version of the first game as well as a Visualizer for the emulator...
-
-the CHIP-8 interpreter. This includes basic commands such as setting variables, timers, jumping to addresses and getting user inputs (the CHIP-8 keyboard). Users will be able to input commands that will be interpreted by the code. In addition, we are planning to have a prototype of our first game ready by the first release.</p>
+<p>The most important features we have planned for Release 2 are the final version of the first game as well as a visualizer for the emulator. The user will be able to play a game of classic Pong, including moving the paddle to bounce the ball, and score points against an opponent. The user will also be able to see the state of each register of our emulator on the display.</p>
 <p>Future releases will include further work on the emulator (debugger, assembler), addtional CHIP-8 games and tools, and eventually the final webpage for the emulator.</p>
 
 ## Work Breakdown
 ![Work Breakdown](images/work_breakdown.PNG?raw=true)
-&nbsp;<p>The most amount of work will be dedicated to the emulator itself. The main component is the interpreter, however we believe that the debugger/visualizer will take up most of our time. The games will be worked on in parallel with the emulator along with the tool, so they shouldn’t take too much extra time. The website should take the least amount of work to complete as all of the group members have some sort of experience in that department already.</p>
+<p>The most amount of work will be dedicated to the emulator itself. The main component is the interpreter, however we believe that the debugger/visualizer will take up most of our time. The games will be worked on in parallel with the emulator along with the tool, so they shouldn’t take too much extra time. The website should take the least amount of work to complete as all of the group members have some sort of experience in that department already.</p>
 
 ## Project Schedule
 ![Project Schedule](images/project_schedule.PNG?raw=true)
-&nbsp;<p>By release 1 our goal is to finish the emulator and to have a working prototype of our first game. The game will then be polished after the release date and work on the second game will begin. By release 2 we should have the visualizer and the first game finished. Between release 2 and release 3 we will work on having prototypes for the second game and the Chip8 tool, because this work interval is the shortest that we will get. Work on the second game and tool will continue after release 3 and we should have everything completed a week before we have to hand in the final project.</p>
+<p>By release 1 our goal is to finish the emulator and to have a working prototype of our first game. The game will then be polished after the release date and work on the second game will begin. By release 2 we should have the visualizer and the first game finished. Between release 2 and release 3 we will work on having prototypes for the second game and the Chip8 tool, because this work interval is the shortest that we will get. Work on the second game and tool will continue after release 3 and we should have everything completed a week before we have to hand in the final project.</p>
