@@ -12,7 +12,10 @@ var chip8 = {
     SOUNDTIMER: 0, // Timer used for sound effects, a beep is made when the timer is nonzero
 
     DISPLAY: new Uint8Array(64 * 32), // The display resolution is 64 * 32, color is monochrome
-    SCALE: 0, // Because 64*32 is quite small the entire display is multiplied by SCALE, to fill up more of the webpage
+    SCALE: 10, // Because 64*32 is quite small the entire display is multiplied by SCALE, to fill up more of the webpage
+
+    KEYPRESSED: 0, // Whether or not a key is being pressed
+    KEYS: new Uint8Array(16), // Holds an array of all possible keys and whether they have been pressed
 
     CYCLES: 10, // The number of cycles to run at a time per loop
     PAUSE: 0, // Whether or not the emulator cycles are paused
@@ -30,7 +33,9 @@ var chip8 = {
         chip8.SOUNDTIMER = 0;
 
         chip8.DISPLAY = chip8.DISPLAY.map(()=>0);
-        chip8.SCALE = 15;
+
+        chip8.KEYPRESSED = 0;
+        chip8.KEYS = chip8.KEYS.map(()=>0);
 
         chip8.PAUSE = 0;
     },
@@ -67,11 +72,7 @@ var chip8 = {
 
     updateDisplay() {
         var pageDisplay = document.getElementById("emulator_screen");
-        pageDisplay.width = 64*chip8.SCALE;
-        pageDisplay.height = 32*chip8.SCALE;
-
         var c = pageDisplay.getContext('2d');
-        c.fillStyle = "#FF0000";
 
         for (var x = 0; x < 64; x++) {
             for (var y = 0; y < 32; y++) {
@@ -109,9 +110,10 @@ var chip8 = {
                         break;
 
                     case 0x00EE:
-                        // chip8.PC = ???
-                        // chip8.SP--
-                        // break;
+                        // 00EE - return from a subroutine
+                        chip8.PC = chip8.STACK[chip8.SP];
+                        chip8.SP--;
+                        break;
                 }
                 break;
 
@@ -276,16 +278,20 @@ var chip8 = {
                     }
                 }
 
-                updateDisplay();
-
                 break;
             case 0xE000:
                 switch (opcode & 0x00FF) {
                     case 0x009E:
                         // Ex9E - SKP Vx
+                        if (chip8.KEYS[chip8.VREGISTER[x]]) {
+                            chip8.PC += 2;
+                        }
                         break;
                     case 0x00A1:
                         // ExA1 - SKNP Vx
+                        if (!chip8.KEYS[chip8.VREGISTER[x]]) {
+                            chip8.PC += 2;
+                        }
                         break;
                 }
                 break;
