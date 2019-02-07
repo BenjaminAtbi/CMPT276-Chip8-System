@@ -12,7 +12,7 @@ var chip8 = {
     SOUNDTIMER: 0, // Timer used for sound effects, a beep is made when the timer is nonzero
 
     DISPLAY: new Uint8Array(64 * 32), // The display resolution is 64 * 32, color is monochrome
-    SCALE: 15, // Because 64*32 is quite small the entire display is multiplied by SCALE, to fill up more of the webpage
+    SCALE: 0, // Because 64*32 is quite small the entire display is multiplied by SCALE, to fill up more of the webpage
 
     CYCLES: 10, // The number of cycles to run at a time per loop
     PAUSE: 0, // Whether or not the emulator cycles are paused
@@ -30,6 +30,7 @@ var chip8 = {
         chip8.SOUNDTIMER = 0;
 
         chip8.DISPLAY = chip8.DISPLAY.map(()=>0);
+        chip8.SCALE = 15;
 
         chip8.PAUSE = 0;
     },
@@ -65,11 +66,12 @@ var chip8 = {
     },
 
     updateDisplay() {
-        var pageDisplay = document.querySelector('canvas');
+        var pageDisplay = document.getElementById("emulator_screen");
         pageDisplay.width = 64*chip8.SCALE;
         pageDisplay.height = 32*chip8.SCALE;
 
         var c = pageDisplay.getContext('2d');
+        c.fillStyle = "#FF0000";
 
         for (var x = 0; x < 64; x++) {
             for (var y = 0; y < 32; y++) {
@@ -274,6 +276,8 @@ var chip8 = {
                     }
                 }
 
+                updateDisplay();
+
                 break;
             case 0xE000:
                 switch (opcode & 0x00FF) {
@@ -289,7 +293,7 @@ var chip8 = {
                 switch (opcode & 0x00FF) {
                     case 0x0007:
                         // Fx07 - LD Vx, DT
-                        chip8.VREGISTER[x] = chip8.DELAYTIMER; 
+                        chip8.VREGISTER[x] = chip8.DELAYTIMER;
                         break;
                     case 0x000A:
                         // Fx0A - LD Vx, K
@@ -308,7 +312,7 @@ var chip8 = {
                         break;
                     case 0x0029:
                         // Fx29 - LD F, Vx
-                        
+
                         break;
                     case 0x0033:
                         // Fx33 - LD B, Vx
