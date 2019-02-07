@@ -34,7 +34,7 @@ var chip8 = {
 
         chip8.DISPLAY = chip8.DISPLAY.map(()=>0);
 
-        loadFont();
+        //loadFont();
         chip8.KEYPRESSED = 0;
         chip8.KEYS = chip8.KEYS.map(()=>0);
 
@@ -364,7 +364,7 @@ var chip8 = {
                         break;
                     case 0x0065:
                         // Fx65 - LD Vx, [I]
-                        for (int i = 0; i <= x; i++) {
+                        for (var i = 0; i <= x; i++) {
                             chip8.VREGISTER[i] = chip8.MEMORY[chip8.IREGISTER + i];
                         }
                         break;
