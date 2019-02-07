@@ -1,7 +1,7 @@
  # <center> Project Document - RELEASE 1 </center>
  
 ## Updates since Release 0
-- Added updates section
+- Added updates, risk management, and project progress sections
 - Updated all sections to include information for release 2
 - Weekly meetings changed from Mondays to Fridays at the same time as before
 - Added section describing development methodology under Software Methodology
@@ -56,8 +56,24 @@ The following table shows the roles that each group member has.
 <p>Two group members will be assigned to game design at one time. Because the type of game we decide to make could vary greatly, the work breakdown will have to be decided once the plan for the game is set. The two group members will split the workload evenly between them.</p>
 <p>The documentation will be procedural and will be constantly updated after every weekly meeting to add new information or change previous revisions</p>
 
+## Risk Management
+Due to the nature of the project, we may run into problems such as:
+- Members falling sick
+- Unpredictable emergencies that may lead to a member not being able to finish their work
+- Members simply not doing their work or not communicating
+- Issues regarding Github
+<p> As a result, as a group we have decided to make sure that we are always communicating. Every member is expected to give an update on what they are working on, and are also expected to explain why they couldn't complete the tasks that they were assigned. To ensure that members don't miss out on meeting discussions as a result of unpredictable events, we will be keeping track of what was discussed. Furthermore, if a person is unable to complete the work then the other group members will help them to the best of their ability. Members are expected to store an up to date version of our Github repository locally on their computer, so that in the case of any emergencies we have a backup.</p>
+
+## Project Progress
+<p>Progress was slow due to our group running into some issues as a result of poor communication. Furthermore, many of the members were unfamiliar with the tools that we planned to use for this project, and the first couple of weeks were used to get familiar with the CHIP-8 architecture, JavaScript, Octo, and so on.</p> 
+<p>In Release 0, we stated that we would have a CHIP-8 interpreter and a working prototype of our first game, Pong, finished.  Our emulator team (Nic, Marko, and Ben) managed to finish 90% of the interpreter. Our interpreter contains test functions which validate our code, and the display functions have also been checked. All of the CHIP-8 opcodes have been implemented; however, there wasn’t much time left over to test for bugs. Furthermore, our project also has user input implemented but it hasn’t been completely verified as of now. Essentially, our interpreter is “complete”, but still needs testing.</p>
+<p>The 2 general programmers decided to split up their work, with Rakim working on the game and Ronit working on a website for our emulator. Decent progress was made for our first game, Pong, using Octo. It supports 2 players with basic ball movements, and a score tracker implemented as well. The game ends once the score reaches 9. Instead of working on the same thing, it was decided that it would be better if we had a website for our emulator so that it would be possible to run the emulator on any computer (using JavaScript on a modern browser) without the need for specific software. We have a basic website set up for now (shows keypad, emulator display, and has a space for the debugger) which will be worked on and polished over the next couple of releases.</p>
+<p>As of now, everyone is familiar with all of the software and tools that we will be using, and all the communication issues have been sorted out. It shouldn’t take much longer to finish up our interpreter and first game, and as soon as they are finished work towards the next release will begin. We are hoping to have Pong completed along with a prototype of our second game, and the emulator team expects to complete the debugger.</p>
+
 ## Testing
-We will test that our games and tools on an already completed emulator to ensure that our emulator runs in the same way. We will create a test program that will go through each of the CHIP-8 commands with several test cases to verify that they work properly. To test the games and tools someone would have to play or utilize them. Eventually, CircleCI will be implemented to automatically test the repository after every push. This is to ensure the validity of the code and make sure it matches the style that we have set for our project.
+<p>We will test that our games and tools on an already completed emulator to ensure that our emulator runs in the same way. We will create a test program that will go through each of the CHIP-8 commands with several test cases to verify that they work properly. To test the games and tools someone would have to play or utilize them. Eventually, CircleCI will be implemented to automatically test the repository after every push. This is to ensure the validity of the code and make sure it matches the style that we have set for our project.</p>
+<p>As of Release 1, we have some testing programs implemented into our interpreter. Our first game, Pong, can be tested using any pre-existing emulators found online. In the following week after the hand in, we expect to have our automated testing programs integrated into our Github repository using CircleCI.</p>
+
 
 ## Use Cases
 <p>The most important features we have planned for Release 2 are the final version of the first game as well as a visualizer for the emulator. The user will be able to play a game of classic Pong, including moving the paddle to bounce the ball, and score points against an opponent. The user will also be able to see the state of each register of our emulator on the display.</p>
