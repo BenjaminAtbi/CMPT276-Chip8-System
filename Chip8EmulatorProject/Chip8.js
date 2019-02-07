@@ -291,14 +291,14 @@ var chip8 = {
                 chip8.VREGISTER[0xF] = 0; // The VF register will act as a flag for if a pixel on the display is unset
                 var pixel; // The value of a pixel, taken from memory
 
-                for (var yCoord = 0; y < N; y++) { // There are N rows of length 8 pixels
+                for (var yCoord = 0; yCoord < N; yCoord++) { // There are N rows of length 8 pixels
                     pixel = chip8.MEMORY[chip8.IREGISTER + yCoord]; // The value of the current pixel is taken from memory
-                    for (var xCoord = 0; x < 8; x++) {
-                        if ((pixel & 0x80) >= 0) { // If the current pixel is not empty
-                            if (chip8.DISPLAY[startX + (64*startY)] == 0) { // Check if the current pixel is already set or not
-                                chip8.DISPLAY[startX + (64*startY)] = 1; // Set the current pixel if it is unset
+                    for (var xCoord = 0; xCoord < 8; xCoord++) {
+                        if ((pixel & (0x80 >> xCoord)) != 0) { // If the current pixel is not empty
+                            if (chip8.DISPLAY[ (startX+xCoord) + ((startY+yCoord) * 64) ] == 0) { // Check if the current pixel is already set or not
+                                chip8.DISPLAY[ (startX+xCoord) + ((startY+yCoord) * 64) ] = 1; // Set the current pixel if it is unset
                             } else {
-                                chip8.DISPLAY[startX + (64*startY)] = 0; // Unset the pixel if it is already set
+                                chip8.DISPLAY[ (startX+xCoord) + ((startY+yCoord) * 64) ] = 0; // Unset the pixel if it is already set
                                 chip8.VREGISTER[0xF] = 1; // Unsetting a pixel will set the VF register
                             }
                         }
