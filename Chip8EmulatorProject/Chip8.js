@@ -34,6 +34,7 @@ var chip8 = {
 
         chip8.DISPLAY = chip8.DISPLAY.map(()=>0);
 
+        loadFont();
         chip8.KEYPRESSED = 0;
         chip8.KEYS = chip8.KEYS.map(()=>0);
 
@@ -45,6 +46,32 @@ var chip8 = {
             for (var i = 0; i < program.length; i++) {
                 chip8.MEMORY[0x200 + i] = program[i];
             }
+    },
+
+    // Load the array of character sprites into memory
+    loadFont() {
+        var font = [
+              0xF0, 0x90, 0x90, 0x90, 0xF0, // 0
+              0x20, 0x60, 0x20, 0x20, 0x70, // 1
+              0xF0, 0x10, 0xF0, 0x80, 0xF0, // 2
+              0xF0, 0x10, 0xF0, 0x10, 0xF0, // 3
+              0x90, 0x90, 0xF0, 0x10, 0x10, // 4
+              0xF0, 0x80, 0xF0, 0x10, 0xF0, // 5
+              0xF0, 0x80, 0xF0, 0x90, 0xF0, // 6
+              0xF0, 0x10, 0x20, 0x40, 0x40, // 7
+              0xF0, 0x90, 0xF0, 0x90, 0xF0, // 8
+              0xF0, 0x90, 0xF0, 0x10, 0xF0, // 9
+              0xF0, 0x90, 0xF0, 0x90, 0x90, // A
+              0xE0, 0x90, 0xE0, 0x90, 0xE0, // B
+              0xF0, 0x80, 0x80, 0x80, 0xF0, // C
+              0xE0, 0x90, 0x90, 0x90, 0xE0, // D
+              0xF0, 0x80, 0xF0, 0x80, 0xF0, // E
+              0xF0, 0x80, 0xF0, 0x80, 0x80 // F
+          ];
+
+          for (i = 0; i < font.length; i++) {
+              chip8.MEMORY[i] = font[i];
+          }
     },
 
     // Run a CPU cycle
@@ -318,17 +345,28 @@ var chip8 = {
                         break;
                     case 0x0029:
                         // Fx29 - LD F, Vx
-
+                        chip8.IREGISTER = chip8.VREGISTER[x]*5; // Character sprites have a width of 5
                         break;
                     case 0x0033:
                         // Fx33 - LD B, Vx
+                        var number = chip8.VREGISTER[x];
+
+                        chip8.MEMORY[chip8.IREGISTER+2] = parseInt(number % 10);
+                        chip8.MEMORY[chip8.IREGISTER+1] = parseInt((number/10) % 10);
+                        chip8.MEMORY[chip8.IREGISTER] = parseInt((number/100) % 10);
 
                         break;
                     case 0x0055:
                         // Fx55 - LD [I], Vx
+                        for (int i = 0; i <= x; i++) {
+                            chip8.MEMORY[chip8.IREGISTER + i] = chip8.VREGISTER[x];
+                        }
                         break;
                     case 0x0065:
                         // Fx65 - LD Vx, [I]
+                        for (int i = 0; i <= x; i++) {
+                            chip8.VREGISTER[i] = chip8.MEMORY[chip8.IREGISTER + i];
+                        }
                         break;
                 }
                 break;
