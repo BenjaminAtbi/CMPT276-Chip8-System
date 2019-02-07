@@ -70,11 +70,6 @@ Due to the nature of the project, we may run into problems such as:
 <p>The 2 general programmers decided to split up their work, with Rakim working on the game and Ronit working on a website for our emulator. Decent progress was made for our first game, Pong, using Octo. It supports 2 players with basic ball movements, and a score tracker implemented as well. The game ends once the score reaches 9. Instead of working on the same thing, it was decided that it would be better if we had a website for our emulator so that it would be possible to run the emulator on any computer (using JavaScript on a modern browser) without the need for specific software. We have a basic website set up for now (shows keypad, emulator display, and has a space for the debugger) which will be worked on and polished over the next couple of releases.</p>
 <p>As of now, everyone is familiar with all of the software and tools that we will be using, and all the communication issues have been sorted out. It shouldn’t take much longer to finish up our interpreter and first game, and as soon as they are finished work towards the next release will begin. We are hoping to have Pong completed along with a prototype of our second game, and the emulator team expects to complete the debugger.</p>
 Here is a list of our members and what they worked on for Release 1:
-- Ronit - website design and implementation
-- Marko - emulator opcodes and documentation
-- Benjamin - created test programs, worked on the emulator
-- Rakim - documentation, created the working Pong prototype
-- Nic - most of the work on the emulator (setting up the framework, linking to html)
 
 ## Testing
 <p>We will test that our games and tools on an already completed emulator to ensure that our emulator runs in the same way. We will create a test program that will go through each of the CHIP-8 commands with several test cases to verify that they work properly. To test the games and tools someone would have to play or utilize them. Eventually, CircleCI will be implemented to automatically test the repository after every push. This is to ensure the validity of the code and make sure it matches the style that we have set for our project.</p>
