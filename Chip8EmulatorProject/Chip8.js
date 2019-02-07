@@ -42,7 +42,8 @@ var chip8 = {
     // Load a given program into memory
     loadProgram(program) {
             for (var i = 0; i < program.length; i++) {
-                chip8.MEMORY[0x200 + i] = program[i];
+                chip8.MEMORY[0x200 + i*2] = program[i] >> 8
+                chip8.MEMORY[0x200 + i*2 + 1] = program[i] & 0x00FF
             }
     },
 
@@ -402,24 +403,24 @@ var chip8 = {
     statePrint(state){
         var printout = "REGISTERS\n---------\n";
         for(var i = 0; i<16; i++){
-            printout += "reg" + i + ": " + state.VREGISTER[i]+"\n";
+            printout += "reg" + i + ": " + state.VREGISTER[i].toString(16) +"\n";
         }
-        printout += "ireg: " + state.IREGISTER + "\n";
+        printout += "ireg: " + state.IREGISTER.toString(16) + "\n";
         printout += "TIMERS\n----------\n";
-        printout += "delay timer: " + state.DELAYTIMER + "\n";
-        printout += "sound timer: " + state.SOUNDTIMER + "\n";
+        printout += "delay timer: " + state.DELAYTIMER.toString(16)  + "\n";
+        printout += "sound timer: " + state.SOUNDTIMER.toString(16) + "\n";
         printout += "STACK\n----------\n";
-        printout += "SP: "+state.SP+"\n 0 -> [";
+        printout += "SP: "+state.SP.toString(16)+"\n 0 -> [";
         for(var i = 0; i < 16; i++){
-            printout += state.STACK[i] + ".";
+            printout += state.STACK[i].toString(16) + ".";
         }
         printout += "] <-16\n";
         printout += "MEMORY\n----------\n";
-        printout += "PC: "+ state.PC + "\n";
+        printout += "PC: "+ state.PC.toString(16) + "\n";
         for(var i = 0; i < 128; i++){
             printout += (i * 32)+"-> [";
             for(var j = 0; j < 32; j++){
-                printout += state.MEMORY[32*i + j] + ".";
+                printout += state.MEMORY[32*i + j].toString(16) + ".";
             }
             printout += "] <-" + ((i+1) * 32) + "\n";
         }
@@ -459,8 +460,28 @@ var chip8 = {
 
 };
 
+var testrun = function(){
+    console.log("Loading 2 into fifth register, copy to register 3, add both into register 4. Print n")
+    var program = [0x6502, 0x8350, 0x8424, 0x8454,0xA000, 0x6104,0x6204,0xD124,0xD000]
+    chip8.loadProgram(program)
+
+    for(var i = 0; i < program.length;i++){
+        chip8.emulateCycle();
+    }
+
+    chip8.statePrint(chip8.stateDump())
+
+
+    // chip8.IREGISTER = 0xA * 5
+    // chip8.VREGISTER[1] = 0x0004
+    // chip8.VREGISTER[2] = 0x0004
+    // chip8.execute(0xD124)
+    // chip8.execute(0xD000)
+}
 // THESE FUNCTION CALLS BELOW WILL RUN WHEN THE HTML PAGE IS OPENED
 // USED FOR TESTING
-chip8.reset();
-chip8.emulateCycle();
+
+chip8.reset()
+testrun()
+
 
