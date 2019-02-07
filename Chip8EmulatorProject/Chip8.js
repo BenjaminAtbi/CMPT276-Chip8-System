@@ -34,7 +34,7 @@ var chip8 = {
 
         chip8.DISPLAY = chip8.DISPLAY.map(()=>0);
 
-        //loadFont();
+        chip8.loadFont();
         chip8.KEYPRESSED = 0;
         chip8.KEYS = chip8.KEYS.map(()=>0);
 
