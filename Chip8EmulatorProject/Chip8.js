@@ -358,7 +358,7 @@ var chip8 = {
                         break;
                     case 0x0055:
                         // Fx55 - LD [I], Vx
-                        for (int i = 0; i <= x; i++) {
+                        for (var i = 0; i <= x; i++) {
                             chip8.MEMORY[chip8.IREGISTER + i] = chip8.VREGISTER[x];
                         }
                         break;
