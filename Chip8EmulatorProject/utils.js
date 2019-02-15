@@ -3,42 +3,35 @@
 var keyInput = {
      
     keypressed: false,  //is any key pressed
-    keymap: "default",  //current key mapping, must be initialized.
+    keymap: savedmaps.default,  //current key mapping, should be initialized.
 
-    keystate: new Map(), //maps keys to their state
+    keystate: [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,],
 
     //Storage space for different keymappings
     savedmaps: { 
-        default:['1','2','3','4','5','6','7','8','9','q','w','e','r','t','y'] //
+        default:[['1',1],['2',2],['3',3],['4',4],['5',5],['6',6],['7',7],['8',8],['9',9],
+        ['q',0xA],['w',0xB],['e',0xC],['r',0xD],['t',0xE],['y',0xF]] 
     },
     
     //register event listener, prepare for key input
     initialize(keymap = "default") { 
         document.addEventListener('keydown', function(event){
-            if(keyInput.keystate.has(event.key)){
-                keyInput.keystate.set(event.key,true)
+            if(keyInput.keymap.has(event.key)){
+                keyInput.keystate[keymay.get(event.key)] = true
                 keyInput.keypressed = true
             }
         })
         document.addEventListener('keyup', function(event){1
-            if(keyInput.keystate.has(event.key)){
-                keyInput.keystate.set(event.key,false)
-                keyInput.keypressed = true
+            if(keyInput.keymap.has(event.key)){
+                keyInput.keystate[keymay.get(event.key)] = false
+                keyInput.keypressed = false
             }
         })
-        keyInput.loadmap(keymap)
-        keyInput.keypressed = 0
+        keyInput.keymap = savedmaps[keymap]
     },
 
-
-
-
-    //load a specified keymapping
-    loadmap(mapname = "default"){ 
-        keymap = keyInput.savedmaps[mapname]
-        keystate = new Map()
-        for(var i = 0; i < keymap.length; i++){
-            keyInput.keystate.set(keymap[i],false)
-        }
+    //check state value
+    check(keynum){
+        return keystate[keynum]
     },
 }
