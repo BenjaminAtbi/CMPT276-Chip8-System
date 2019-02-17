@@ -14,7 +14,7 @@ var chip8 = {
     DISPLAY: new Uint8Array(64 * 32), // The display resolution is 64 * 32, color is monochrome
     SCALE: 10, // Because 64*32 is quite small the entire display is multiplied by SCALE, to fill up more of the webpage
 
-    KEYS: keyInput, // Holds an array of all possible keys and whether they have been pressed
+    KEYS: new keyInput(), // Holds an array of all possible keys and whether they have been pressed
 
     CYCLES: 10, // The number of cycles to run at a time per loop
     PAUSE: 0, // Whether or not the emulator cycles are paused
@@ -34,7 +34,7 @@ var chip8 = {
         chip8.DISPLAY = chip8.DISPLAY.map(()=>0);
 
         chip8.loadFont();
-        chip8.KEYS.initialize()
+        chip8.KEYS = new keyInput();
 
         chip8.PAUSE = 0;
     },
@@ -478,10 +478,11 @@ var testrun = function(){
     // chip8.execute(0xD124)
     // chip8.execute(0xD000)
 }
+
 // THESE FUNCTION CALLS BELOW WILL RUN WHEN THE HTML PAGE IS OPENED
 // USED FOR TESTING
 
-chip8.reset()
-testrun()
+//chip8.reset()
+//testrun()
 
 
