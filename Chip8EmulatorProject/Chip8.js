@@ -433,6 +433,11 @@ var chip8 = {
         document.getElementById("OpcodeLabel").innerHTML = chip8.INSTRUCTINFO[0];
         document.getElementById("NameLabel").innerHTML = chip8.INSTRUCTINFO[1];
         document.getElementById("DescLabel").innerHTML = chip8.INSTRUCTINFO[2];
+
+        document.getElementById("DisTLabel").innerHTML = chip8.DELAYTIMER;
+        document.getElementById("SouTLabel").innerHTML = chip8.SOUNDTIMER;
+
+        document.getElementById("MemoryTextarea").innerHTML = chip8.MEMORY;
     },
 
     // Test Functions
