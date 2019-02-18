@@ -25,7 +25,6 @@
   <table class="visualizer">
       <tr>
           <th colspan="2">Registers</th>
-
           <th colspan="2">Current Instruction</th>
       </tr>
       <tr>
@@ -56,14 +55,22 @@
       <tr>
           <th>4</th>
           <td> <label id="4regLabel">Contents</label> </td>
+
+          <th colspan="2">Timers</th>
       </tr>
       <tr>
           <th>5</th>
           <td> <label id="5regLabel">Contents</label> </td>
+
+          <th>Display</th>
+          <td> <label id="DisTLabel">Contents</label> </td>
       </tr>
       <tr>
           <th>6</th>
           <td> <label id="6regLabel">Contents</label> </td>
+
+          <th>Sound</th>
+          <td> <label id="SouTLabel">Contents</label> </td>
       </tr>
       <tr>
           <th>7</th>
@@ -106,6 +113,9 @@
           <td> <label id="IregLabel">Contents</label> </td>
       </tr>
   </table>
+
+  <h2>Memory</h2>
+  <textarea id="MemoryTextarea" rows="32" cols="128" readonly> </textarea>
 
   <table class="input_button">
     <tr>
