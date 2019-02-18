@@ -19,21 +19,21 @@ var chip8 = {
     CYCLES: 10, // The number of cycles to run at a time per loop
     PAUSE: 0, // Whether or not the emulator cycles are paused
 
-    INSTRUCTINFO: new Array("OPCODE","NAME","DESC"),
+    INSTRUCTINFO: new Array("OPCODE", "NAME", "DESC"),
 
     reset() {
         chip8.PC = 0x200; // Point the program counter to the start of the program memeory
-        chip8.MEMORY = chip8.MEMORY.map(()=>0);
-        chip8.VREGISTER = chip8.VREGISTER.map(()=>0);
+        chip8.MEMORY = chip8.MEMORY.map(() => 0);
+        chip8.VREGISTER = chip8.VREGISTER.map(() => 0);
         chip8.IREGISTER = 0;
 
-        chip8.STACK = chip8.STACK.map(()=>0);
+        chip8.STACK = chip8.STACK.map(() => 0);
         chip8.SP = 0;
 
         chip8.DELAYTIMER = 0;
         chip8.SOUNDTIMER = 0;
 
-        chip8.DISPLAY = chip8.DISPLAY.map(()=>0);
+        chip8.DISPLAY = chip8.DISPLAY.map(() => 0);
 
         chip8.loadFont();
         chip8.KEYS = new keyInput();
@@ -43,47 +43,47 @@ var chip8 = {
 
     // Load a given program into memory
     loadProgram(program) {
-            for (var i = 0; i < program.length; i++) {
-                chip8.MEMORY[0x200 + i*2] = program[i] >> 8
-                chip8.MEMORY[0x200 + i*2 + 1] = program[i] & 0x00FF
-            }
+        for (var i = 0; i < program.length; i++) {
+            chip8.MEMORY[0x200 + i * 2] = program[i] >> 8
+            chip8.MEMORY[0x200 + i * 2 + 1] = program[i] & 0x00FF
+        }
     },
 
     // Load the array of character sprites into memory
     loadFont() {
         var font = [
-              0xF0, 0x90, 0x90, 0x90, 0xF0, // 0
-              0x20, 0x60, 0x20, 0x20, 0x70, // 1
-              0xF0, 0x10, 0xF0, 0x80, 0xF0, // 2
-              0xF0, 0x10, 0xF0, 0x10, 0xF0, // 3
-              0x90, 0x90, 0xF0, 0x10, 0x10, // 4
-              0xF0, 0x80, 0xF0, 0x10, 0xF0, // 5
-              0xF0, 0x80, 0xF0, 0x90, 0xF0, // 6
-              0xF0, 0x10, 0x20, 0x40, 0x40, // 7
-              0xF0, 0x90, 0xF0, 0x90, 0xF0, // 8
-              0xF0, 0x90, 0xF0, 0x10, 0xF0, // 9
-              0xF0, 0x90, 0xF0, 0x90, 0x90, // A
-              0xE0, 0x90, 0xE0, 0x90, 0xE0, // B
-              0xF0, 0x80, 0x80, 0x80, 0xF0, // C
-              0xE0, 0x90, 0x90, 0x90, 0xE0, // D
-              0xF0, 0x80, 0xF0, 0x80, 0xF0, // E
-              0xF0, 0x80, 0xF0, 0x80, 0x80 // F
-          ];
+            0xF0, 0x90, 0x90, 0x90, 0xF0, // 0
+            0x20, 0x60, 0x20, 0x20, 0x70, // 1
+            0xF0, 0x10, 0xF0, 0x80, 0xF0, // 2
+            0xF0, 0x10, 0xF0, 0x10, 0xF0, // 3
+            0x90, 0x90, 0xF0, 0x10, 0x10, // 4
+            0xF0, 0x80, 0xF0, 0x10, 0xF0, // 5
+            0xF0, 0x80, 0xF0, 0x90, 0xF0, // 6
+            0xF0, 0x10, 0x20, 0x40, 0x40, // 7
+            0xF0, 0x90, 0xF0, 0x90, 0xF0, // 8
+            0xF0, 0x90, 0xF0, 0x10, 0xF0, // 9
+            0xF0, 0x90, 0xF0, 0x90, 0x90, // A
+            0xE0, 0x90, 0xE0, 0x90, 0xE0, // B
+            0xF0, 0x80, 0x80, 0x80, 0xF0, // C
+            0xE0, 0x90, 0x90, 0x90, 0xE0, // D
+            0xF0, 0x80, 0xF0, 0x80, 0xF0, // E
+            0xF0, 0x80, 0xF0, 0x80, 0x80 // F
+        ];
 
-          for (i = 0; i < font.length; i++) {
-              chip8.MEMORY[i] = font[i];
-          }
+        for (i = 0; i < font.length; i++) {
+            chip8.MEMORY[i] = font[i];
+        }
     },
 
     // Run a CPU cycle
     emulateCycle() {
-        if(!chip8.PAUSE) {
+        if (!chip8.PAUSE) {
             var opcode = chip8.MEMORY[chip8.PC] << 8 | chip8.MEMORY[chip8.PC + 1]; // Decode command
             chip8.PC += 2;
             chip8.execute(opcode); // Execute command
         }
 
-        if(!chip8.PAUSE) {
+        if (!chip8.PAUSE) {
             chip8.updateTimers();
         }
 
@@ -102,7 +102,7 @@ var chip8 = {
 
         for (var x = 0; x < 64; x++) {
             for (var y = 0; y < 32; y++) {
-                if (chip8.DISPLAY[y*64 + x] == 1) c.fillRect(x*chip8.SCALE,y*chip8.SCALE,chip8.SCALE,chip8.SCALE);
+                if (chip8.DISPLAY[y * 64 + x] == 1) c.fillRect(x * chip8.SCALE, y * chip8.SCALE, chip8.SCALE, chip8.SCALE);
             }
         }
 
@@ -110,11 +110,11 @@ var chip8 = {
 
     // Reset the display
     clearDisplay() {
-        chip8.DISPLAY = chip8.DISPLAY.map(()=>0);
+        chip8.DISPLAY = chip8.DISPLAY.map(() => 0);
     },
 
     beep() {
-        if(chip8.SOUNDTIMER > 0) {
+        if (chip8.SOUNDTIMER > 0) {
             // SPEAKER PLAY
         } else {
             // SPEAKER STOP
@@ -133,14 +133,14 @@ var chip8 = {
                 switch (opcode) {
                     // 0nnn - SYS addr - THIS COMMAND IS NOT NECESSARY
                     case 0x00E0:
-                    chip8.INSTRUCTINFO[1] = "CLS";
-                    chip8.INSTRUCTINFO[2] = "Clear the display.";
+                        chip8.INSTRUCTINFO[1] = "CLS";
+                        chip8.INSTRUCTINFO[2] = "Clear the display.";
                         chip8.clearDisplay();
                         break;
 
                     case 0x00EE:
-                    chip8.INSTRUCTINFO[1] = "RET";
-                    chip8.INSTRUCTINFO[2] = "Return from a subroutine.";
+                        chip8.INSTRUCTINFO[1] = "RET";
+                        chip8.INSTRUCTINFO[2] = "Return from a subroutine.";
                         chip8.PC = chip8.STACK[chip8.SP];
                         chip8.SP--;
                         break;
@@ -148,84 +148,84 @@ var chip8 = {
                 break;
 
             case 0x1000:
-            chip8.INSTRUCTINFO[1] = "JP";
-            chip8.INSTRUCTINFO[2] = "Jump to location.";
+                chip8.INSTRUCTINFO[1] = "JP";
+                chip8.INSTRUCTINFO[2] = "Jump to location.";
                 chip8.PC = opcode & 0x0FFF;
                 break;
 
             case 0x2000:
-            chip8.INSTRUCTINFO[1] = "CALL";
-            chip8.INSTRUCTINFO[2] = "Call subroutine.";
+                chip8.INSTRUCTINFO[1] = "CALL";
+                chip8.INSTRUCTINFO[2] = "Call subroutine.";
                 chip8.SP++;
                 chip8.STACK[chip8.SP] = chip8.PC;
                 chip8.PC = opcode & 0x0FFF;
                 break;
 
             case 0x3000:
-            chip8.INSTRUCTINFO[1] = "SE";
-            chip8.INSTRUCTINFO[2] = "Skip next instruction if Vx = kk.";
+                chip8.INSTRUCTINFO[1] = "SE";
+                chip8.INSTRUCTINFO[2] = "Skip next instruction if Vx = kk.";
                 if (chip8.VREGISTER[x] == opcode & 0x00FF) {
-                  chip8.PC += 2;
+                    chip8.PC += 2;
                 }
                 break;
 
             case 0x4000:
-            chip8.INSTRUCTINFO[1] = "SNE";
-            chip8.INSTRUCTINFO[2] = "Skip next instruction if Vx != kk.";
+                chip8.INSTRUCTINFO[1] = "SNE";
+                chip8.INSTRUCTINFO[2] = "Skip next instruction if Vx != kk.";
                 if (chip8.VREGISTER[x] != opcode & 0x00FF) {
                     chip8.PC += 2;
                 }
                 break;
 
             case 0x5000:
-            chip8.INSTRUCTINFO[1] = "SE";
-            chip8.INSTRUCTINFO[2] = "Skip next instruction if Vx = Vy.";
+                chip8.INSTRUCTINFO[1] = "SE";
+                chip8.INSTRUCTINFO[2] = "Skip next instruction if Vx = Vy.";
                 if (chip8.VREGISTER[x] == chip8.VREGISTER[y]) {
                     chip8.PC += 2;
                 }
                 break;
 
             case 0x6000:
-            chip8.INSTRUCTINFO[1] = "LD";
-            chip8.INSTRUCTINFO[2] = "Set Vx = kk.";
+                chip8.INSTRUCTINFO[1] = "LD";
+                chip8.INSTRUCTINFO[2] = "Set Vx = kk.";
                 chip8.VREGISTER[x] = (opcode & 0x00FF);
                 break;
 
             case 0x7000:
-            chip8.INSTRUCTINFO[1] = "ADD";
-            chip8.INSTRUCTINFO[2] = "Set Vx = Vx + kk.";
+                chip8.INSTRUCTINFO[1] = "ADD";
+                chip8.INSTRUCTINFO[2] = "Set Vx = Vx + kk.";
                 chip8.VREGISTER[x] = chip8.VREGISTER[x] + (opcode & 0x00FF);
                 break;
 
             case 0x8000:
                 switch (opcode & 0x000F) { // Get the last digit of the opcode, the second and third digits are variable
                     case 0x0000:
-                    chip8.INSTRUCTINFO[1] = "LD";
-                    chip8.INSTRUCTINFO[2] = "Set Vx = Vy.";
+                        chip8.INSTRUCTINFO[1] = "LD";
+                        chip8.INSTRUCTINFO[2] = "Set Vx = Vy.";
                         chip8.VREGISTER[x] = chip8.VREGISTER[y];
                         break;
 
                     case 0x0001:
-                    chip8.INSTRUCTINFO[1] = "OR";
-                    chip8.INSTRUCTINFO[2] = "Set Vx = Vx OR Vy.";
+                        chip8.INSTRUCTINFO[1] = "OR";
+                        chip8.INSTRUCTINFO[2] = "Set Vx = Vx OR Vy.";
                         chip8.VREGISTER[x] = chip8.VREGISTER[x] | chip8.VREGISTER[y];
                         break;
 
                     case 0x0002:
-                    chip8.INSTRUCTINFO[1] = "AND";
-                    chip8.INSTRUCTINFO[2] = "Set Vx = Vx AND Vy.";
+                        chip8.INSTRUCTINFO[1] = "AND";
+                        chip8.INSTRUCTINFO[2] = "Set Vx = Vx AND Vy.";
                         chip8.VREGISTER[x] = chip8.VREGISTER[x] & chip8.VREGISTER[y];
                         break;
 
                     case 0x0003:
-                    chip8.INSTRUCTINFO[1] = "XOR";
-                    chip8.INSTRUCTINFO[2] = "Set Vx = Vx XOR Vy.";
+                        chip8.INSTRUCTINFO[1] = "XOR";
+                        chip8.INSTRUCTINFO[2] = "Set Vx = Vx XOR Vy.";
                         chip8.VREGISTER[x] = chip8.VREGISTER[x] ^ chip8.VREGISTER[y];
                         break;
 
                     case 0x0004:
-                    chip8.INSTRUCTINFO[1] = "ADD";
-                    chip8.INSTRUCTINFO[2] = "Set Vx = Vx + Vy, set VF = carry.";
+                        chip8.INSTRUCTINFO[1] = "ADD";
+                        chip8.INSTRUCTINFO[2] = "Set Vx = Vx + Vy, set VF = carry.";
                         if ((chip8.VREGISTER[x] + chip8.VREGISTER[y]) > 255) {
                             chip8.VREGISTER[15] = 1;
                         }
@@ -236,8 +236,8 @@ var chip8 = {
                         break;
 
                     case 0x0005:
-                    chip8.INSTRUCTINFO[1] = "SUB";
-                    chip8.INSTRUCTINFO[2] = "Set Vx = Vx - Vy, set VF = NOT borrow.";
+                        chip8.INSTRUCTINFO[1] = "SUB";
+                        chip8.INSTRUCTINFO[2] = "Set Vx = Vx - Vy, set VF = NOT borrow.";
                         if (chip8.VREGISTER[x] > chip8.VREGISTER[y]) {
                             chip8.VREGISTER[15] = 1;
                         }
@@ -248,8 +248,8 @@ var chip8 = {
                         break;
 
                     case 0x0006:
-                    chip8.INSTRUCTINFO[1] = "SHR";
-                    chip8.INSTRUCTINFO[2] = "Set Vx = Vx SHR Vy.";
+                        chip8.INSTRUCTINFO[1] = "SHR";
+                        chip8.INSTRUCTINFO[2] = "Set Vx = Vx SHR Vy.";
                         if (chip8.VREGISTER[x] & 0x0001 == 1) {
                             chip8.VREGISTER[15] = 1;
                         }
@@ -260,8 +260,8 @@ var chip8 = {
                         break;
 
                     case 0x0007:
-                    chip8.INSTRUCTINFO[1] = "SUBN";
-                    chip8.INSTRUCTINFO[2] = "Set Vx = Vx - Vy, set VF = NOT borrow.";
+                        chip8.INSTRUCTINFO[1] = "SUBN";
+                        chip8.INSTRUCTINFO[2] = "Set Vx = Vx - Vy, set VF = NOT borrow.";
                         if (chip8.VREGISTER[x] < chip8.VREGISTER[y]) {
                             chip8.VREGISTER[15] = 1;
                         }
@@ -272,8 +272,8 @@ var chip8 = {
                         break;
 
                     case 0x000E:
-                    chip8.INSTRUCTINFO[1] = "SHL";
-                    chip8.INSTRUCTINFO[2] = "Set Vx = Vx SHL 1.";
+                        chip8.INSTRUCTINFO[1] = "SHL";
+                        chip8.INSTRUCTINFO[2] = "Set Vx = Vx SHL 1.";
                         if ((chip8.VREGISTER[x] & 0x80) == 1) {
                             chip8.VREGISTER[15] = 1;
                         }
@@ -285,30 +285,30 @@ var chip8 = {
                 }
                 break;
             case 0x9000:
-            chip8.INSTRUCTINFO[1] = "SNE";
-            chip8.INSTRUCTINFO[2] = "Skip next instruction if Vx != Vy.";
+                chip8.INSTRUCTINFO[1] = "SNE";
+                chip8.INSTRUCTINFO[2] = "Skip next instruction if Vx != Vy.";
                 if (chip8.VREGISTER[x] != chip8.VREGISTER[y]) {
-                  chip8.PC += 2;
+                    chip8.PC += 2;
                 }
                 break;
             case 0xA000:
-            chip8.INSTRUCTINFO[1] = "LD";
-            chip8.INSTRUCTINFO[2] = "Set I = nnn.";
+                chip8.INSTRUCTINFO[1] = "LD";
+                chip8.INSTRUCTINFO[2] = "Set I = nnn.";
                 chip8.IREGISTER = (opcode & 0x0FFF);
                 break;
             case 0xB000:
-            chip8.INSTRUCTINFO[1] = "JP";
-            chip8.INSTRUCTINFO[2] = "Jump to location nnn + V0.";
+                chip8.INSTRUCTINFO[1] = "JP";
+                chip8.INSTRUCTINFO[2] = "Jump to location nnn + V0.";
                 chip8.PC = (opcode & 0x0FFF) + chip8.VREGISTER[0];
                 break;
             case 0xC000:
-            chip8.INSTRUCTINFO[1] = "RND";
-            chip8.INSTRUCTINFO[2] = "Set Vx = random byte AND kk";
-                chip8.VREGISTER[x] = ( (Math.floor((Math.random()*255))) & (opcode & 0x00FF) );
+                chip8.INSTRUCTINFO[1] = "RND";
+                chip8.INSTRUCTINFO[2] = "Set Vx = random byte AND kk";
+                chip8.VREGISTER[x] = ((Math.floor((Math.random() * 255))) & (opcode & 0x00FF));
                 break;
             case 0xD000:
-            chip8.INSTRUCTINFO[1] = "DRW";
-            chip8.INSTRUCTINFO[2] = "Display n-byte sprite starting at memory location I at (Vx, Vy), set VF = collision.";
+                chip8.INSTRUCTINFO[1] = "DRW";
+                chip8.INSTRUCTINFO[2] = "Display n-byte sprite starting at memory location I at (Vx, Vy), set VF = collision.";
                 var N = (opcode & 0x000F); // The height of the sprite
                 var startX = chip8.VREGISTER[x]; // The x coordinate of the sprite
                 var startY = chip8.VREGISTER[y]; // The y coordinate of the sprite
@@ -319,10 +319,10 @@ var chip8 = {
                     pixel = chip8.MEMORY[chip8.IREGISTER + yCoord]; // The value of the current pixel is taken from memory
                     for (var xCoord = 0; xCoord < 8; xCoord++) {
                         if ((pixel & (0x80 >> xCoord)) != 0) { // If the current pixel is not empty
-                            if (chip8.DISPLAY[ (startX+xCoord) + ((startY+yCoord) * 64) ] == 0) { // Check if the current pixel is already set or not
-                                chip8.DISPLAY[ (startX+xCoord) + ((startY+yCoord) * 64) ] = 1; // Set the current pixel if it is unset
+                            if (chip8.DISPLAY[(startX + xCoord) + ((startY + yCoord) * 64)] == 0) { // Check if the current pixel is already set or not
+                                chip8.DISPLAY[(startX + xCoord) + ((startY + yCoord) * 64)] = 1; // Set the current pixel if it is unset
                             } else {
-                                chip8.DISPLAY[ (startX+xCoord) + ((startY+yCoord) * 64) ] = 0; // Unset the pixel if it is already set
+                                chip8.DISPLAY[(startX + xCoord) + ((startY + yCoord) * 64)] = 0; // Unset the pixel if it is already set
                                 chip8.VREGISTER[0xF] = 1; // Unsetting a pixel will set the VF register
                             }
                         }
@@ -333,15 +333,15 @@ var chip8 = {
             case 0xE000:
                 switch (opcode & 0x00FF) {
                     case 0x009E:
-                    chip8.INSTRUCTINFO[1] = "SKP";
-                    chip8.INSTRUCTINFO[2] = "Skip the next instruction if key with value of Vx is pressed.";
+                        chip8.INSTRUCTINFO[1] = "SKP";
+                        chip8.INSTRUCTINFO[2] = "Skip the next instruction if key with value of Vx is pressed.";
                         if (chip8.KEYS.keystate[chip8.VREGISTER[x]]) {
                             chip8.PC += 2;
                         }
                         break;
                     case 0x00A1:
-                    chip8.INSTRUCTINFO[1] = "SKNP";
-                    chip8.INSTRUCTINFO[2] = "Skip the next instruction if key with value of Vx is not pressed.";
+                        chip8.INSTRUCTINFO[1] = "SKNP";
+                        chip8.INSTRUCTINFO[2] = "Skip the next instruction if key with value of Vx is not pressed.";
                         if (!chip8.KEYS.keystate[chip8.VREGISTER[x]]) {
                             chip8.PC += 2;
                         }
@@ -351,55 +351,55 @@ var chip8 = {
             case 0xF000:
                 switch (opcode & 0x00FF) {
                     case 0x0007:
-                    chip8.INSTRUCTINFO[1] = "LD";
-                    chip8.INSTRUCTINFO[2] = "Set Vx = delay timer value.";
+                        chip8.INSTRUCTINFO[1] = "LD";
+                        chip8.INSTRUCTINFO[2] = "Set Vx = delay timer value.";
                         chip8.VREGISTER[x] = chip8.DELAYTIMER;
                         break;
                     case 0x000A:
-                    chip8.INSTRUCTINFO[1] = "LD";
-                    chip8.INSTRUCTINFO[2] = "Wait for a key press, store the value of the key in Vx.";
-                    // NOT COMPLETED YET
+                        chip8.INSTRUCTINFO[1] = "LD";
+                        chip8.INSTRUCTINFO[2] = "Wait for a key press, store the value of the key in Vx.";
+                        // NOT COMPLETED YET
                         break;
                     case 0x0015:
-                    chip8.INSTRUCTINFO[1] = "LD";
-                    chip8.INSTRUCTINFO[2] = "Set delay timer = Vx.";
+                        chip8.INSTRUCTINFO[1] = "LD";
+                        chip8.INSTRUCTINFO[2] = "Set delay timer = Vx.";
                         chip8.DELAYTIMER = chip8.VREGISTER[x];
                         break;
                     case 0x0018:
-                    chip8.INSTRUCTINFO[1] = "LD";
-                    chip8.INSTRUCTINFO[2] = "Set sound timer = Vx.";
+                        chip8.INSTRUCTINFO[1] = "LD";
+                        chip8.INSTRUCTINFO[2] = "Set sound timer = Vx.";
                         chip8.SOUNDTIMER = chip8.VREGISTER[x];
                         break;
                     case 0x001E:
-                    chip8.INSTRUCTINFO[1] = "ADD";
-                    chip8.INSTRUCTINFO[2] = "Set I = I + Vx.";
+                        chip8.INSTRUCTINFO[1] = "ADD";
+                        chip8.INSTRUCTINFO[2] = "Set I = I + Vx.";
                         chip8.IREGISTER += chip8.VREGISTER[x];
                         break;
                     case 0x0029:
-                    chip8.INSTRUCTINFO[1] = "LD";
-                    chip8.INSTRUCTINFO[2] = "Set I = location of sprite for digit Vx.";
-                        chip8.IREGISTER = chip8.VREGISTER[x]*5; // Character sprites have a width of 5
+                        chip8.INSTRUCTINFO[1] = "LD";
+                        chip8.INSTRUCTINFO[2] = "Set I = location of sprite for digit Vx.";
+                        chip8.IREGISTER = chip8.VREGISTER[x] * 5; // Character sprites have a width of 5
                         break;
                     case 0x0033:
-                    chip8.INSTRUCTINFO[1] = "LD";
-                    chip8.INSTRUCTINFO[2] = "Store BCD representation of Vx in memory locations I, I+1, and I+2.";
+                        chip8.INSTRUCTINFO[1] = "LD";
+                        chip8.INSTRUCTINFO[2] = "Store BCD representation of Vx in memory locations I, I+1, and I+2.";
                         var number = chip8.VREGISTER[x];
 
-                        chip8.MEMORY[chip8.IREGISTER+2] = parseInt(number % 10);
-                        chip8.MEMORY[chip8.IREGISTER+1] = parseInt((number/10) % 10);
-                        chip8.MEMORY[chip8.IREGISTER] = parseInt((number/100) % 10);
+                        chip8.MEMORY[chip8.IREGISTER + 2] = parseInt(number % 10);
+                        chip8.MEMORY[chip8.IREGISTER + 1] = parseInt((number / 10) % 10);
+                        chip8.MEMORY[chip8.IREGISTER] = parseInt((number / 100) % 10);
 
                         break;
                     case 0x0055:
-                    chip8.INSTRUCTINFO[1] = "LD";
-                    chip8.INSTRUCTINFO[2] = "Store registers V0 through Vx in memory starting at location I.";
+                        chip8.INSTRUCTINFO[1] = "LD";
+                        chip8.INSTRUCTINFO[2] = "Store registers V0 through Vx in memory starting at location I.";
                         for (var i = 0; i <= x; i++) {
                             chip8.MEMORY[chip8.IREGISTER + i] = chip8.VREGISTER[x];
                         }
                         break;
                     case 0x0065:
-                    chip8.INSTRUCTINFO[1] = "LD";
-                    chip8.INSTRUCTINFO[2] = "Read registers V0 through Vx from memory starting at location I.";
+                        chip8.INSTRUCTINFO[1] = "LD";
+                        chip8.INSTRUCTINFO[2] = "Read registers V0 through Vx from memory starting at location I.";
                         for (var i = 0; i <= x; i++) {
                             chip8.VREGISTER[i] = chip8.MEMORY[chip8.IREGISTER + i];
                         }
@@ -438,7 +438,7 @@ var chip8 = {
     // Test Functions
 
     //returns object containing current value of all state fields
-    stateDump(){
+    stateDump() {
         return {
             PC: chip8.PC, // The program counter
             MEMORY: chip8.MEMORY, // Chip 8 memory, 4096 bytes long, Chip 8 programs are stored starting from the 512th byte (0x200)
@@ -461,36 +461,36 @@ var chip8 = {
     },
 
     // prints out all fields of a state object
-    statePrint(state){
+    statePrint(state) {
         var printout = "REGISTERS\n---------\n";
-        for(var i = 0; i<16; i++){
-            printout += "reg" + i + ": " + state.VREGISTER[i].toString(16) +"\n";
+        for (var i = 0; i < 16; i++) {
+            printout += "reg" + i + ": " + state.VREGISTER[i].toString(16) + "\n";
         }
         printout += "ireg: " + state.IREGISTER.toString(16) + "\n";
         printout += "TIMERS\n----------\n";
-        printout += "delay timer: " + state.DELAYTIMER.toString(16)  + "\n";
+        printout += "delay timer: " + state.DELAYTIMER.toString(16) + "\n";
         printout += "sound timer: " + state.SOUNDTIMER.toString(16) + "\n";
         printout += "STACK\n----------\n";
-        printout += "SP: "+state.SP.toString(16)+"\n 0 -> [";
-        for(var i = 0; i < 16; i++){
+        printout += "SP: " + state.SP.toString(16) + "\n 0 -> [";
+        for (var i = 0; i < 16; i++) {
             printout += state.STACK[i].toString(16) + ".";
         }
         printout += "] <-16\n";
         printout += "MEMORY\n----------\n";
-        printout += "PC: "+ state.PC.toString(16) + "\n";
-        for(var i = 0; i < 128; i++){
-            printout += (i * 32)+"-> [";
-            for(var j = 0; j < 32; j++){
-                printout += state.MEMORY[32*i + j].toString(16) + ".";
+        printout += "PC: " + state.PC.toString(16) + "\n";
+        for (var i = 0; i < 128; i++) {
+            printout += (i * 32) + "-> [";
+            for (var j = 0; j < 32; j++) {
+                printout += state.MEMORY[32 * i + j].toString(16) + ".";
             }
-            printout += "] <-" + ((i+1) * 32) + "\n";
+            printout += "] <-" + ((i + 1) * 32) + "\n";
         }
         console.log(printout)
         return printout;
     },
 
     //returns state object with fields equal to the difference between input states
-    stateCompare(state1, state2){
+    stateCompare(state1, state2) {
         var comp = {};
         comp.PC = state2.PC - state1.PC;
         comp.IREGISTER = state2.IREGISTER - state1.IREGISTER;
@@ -500,33 +500,33 @@ var chip8 = {
         comp.STACK = new Uint8Array(16);
         comp.VREGISTER = new Uint8Array(16);
         comp.MEMORY = new Uint8Array(4096);
-        for(var i = 0; i < 16; i++){
+        for (var i = 0; i < 16; i++) {
             comp.STACK[i] = state2.STACK[i] - state1.STACK[i];
             comp.VREGISTER[i] = state2.VREGISTER[i] - state1.VREGISTER[i];
         }
-        for(var i = 0; i < 2096; i++){
+        for (var i = 0; i < 2096; i++) {
             comp.MEMORY[i] = state2.MEMORY[i] - state1.MEMORY[i];
         }
         return comp;
     },
 
     //prints difference between states before and after running an opcode
-    testOpcode(opcode){
+    testOpcode(opcode) {
         state1 = chip8.stateDump();
         chip8.execute(opcode);
         state2 = chip8.stateDump();
-        comp = chip8.stateCompare(state1,state2)
-        chip8.statePrint(chip8.stateCompare(state1,state2));
+        comp = chip8.stateCompare(state1, state2)
+        chip8.statePrint(chip8.stateCompare(state1, state2));
     },
 
 };
 
-var testrun = function(){
+var testrun = function () {
     console.log("Loading 2 into fifth register, copy to register 3, add both into register 4. Print n")
-    var program = [0x6502, 0x8350, 0x8424, 0x8454,0xA000, 0x6104,0x6204,0xD124,0xD000]
+    var program = [0x6502, 0x8350, 0x8424, 0x8454, 0xA000, 0x6104, 0x6204, 0xD124, 0xD000]
     chip8.loadProgram(program)
 
-    for(var i = 0; i < program.length;i++){
+    for (var i = 0; i < program.length; i++) {
         chip8.emulateCycle();
     }
 
