@@ -17,6 +17,7 @@ var chip8 = {
 
     CYCLES: 10, // The number of cycles to run at a time per loop
     PAUSE: 0, // Whether or not the emulator cycles are paused
+    NEXT: 0, // Whether or not the next button has been clicked
 
     INSTRUCTINFO: new Array("OPCODE","NAME","DESC"),
 
@@ -38,6 +39,7 @@ var chip8 = {
         chip8.KEYS = new keyInput();
 
         chip8.PAUSE = 0;
+        chip8.NEXT = 0;
     },
 
     // Load a given program into memory
@@ -76,18 +78,22 @@ var chip8 = {
 
     // Run a CPU cycle
     emulateCycle() {
-        if(!chip8.PAUSE) {
+        if(!chip8.PAUSE || chip8.NEXT) {
             var opcode = chip8.MEMORY[chip8.PC] << 8 | chip8.MEMORY[chip8.PC + 1]; // Decode command
             chip8.PC += 2;
             chip8.execute(opcode); // Execute command
-        }
-
-        if(!chip8.PAUSE) {
             chip8.updateTimers();
         }
 
         chip8.beep();
         chip8.updateDisplay();
+        chip8.updateVisualizer();
+    },
+
+    nextCycle() {
+        chip8.NEXT = 1;
+        chip8.emulateCycle();
+        chip8.NEXT = 0;
     },
 
     updateTimers() {
@@ -105,6 +111,16 @@ var chip8 = {
             }
         }
 
+    },
+
+    togglePause() {
+            if(!chip8.PAUSE) {
+                chip8.PAUSE = 1;
+                document.getElementById("PauseLabel").innerHTML = "Execution Paused";
+            } else {
+                chip8.PAUSE = 0;
+                document.getElementById("PauseLabel").innerHTML = "Execution Unpaused";
+            }
     },
 
     // Reset the display
@@ -569,11 +585,8 @@ var testrun = function(){
     var program = [0x6502, 0x8350, 0x8424, 0x8454,0xA000, 0x6104,0x6204,0xD124]
     chip8.loadProgram(program)
 
-    for(var i = 0; i < program.length;i++){
-        chip8.emulateCycle();
-    }
+    chip8.emulateCycle();
 
-    chip8.statePrint(chip8.stateDump())
 }
 
 // THESE FUNCTION CALLS BELOW WILL RUN WHEN THE HTML PAGE IS OPENED
@@ -581,4 +594,3 @@ var testrun = function(){
 
 chip8.reset()
 testrun()
-chip8.updateVisualizer()
