@@ -22,7 +22,14 @@
     <canvas id="emulator_screen"></canvas>
   </div>
 
+  <button type="button">Previous</button>
+  <button type="button" onclick="chip8.togglePause()">Toggle Pause</button>
+  <button type="button" onclick="chip8.nextCycle()">Next</button>
+
   <table class="visualizer">
+      <tr>
+          <th colspan="5" id="PauseLabel">Execution Unpaused</th>
+      </tr>
       <tr>
           <th colspan="2">Registers</th>
           <th colspan="2">Current Instruction</th>
@@ -30,7 +37,7 @@
       </tr>
       <tr>
           <th>0</th>
-          <td id="0regLabel"> Contttt </td>
+          <td id="0regLabel">Contents</td>
 
           <th>Opcode</th>
           <td> <label id="OpcodeLabel">Contents</label> </td>
