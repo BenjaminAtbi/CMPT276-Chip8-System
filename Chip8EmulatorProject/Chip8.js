@@ -12,7 +12,6 @@ var chip8 = {
     SOUNDTIMER: 0, // Timer used for sound effects, a beep is made when the timer is nonzero
 
     DISPLAY: new Uint8Array(64 * 32), // The display resolution is 64 * 32, color is monochrome
-    SCALE: 10, // Because 64*32 is quite small the entire display is multiplied by SCALE, to fill up more of the webpage
 
     KEYS: new keyInput(), // Holds an array of all possible keys and whether they have been pressed
 
@@ -102,7 +101,7 @@ var chip8 = {
 
         for (var x = 0; x < 64; x++) {
             for (var y = 0; y < 32; y++) {
-                if (chip8.DISPLAY[y*64 + x] == 1) c.fillRect(x*chip8.SCALE,y*chip8.SCALE,chip8.SCALE,chip8.SCALE);
+                if (chip8.DISPLAY[y*64 + x] == 1) c.fillRect(x,y,1,1);
             }
         }
 
@@ -119,6 +118,27 @@ var chip8 = {
         } else {
             // SPEAKER STOP
         }
+    },
+
+    setPixel(x,y) {
+
+        var xCoord = x;
+        var yCoord = y;
+
+        if (xCoord > 64) { // If the set pixel is outside the bounds of the display it is reduced
+            xCoord -= 64;
+        } else if (xCoord < 0) {
+            xCoord += 64;
+        }
+
+        if (yCoord > 32) {
+            yCoord -= 32;
+        } else if (yCoord < 0) {
+            yCoord += 32;
+        }
+
+        chip8.DISPLAY[xCoord + (yCoord*64)] ^= 1; // Xor the pixel to flip it from on to off or vice versa
+
     },
 
     execute(opcode) {
@@ -319,12 +339,10 @@ var chip8 = {
                     pixel = chip8.MEMORY[chip8.IREGISTER + yCoord]; // The value of the current pixel is taken from memory
                     for (var xCoord = 0; xCoord < 8; xCoord++) {
                         if ((pixel & (0x80 >> xCoord)) != 0) { // If the current pixel is not empty
-                            if (chip8.DISPLAY[ (startX+xCoord) + ((startY+yCoord) * 64) ] == 0) { // Check if the current pixel is already set or not
-                                chip8.DISPLAY[ (startX+xCoord) + ((startY+yCoord) * 64) ] = 1; // Set the current pixel if it is unset
-                            } else {
-                                chip8.DISPLAY[ (startX+xCoord) + ((startY+yCoord) * 64) ] = 0; // Unset the pixel if it is already set
+                            if (chip8.DISPLAY[ (startX+xCoord) + ((startY+yCoord) * 64) ] == 1) { // Check if the current pixel is already set or not
                                 chip8.VREGISTER[0xF] = 1; // Unsetting a pixel will set the VF register
                             }
+                            chip8.setPixel(startX+xCoord, startY+yCoord);
                         }
                     }
                 }
@@ -478,7 +496,6 @@ var chip8 = {
             SOUNDTIMER: chip8.SOUNDTIMER, // Timer used for sound effects, a beep is made when the timer is nonzero
 
             DISPLAY: chip8.DISPLAY, // The display resolution is 64 * 32, color is monochrome
-            SCALE: chip8.SCALE, // Because 64*32 is quite small the entire display is multiplied by SCALE, to fill up more of the webpage
 
             CYCLES: chip8.CYCLES, // The number of cycles to run at a time per loop
             PAUSE: chip8.PAUSE, // Whether or not the emulator cycles are paused
@@ -549,7 +566,7 @@ var chip8 = {
 
 var testrun = function(){
     console.log("Loading 2 into fifth register, copy to register 3, add both into register 4. Print n")
-    var program = [0x6502, 0x8350, 0x8424, 0x8454,0xA000, 0x6104,0x6204,0xD124,0xD000]
+    var program = [0x6502, 0x8350, 0x8424, 0x8454,0xA000, 0x6104,0x6204,0xD124]
     chip8.loadProgram(program)
 
     for(var i = 0; i < program.length;i++){
