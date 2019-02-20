@@ -12,6 +12,7 @@ var chip8 = {
     SOUNDTIMER: 0, // Timer used for sound effects, a beep is made when the timer is nonzero
 
     DISPLAY: new Uint8Array(64 * 32), // The display resolution is 64 * 32, color is monochrome
+    SCALE: 10, // Because the resolution of 64*32 is quite small the screen is scaled up for visibility
 
     KEYS: new keyInput(), // Holds an array of all possible keys and whether they have been pressed
 
@@ -34,6 +35,7 @@ var chip8 = {
         chip8.SOUNDTIMER = 0;
 
         chip8.DISPLAY = chip8.DISPLAY.map(()=>0);
+        chip8.SCALE = 10;
 
         chip8.loadFont();
         chip8.KEYS = new keyInput();
@@ -107,7 +109,7 @@ var chip8 = {
 
         for (var x = 0; x < 64; x++) {
             for (var y = 0; y < 32; y++) {
-                if (chip8.DISPLAY[y*64 + x] == 1) c.fillRect(x,y,1,1);
+                if (chip8.DISPLAY[y*64 + x] == 1) c.fillRect(x*chip8.SCALE,y*chip8.SCALE,chip8.SCALE,chip8.SCALE);
             }
         }
 
@@ -192,8 +194,8 @@ var chip8 = {
             case 0x2000:
             chip8.INSTRUCTINFO[1] = "CALL";
             chip8.INSTRUCTINFO[2] = "Call subroutine.";
-                chip8.SP++;
                 chip8.STACK[chip8.SP] = chip8.PC;
+                chip8.SP++;
                 chip8.PC = opcode & 0x0FFF;
                 break;
 
@@ -579,18 +581,3 @@ var chip8 = {
     },
 
 };
-
-var testrun = function(){
-    console.log("Loading 2 into fifth register, copy to register 3, add both into register 4. Print n")
-    var program = [0x6502, 0x8350, 0x8424, 0x8454,0xA000, 0x6104,0x6204,0xD124]
-    chip8.loadProgram(program)
-
-    chip8.emulateCycle();
-
-}
-
-// THESE FUNCTION CALLS BELOW WILL RUN WHEN THE HTML PAGE IS OPENED
-// USED FOR TESTING
-
-chip8.reset()
-testrun()
