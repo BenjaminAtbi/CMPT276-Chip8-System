@@ -202,7 +202,7 @@ var chip8 = {
             case 0x3000:
             chip8.INSTRUCTINFO[1] = "SE";
             chip8.INSTRUCTINFO[2] = "Skip next instruction if Vx = kk.";
-                if (chip8.VREGISTER[x] == opcode & 0x00FF) {
+                if (chip8.VREGISTER[x] == (opcode & 0x00FF)) {
                   chip8.PC += 2;
                 }
                 break;
@@ -210,7 +210,7 @@ var chip8 = {
             case 0x4000:
             chip8.INSTRUCTINFO[1] = "SNE";
             chip8.INSTRUCTINFO[2] = "Skip next instruction if Vx != kk.";
-                if (chip8.VREGISTER[x] != opcode & 0x00FF) {
+                if (chip8.VREGISTER[x] != (opcode & 0x00FF)) {
                     chip8.PC += 2;
                 }
                 break;
@@ -232,7 +232,13 @@ var chip8 = {
             case 0x7000:
             chip8.INSTRUCTINFO[1] = "ADD";
             chip8.INSTRUCTINFO[2] = "Set Vx = Vx + kk.";
-                chip8.VREGISTER[x] = chip8.VREGISTER[x] + (opcode & 0x00FF);
+                var sum =  chip8.VREGISTER[x] + (opcode & 0x00FF);
+
+                if (sum > 255) {
+                    sum -= 256;
+                }
+
+                chip8.VREGISTER[x] = sum;
                 break;
 
             case 0x8000:
@@ -288,12 +294,7 @@ var chip8 = {
                     case 0x0006:
                     chip8.INSTRUCTINFO[1] = "SHR";
                     chip8.INSTRUCTINFO[2] = "Set Vx = Vx SHR Vy.";
-                        if (chip8.VREGISTER[x] & 0x0001 == 1) {
-                            chip8.VREGISTER[15] = 1;
-                        }
-                        else {
-                            chip8.VREGISTER[15] = 0;
-                        }
+                        chip8.VREGISTER[15] = (chip8.VREGISTER[x] & 0x0001);
                         chip8.VREGISTER[x] = chip8.VREGISTER[x] >> 1;
                         break;
 
@@ -312,12 +313,7 @@ var chip8 = {
                     case 0x000E:
                     chip8.INSTRUCTINFO[1] = "SHL";
                     chip8.INSTRUCTINFO[2] = "Set Vx = Vx SHL 1.";
-                        if ((chip8.VREGISTER[x] & 0x80) == 1) {
-                            chip8.VREGISTER[15] = 1;
-                        }
-                        else {
-                            chip8.VREGISTER[15] = 0;
-                        }
+                        chip8.VREGISTER[15] = chip8.VREGISTER[x] >> 7;
                         chip8.VREGISTER[x] = chip8.VREGISTER[x] << 1;
                         break;
                 }
@@ -414,7 +410,7 @@ var chip8 = {
                     case 0x0029:
                     chip8.INSTRUCTINFO[1] = "LD";
                     chip8.INSTRUCTINFO[2] = "Set I = location of sprite for digit Vx.";
-                        chip8.IREGISTER = chip8.VREGISTER[x]*5; // Character sprites have a width of 5
+                        chip8.IREGISTER = chip8.VREGISTER[x]*5; // Font sprites have a width of 5
                         break;
                     case 0x0033:
                     chip8.INSTRUCTINFO[1] = "LD";
@@ -430,7 +426,7 @@ var chip8 = {
                     chip8.INSTRUCTINFO[1] = "LD";
                     chip8.INSTRUCTINFO[2] = "Store registers V0 through Vx in memory starting at location I.";
                         for (var i = 0; i <= x; i++) {
-                            chip8.MEMORY[chip8.IREGISTER + i] = chip8.VREGISTER[x];
+                            chip8.MEMORY[chip8.IREGISTER + i] = chip8.VREGISTER[i];
                         }
                         break;
                     case 0x0065:
