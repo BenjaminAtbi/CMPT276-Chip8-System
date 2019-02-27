@@ -164,6 +164,15 @@
       </tr>
   </table>
 
+  <h3>File Input</h3>
+  <div>
+  <label for="inputFile">Choose CHIP8 program to load</label>
+  <input type="file" id="inputFile" name="inputFile">
+  </div>
+  <pre id = "FileInputDisplay">
+  <p> Loaded File: </p>
+  </pre>
+
   <h2>Memory</h2>
   <textarea id="MemoryTextarea" rows="32" cols="128" readonly> </textarea>
 
@@ -197,6 +206,7 @@
   <script type="text/javascript" src="utils.js"> </script>
   <script type="text/javascript" src="Chip8.js"> </script>
   <script type="text/javascript" src="test.js"> </script>
+  <script type="text/javascript" src="fileReader.js"> </script>
 
 </body>
 </html>
