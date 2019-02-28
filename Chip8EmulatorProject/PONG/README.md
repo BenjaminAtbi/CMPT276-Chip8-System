@@ -6,7 +6,7 @@ if a ball hits the top or bottom, it will ricochet. When the ball hits the paddl
 is reversed. The score is tracked and displayed accurately in the middle of the screen. Furthermore,
 the paddles are able to wrap around the sceen (goes below and comes back from the top).</p>
 
-<p>This version of Pong is made for 2 players, and **the program is terminated when either player reaches a score of 5**.</p>
+This version of Pong is made for 2 players, and **the program is terminated when either player reaches a score of 5**
 
 FINISHED FEATURES
 - drawing gamestate (borders, score, paddles, ball)
