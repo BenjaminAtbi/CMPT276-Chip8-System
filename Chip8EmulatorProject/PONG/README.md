@@ -6,14 +6,14 @@ if a ball hits the top or bottom, it will ricochet. When the ball hits the paddl
 is reversed. The score is tracked and displayed accurately in the middle of the screen. Furthermore,
 the paddles are able to wrap around the sceen (goes below and comes back from the top).</p>
 
-This version of Pong is made for 2 players, and **the program is terminated when either player reaches a score of 5**
+This version of Pong is made for 2 players, and **the program is terminated when either player reaches a score of 5**. The program ends with a flashing GG screen in order to give a sense of accomplishment to the winner.
 
 FINISHED FEATURES
-- drawing gamestate (borders, score, paddles, ball)
+- drawing gamestate (score, paddles, ball)
 - user input for left and right paddles
 - basic ball movement (bounces off walls, resets the game if it goes out of bounds)
 - score tracking and updating
-  - properly displayed/ updated, terminates game when either player reaches a score of 5 with a GG message
+  - properly displayed/ updated, terminates game when either player reaches a score of 5 with a GG message (after a short pause)
 - ball collision with paddles
 
 PLANNED FEATURES (BONUS)
