@@ -23,6 +23,7 @@ Group Members:
   - can be stepped forward using "next", "previous" has not been implemented yet
   - the contents of the registers, stack, and memory can be seen as they update throughout the program
   - the instructions can also be seen as they are executed
+  - our current cycle speed is set fairly high, so it is recommended to step through the program to get a good grasp on the functionality of our visualizer
 - File input, while not complete, can be tested by pressing the "Choose File" button and uploading a .txt file
   - doesn't support .ch8 files yet
   - contents of the .txt file are displayed on the webpage
