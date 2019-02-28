@@ -10,7 +10,7 @@
 
 ## Updates since Release 1
 - Updated sections (testing, project progress, risk management) with new information from Release 2
-- Added a new subsection in Project Progress, detailing the role each member had for Release 2 
+- Added a new subsection in Project Progress detailing the role each member had for Release 2, and a discussion on features implemented or missed
 - Added goals for Release 3 in Use Cases
   - new subsection, detailing finished and unfinished features
 
@@ -65,14 +65,13 @@ Due to the nature of the project, we may run into problems such as:
 - Unpredictable emergencies that may lead to a member not being able to finish their work
 - Members simply not doing their work or not communicating
 - Issues regarding Github
-<p> As a result, as a group we have decided to make sure that we are always communicating. Every member is expected to give an update on what they are working on, and are also expected to explain why they couldn't complete the tasks that they were assigned. To ensure that members don't miss out on meeting discussions as a result of unpredictable events, we will be keeping track of what was discussed. Furthermore, if a person is unable to complete the work then the other group members will help them to the best of their ability. Members are expected to store an up to date version of our Github repository locally on their computer, so that in the case of any emergencies we have a backup.</p>
+<p> As a result, we have decided to make sure that we are always communicating. Every member is expected to give an update on what they are working on, and is also expected to explain why they couldn't complete the tasks that they were assigned. To ensure that members don't miss out on meeting discussions as a result of unpredictable events, we will be keeping track of what was discussed. Furthermore, if a person is unable to complete the work then the other group members will help them to the best of their ability. Members are expected to store an up to date version of our Github repository locally on their computer, so that in the case of any emergencies we have a backup.</p>
 
 ## Project Progress
 **RELEASE 1** 
 <p>Progress was slow due to our group running into some issues as a result of poor communication. Furthermore, many of the members were unfamiliar with the tools that we planned to use for this project, and the first couple of weeks were used to get familiar with the CHIP-8 architecture, JavaScript, Octo, and so on.</p> 
 <p>In Release 0, we stated that we would have a CHIP-8 interpreter and a working prototype of our first game, Pong, finished.  Our emulator team (Nic, Marko, and Ben) managed to finish 90% of the interpreter. Our interpreter contains test functions which validate our code, and the display functions have also been checked. All of the CHIP-8 opcodes have been implemented; however, there wasn’t much time left over to test for bugs. Furthermore, our project also has user input implemented but it hasn’t been completely verified as of now. Essentially, our interpreter is “complete”, but still needs testing.</p>
 <p>The 2 general programmers decided to split up their work, with Rakim working on the game and Ronit working on a website for our emulator. Decent progress was made for our first game, Pong, using Octo. It supports 2 players with basic ball movements, and a score tracker implemented as well. The game ends once the score reaches 9. Instead of working on the same thing, it was decided that it would be better if we had a website for our emulator so that it would be possible to run the emulator on any computer (using JavaScript on a modern browser) without the need for specific software. We have a basic website set up for now (shows keypad, emulator display, and has a space for the debugger) which will be worked on and polished over the next couple of releases.</p>
-<p>As of now, everyone is familiar with all of the software and tools that we will be using, and all the communication issues have been sorted out. It shouldn’t take much longer to finish up our interpreter and first game, and as soon as they are finished work towards the next release will begin. We are hoping to have Pong completed along with a prototype of our second game, and the emulator team expects to complete the debugger.</p>
 <p>As of now, everyone is familiar with all of the software and tools that we will be using, and all the communication issues have been sorted out. It shouldn’t take much longer to finish up our interpreter and first game, and as soon as they are finished work towards the next release will begin. We are hoping to have Pong completed along with a prototype of our second game, and the emulator team expects to complete the debugger.</p>
 
 **RELEASE 2** 
@@ -86,26 +85,26 @@ Due to the nature of the project, we may run into problems such as:
 <p> Here is a list of each member and the role they played in the current release (Release 2)</p>
 
 - Nic - worked on visualizer (displaying memory, registers, executed instructions, stepping forward) and linking emulator to HTML
-- Marko - worked on file input and the parsing of strings obtained from files
+- Marko - worked on file input and the parsing of file contents
 - Ben - streamlined the key input functions for the interpreter
 - Rakim - completed first game, Pong, as well as working on documentation (for game 2 as well as the project document)
 - Ronit - created a prototype of our second game, Space Invaders
 
 ## Testing
-<p>We will test that our games and tools on an already completed emulator to ensure that our emulator runs in the same way. We will create a test program that will go through each of the CHIP-8 commands with several test cases to verify that they work properly. To test the games and tools someone would have to play or utilize them. Eventually, CircleCI will be implemented to automatically test the repository after every push. This is to ensure the validity of the code and make sure it matches the style that we have set for our project.</p>
+<p>We will test that our games and tools function on an already completed emulator to ensure that our emulator runs in the same way. We will create a test program that will go through each of the CHIP-8 commands with several test cases to verify that they work properly. To test the games and tools someone would have to play or utilize them. Eventually, CircleCI will be implemented to automatically test the repository after every push. This is to ensure the validity of the code and make sure it matches the style that we have set for our project.</p>
 <p>As of Release 1, we have some testing programs implemented into our interpreter. Our first game, Pong, can be tested using any pre-existing emulators found online. In the following week after the hand in, we expect to have our automated testing programs integrated into our Github repository using CircleCI.</p>
-<p>As of Release 2, we have created additional automated testing programs for our emulator (for all opcodes except for the key input ones). When the webpage is opened, test.js is automatically run and the output of each test can be seen in the console. The visualizer allows users to pause the program and step forward one instruction at a time, as well as view the contents of the stack, registers and memory. Although our load program function isn't completely finished as of yet, we have set up a file reader that is able to read the contents of a .ch8 file and parse it into an array. On our website, this can be tested by pressing the "Choose File" button found under the "File Input" section. Furthermore, the display functions of the emulator can be seen in action when the website is loaded, where a sprite can be seen endlessly scrolling across the canvas. Our current cycle rate is very fast, so we suggest that the "Toggle Pause" and "Next" buttons be used to test our emulator. In addition to our emulator, our first game is finished and ready for testing using the steps found in the README file for the game. </p>
+<p>As of Release 2, we have created additional automated testing programs for our emulator (for all opcodes except for the key input ones). When the webpage is opened, test.js is automatically run and the output of each test can be seen in the console. The visualizer allows users to pause the program and step forward one instruction at a time, as well as view the contents of the stack, registers and memory. Although our load program function isn't completely finished as of yet, we have set up a file reader that is able to read the contents of a .txt file and parse it into an array. On our website, this can be tested by pressing the "Choose File" button found under the "File Input" section. The display functions of the emulator can be seen in action when the website is loaded, where a sprite can be seen endlessly scrolling across the canvas. Our current cycle rate is very fast, so we suggest that the "Toggle Pause" and "Next" buttons be used to test our emulator. In addition to our emulator, our first game is finished and ready for testing using the steps found in the README file for the game. </p>
 <p> Currently, the "Game" dropdown menu is just a placeholder and has no real function. It is not supposed to be an actual representation of our emulator loading a CHIP-8 program. This is a feature planned to be completed before next release.</P>
 
 ## Use Cases
-<p>The most important features we have planned for Release 3 are to have made substantial progress on our game two, which we have decided will be Space Invaders. Furthermore, our group will begin development on a tool for our emulator. In this phase, we will be finishing off any left over features for our interpreter and visualizer that we were unable to complete before. We will also be making sure that our emulator is able to run smoothly without any bugs.</p>
+<p>The most important feature we have planned for Release 3 is a prototype of our second game, which we have decided will be Space Invaders. For the release we aim to have the user be able to move the turret left and right, and fire it. Our group will also begin development on a software tool for our emulator. In this phase, we will be finishing off any left over features for our interpreter and visualizer that we were unable to complete before. This means the user will be able to step back the state of the emulator, as well as be able to load a .ch8 file from their system to run on the emulator.</p>
 <p>Future releases will include further work on the emulator (bug testing), polishing all of the tools and games that we create, and if there is any time left over we will be creating additional applications for our emulator.</p>
 <p>Below is a list of our finished and unfinished features:</p>
 
 **FINISHED**
 - All opcodes are complete and working
   - automated testing for all opcodes, except for key input opcodes, has been implemented
-- Able to read and parse .ch8 files
+- Able to read and parse .txt files
 - Contents of the stack, registers, timers, memory are visible
 - Every instruction is displayed as it is executed
 - Execution of a program can be paused, and stepped forward
