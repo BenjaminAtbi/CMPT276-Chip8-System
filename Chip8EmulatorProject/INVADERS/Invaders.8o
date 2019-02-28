@@ -1,0 +1,98 @@
+# pressing A or D moves the tank right and left
+  
+: image
+0x00 0x00 0x00 0x00 0x30 0x78 0x30 0x30 0x48 0x00 0x00 0x00 0x00 0x00 0x00
+: tankimage1
+0x00 0x00 0x00 0x00 0x00 0x08 0x08 0x1C 0x1C 0x1C 0x00 0x00 0x00 0x00 0x00
+: tankimage2
+0x00 0x00 0x00 0x00 0x00 0x08 0x08 0x1C 0x1C 0x1C 0x00 0x00 0x00 0x00 0x00
+: ball
+0x3C 0x7A 0xFD 0xFF 0xFF 0xFF 0x7E 0x3C
+
+#REGISTER MAP
+:alias tanky      vd #left paddle vertical
+:alias tankx      ve #left paddle horizontal
+
+: move_tank #player 1 paddle
+    v1 := tankx
+    v2 := tanky
+
+    #movement
+    v0 := 7 if v0 key then v1 += -1 #left
+    v0 := 9 if v0 key then v1 +=  1 #right
+
+    #update position
+    i := tankimage1
+    sprite tankx tanky 15
+    tankx := v1
+    tanky := v2
+    i := tankimage1
+    sprite tankx tanky 15
+;
+
+
+: main
+    v0 := 10 #moves horizintally
+    v1 := 0  #moves vertically
+    i := image
+    sprite v0 v1 10 # defines the heigth of the sprite
+    v0 += 8
+    v1 += 0
+    sprite v0 v1 10
+    v0 += 8
+    v1 += 0
+    sprite v0 v1 10
+    v0 += 8
+    v1 += 0
+    sprite v0 v1 10
+    v0 += 8
+     v1 += 0
+    sprite v0 v1 10
+
+    #row two for the sprites
+    v0 := 10
+    v1 := 8
+    sprite v0 v1 10
+    v0 += 8
+    v1 += 0
+    sprite v0 v1 10
+    v0 += 8
+    v1 += 0
+    sprite v0 v1 10
+    v0 += 8
+    v1 += 0
+    sprite v0 v1 10
+    v0 += 8
+    v1 += 0
+    sprite v0 v1 10
+
+    # row three for the sprites
+    v0 := 10
+    v1 := 16
+    sprite v0 v1 10
+    v0 += 8
+    v1 += 0
+    sprite v0 v1 10
+    v0 += 8
+    v1 += 0
+    sprite v0 v1 10
+    v0 += 8
+    v1 += 0
+    sprite v0 v1 10
+    v0 += 8
+    v1 += 0
+    sprite v0 v1 10
+
+    # display the tank
+    tankx := 25
+    tanky := 21
+
+    i := tankimage1
+    sprite tankx tanky 15
+
+    #this loop handles the tank movement
+    loop
+		move_tank
+	again
+
+
