@@ -78,23 +78,38 @@ var chip8 = {
           }
     },
 
+    startExecution() {
+        chip8.PAUSE = 0;
+        requestAnimationFrame(chip8.emulateCycles);
+    },
+
+    emulateCycles() {
+        if(!chip8.PAUSE) {
+            for (var i = 0; i < chip8.CYCLES; i++) {
+                chip8.executeNextOpcode();
+
+                chip8.beep();
+                chip8.updateTimers();
+                chip8.updateDisplay();
+                chip8.updateVisualizer();
+            }
+
+            requestAnimationFrame(chip8.emulateCycles);
+        }
+    },
+
     // Run a CPU cycle
-    emulateCycle() {
+    executeNextOpcode() {
         if(!chip8.PAUSE || chip8.NEXT) {
             var opcode = chip8.MEMORY[chip8.PC] << 8 | chip8.MEMORY[chip8.PC + 1]; // Decode command
             chip8.PC += 2;
             chip8.execute(opcode); // Execute command
-            chip8.updateTimers();
         }
-
-        chip8.beep();
-        chip8.updateDisplay();
-        chip8.updateVisualizer();
     },
 
     nextCycle() {
         chip8.NEXT = 1;
-        chip8.emulateCycle();
+        chip8.executeNextOpcode();
         chip8.NEXT = 0;
     },
 
@@ -106,6 +121,8 @@ var chip8 = {
     updateDisplay() {
         var pageDisplay = document.getElementById("emulator_screen");
         var c = pageDisplay.getContext('2d');
+
+        c.clearRect(0,0,64*chip8.SCALE,32*chip8.SCALE);
 
         for (var x = 0; x < 64; x++) {
             for (var y = 0; y < 32; y++) {
@@ -122,6 +139,7 @@ var chip8 = {
             } else {
                 chip8.PAUSE = 0;
                 document.getElementById("PauseLabel").innerHTML = "Execution Unpaused";
+                chip8.startExecution();
             }
     },
 
@@ -143,14 +161,14 @@ var chip8 = {
         var xCoord = x;
         var yCoord = y;
 
-        if (xCoord > 64) { // If the set pixel is outside the bounds of the display it is reduced
-            xCoord -= 64;
+        if (xCoord >= 64) { // If the set pixel is outside the bounds of the display it is reduced
+            xCoord = xCoord % 64;
         } else if (xCoord < 0) {
             xCoord += 64;
         }
 
-        if (yCoord > 32) {
-            yCoord -= 32;
+        if (yCoord >= 32) {
+            yCoord = yCoord % 32;
         } else if (yCoord < 0) {
             yCoord += 32;
         }
