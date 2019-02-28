@@ -11,7 +11,7 @@ Group Members:
 - Benjamin Atbi
 - Marko Miletic
 
-# HOW TO RUN THE TESTING
+# HOW TO RUN THE TESTS AND GAMES
 - When index.html is opened in the Chip8EmulatorProject directory, tests are automatically run from test.js. 
   - results are printed in the console of the browser 
   - there are tests for every opcode in our interpreter except for the ones that deal with key input (those tests have not been implemented, and as a result show up as "FAIL) 
