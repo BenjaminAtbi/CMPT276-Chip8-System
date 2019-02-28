@@ -109,7 +109,14 @@ var chip8 = {
 
     nextCycle() {
         chip8.NEXT = 1;
+
         chip8.executeNextOpcode();
+
+        chip8.beep();
+        chip8.updateTimers();
+        chip8.updateDisplay();
+        chip8.updateVisualizer();
+
         chip8.NEXT = 0;
     },
 
