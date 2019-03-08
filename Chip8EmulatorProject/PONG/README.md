@@ -20,6 +20,11 @@ PLANNED FEATURES (BONUS)
 - option to pick between player 2 or computer
   - add an AI to be played against
 - add a main menu and the option to restart the game once a player wins
-- in the GG screen, display which player won
+- ~~in the GG screen, display which player won~~
+- sounds
+  - ~~when ball goes out of bounds~~
+  - victory sound
+ 
+**Planned features that have a strikethrough have been completed**
 
 TEST THE GAME USING THE FOLLOWING LINK: https://johnearnest.github.io/Octo/index.html?key=D4UvJ3cV
