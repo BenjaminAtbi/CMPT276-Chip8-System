@@ -5,7 +5,7 @@ html {
 }
 
 body {
-  font-family: 'Fjalla One', sans-serif;
+  font-family: '8BITWONDERNominal';
   background: linear-gradient(to bottom, #405166, #656f6f );
 }
 
@@ -16,6 +16,13 @@ h1 {
   letter-spacing: 2px;
 }
 
+h3 {
+  position: absolute;
+  transition: .5s ease;
+  top: 165px;
+  left: 1125px;
+}
+
 .title {
   display: block;
   text-align: center;
@@ -23,9 +30,16 @@ h1 {
 }
 
 .form_style{
+  margin-top: 32px;
+  margin-left:615px;
+
   display: block;
-  margin-top: 20px;
-  margin-left: 5px;
+  color: white;
+}
+
+#visualiser_table{
+  border: 1px solid black;
+  text-align: center;
   color: white;
 }
 
@@ -33,22 +47,34 @@ h1 {
   margin-left: 2px;
 }
 
-
 #emulator_screen{
-  float:left;
-  margin-right: 10px;
-  border: 1px solid black;
+  margin: auto;
+  border: 3px solid black;
   background-color: white;
 }
-#visualiser_screen{
 
-  background-color: white;
-  width: 300px;
-
-
+#play_buttons {
+  margin-left:530px;
 }
+
+#pause_status{
+  margin-left: 600px;
+}
+
 .input_button{
   display: block;
   clear: left;
   margin-top: 10px;
 }
+
+.screen{
+  display: inline-block;
+  padding-right: 90px;
+}
+
+#instructions_table{
+  font-size: 12px;
+}
+
+
+
