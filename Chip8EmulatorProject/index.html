@@ -1,7 +1,6 @@
 <html>
 <head>
   <title>Chip-8 Emulator</title>
-  <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/8bit-wonder" type="text/css"/>
   <link rel="stylesheet" href="./css/index.css">
 </head>
 <body>
@@ -9,161 +8,201 @@
   <h1 class="title">CHIP-8 Emulator</h1>
   </header>
 
-  <div class="form_style" style="display: inline-block;">
+  <div class="form_style">
     <form action="#">
-      <label for="game_option">Pick a game</label>
+      <label for="game_option">Game</label>
       <select id="game_option" autofocus="true">
-        <option value = "1"> N/A </option>
-        <option value = "2"> N/A </option>
+        <option value = "1"> Pong </option>
+        <option value = "2"> Second Game </option>
       </select>
-
-      <label for="inputFile">or load a program</label>
-      <input type="file" id="inputFile" name="inputFile">  
     </form>
   </div>
 
-  <br/>
-  <br/>
-  <br/>
-  <br/>
-
-  <table id = "pause_status">
-    <tr>
-        <th id="PauseLabel">UNPAUSED</th>
-    </tr>
-  </table>
-
-  <h3>Memory</h3>
-  
-  <div style="display: inline-block; padding-right: 90px; margin-left: 20px;">
-    <table id = "visualizer_table">
-        <tr>
-            <td colspan="2">Registers</td>
-            <td style = "padding-left: 30px;" >Stack</th>
-        </tr>
-        <tr>
-            <th>0</th>
-            <td id="0regLabel">Contents</td>
-            <td style = "padding-left: 30px;"> <label id="Stack0Label">Contents</label></td>
-        </tr>
-        <tr>
-            <th>1</th>
-            <td> <label id="1regLabel">Contents</label> </td>
-            <td style = "padding-left: 30px;"> <label id="Stack1Label">Contents</label></td>
-        </tr>
-        <tr>
-            <th>2</th>
-            <td> <label id="2regLabel">Contents</label> </td>
-            <td style = "padding-left: 30px;"> <label id="Stack2Label">Contents</label></td>
-        </tr>
-        <tr>
-            <th>3</th>
-            <td> <label id="3regLabel">Contents</label> </td>
-            <td style = "padding-left: 30px;"> <label id="Stack3Label">Contents</label></td>
-        </tr>
-        <tr>
-            <th>4</th>
-            <td> <label id="4regLabel">Contents</label> </td>
-            <td style = "padding-left: 30px;"> <label id="Stack4Label">Contents</label></td>
-        </tr>
-        <tr>
-            <th>5</th>
-            <td> <label id="5regLabel">Contents</label> </td>
-            <td style = "padding-left: 30px;"> <label id="Stack5Label">Contents</label></td>
-        </tr>
-        <tr>
-            <th>6</th>
-            <td> <label id="6regLabel">Contents</label> </td>
-            <td style = "padding-left: 30px;"> <label id="Stack6Label">Contents</label></td>
-        </tr>
-        <tr>
-            <th>7</th>
-            <td> <label id="7regLabel">Contents</label> </td>
-            <td style = "padding-left: 30px;"> <label id="Stack7Label">Contents</label></td>
-        </tr>
-        <tr>
-            <th>8</th>
-            <td> <label id="8regLabel">Contents</label> </td>
-            <td style = "padding-left: 30px;"> <label id="Stack8Label">Contents</label></td>
-        </tr>
-        <tr>
-            <th>9</th>
-            <td> <label id="9regLabel">Contents</label> </td>
-            <td style = "padding-left: 30px;"> <label id="Stack9Label">Contents</label></td>
-        </tr>
-        <tr>
-            <th>A</th>
-            <td> <label id="AregLabel">Contents</label> </td>
-            <td style = "padding-left: 30px;"> <label id="StackALabel">Contents</label></td>
-        </tr>
-        <tr>
-            <th>B</th>
-            <td> <label id="BregLabel">Contents</label> </td>
-            <td style = "padding-left: 30px;"> <label id="StackBLabel">Contents</label></td>
-        </tr>
-        <tr>
-            <th>C</th>
-            <td> <label id="CregLabel">Contents</label> </td>
-            <td style = "padding-left: 30px;"> <label id="StackCLabel">Contents</label></td>
-        </tr>
-        <tr>
-            <th>D</th>
-            <td> <label id="DregLabel">Contents</label> </td>
-            <td style = "padding-left: 30px;"> <label id="StackDLabel">Contents</label></td>
-        </tr>
-        <tr>
-            <th>E</th>
-            <td> <label id="EregLabel">Contents</label> </td>
-
-            <td style = "padding-left: 30px;"> <label id="StackELabel">Contents</label></td>
-        </tr>
-        <tr>
-            <th>F</th>
-            <td> <label id="FregLabel">Contents</label> </td>
-            <td style = "padding-left: 30px;"> <label id="StackFLabel">Contents</label></td>
-        </tr>
-        <tr>
-            <th>I</th>
-            <td> <label id="IregLabel">Contents</label> </td>
-        </tr>
-    </table>
-  </div>
-
-  <div class="screen" id = "emu_screen">
+  <div class="screen">
     <canvas id="emulator_screen" width="640" height="320"></canvas>
   </div>
-  
-  <textarea id="MemoryTextarea" rows="21" cols="100" style="display:inline-block" readonly style +> </textarea>
 
-  <br/>
-  <br/>
-  <br/>
+  <button type="button">Previous</button>
+  <button type="button" onclick="chip8.togglePause()">Toggle Pause</button>
+  <button type="button" onclick="chip8.nextCycle()">Next</button>
 
-  <div id = "instructions" style="margin-left: 370px;">
-    <table id = "instructions_table">
-        <tr> 
-            <th style = "text-align: left">Opcode</th>
-            <td> <label id="OpcodeLabel">Contents</label> </td>
-        </tr>
-        <tr>
-            <th style = "text-align: left">Name</th>
-            <td> <label id="NameLabel">Contents</label> </td>
-        </tr>
-        <tr>
-            <th style = "text-align: left">Description</th>
-            <td> <label id="DescLabel">Contents</label> </td>
-        </tr>
-    </table>
- </div>
-  
-  <br/>
-  <br/>
+  <table class="visualizer">
+      <tr>
+          <th colspan="5" id="PauseLabel">UNPAUSED</th>
+      </tr>
+      <tr>
+          <th colspan="2">Registers</th>
+          <th colspan="2">Current Instruction</th>
+          <th></th>
+          <th>Stack</th>
+      </tr>
+      <tr>
+          <th>0</th>
+          <td id="0regLabel">Contents</td>
 
-  <div id="play_buttons">
-    <button type="button">Previous</button>
-    <button type="button" onclick="chip8.togglePause()">Toggle Pause</button>
-    <button type="button" onclick="chip8.nextCycle()">Next</button>
+          <th>Opcode</th>
+          <td> <label id="OpcodeLabel">Contents</label> </td>
+
+          <td> <label id="Stack0Label">Contents</label></td>
+      </tr>
+      <tr>
+          <th>1</th>
+          <td> <label id="1regLabel">Contents</label> </td>
+
+          <th>Name</th>
+          <td> <label id="NameLabel">Contents</label> </td>
+
+          <td> <label id="Stack1Label">Contents</label></td>
+      </tr>
+      <tr>
+          <th>2</th>
+          <td> <label id="2regLabel">Contents</label> </td>
+
+          <th>Description</th>
+          <td> <label id="DescLabel">Contents</label> </td>
+
+          <td> <label id="Stack2Label">Contents</label></td>
+      </tr>
+      <tr>
+          <th>3</th>
+          <td> <label id="3regLabel">Contents</label> </td>
+          <td></td>
+          <td></td>
+          <td> <label id="Stack3Label">Contents</label></td>
+      </tr>
+      <tr>
+          <th>4</th>
+          <td> <label id="4regLabel">Contents</label> </td>
+
+          <th colspan="2">Timers</th>
+
+          <td> <label id="Stack4Label">Contents</label></td>
+      </tr>
+      <tr>
+          <th>5</th>
+          <td> <label id="5regLabel">Contents</label> </td>
+
+          <th>Display</th>
+          <td> <label id="DisTLabel">Contents</label> </td>
+
+          <td> <label id="Stack5Label">Contents</label></td>
+      </tr>
+      <tr>
+          <th>6</th>
+          <td> <label id="6regLabel">Contents</label> </td>
+
+          <th>Sound</th>
+          <td> <label id="SouTLabel">Contents</label> </td>
+
+          <td> <label id="Stack6Label">Contents</label></td>
+      </tr>
+      <tr>
+          <th>7</th>
+          <td> <label id="7regLabel">Contents</label> </td>
+          <td></td>
+          <td></td>
+          <td> <label id="Stack7Label">Contents</label></td>
+      </tr>
+      <tr>
+          <th>8</th>
+          <td> <label id="8regLabel">Contents</label> </td>
+          <td></td>
+          <td></td>
+          <td> <label id="Stack8Label">Contents</label></td>
+      </tr>
+      <tr>
+          <th>9</th>
+          <td> <label id="9regLabel">Contents</label> </td>
+          <td></td>
+          <td></td>
+          <td> <label id="Stack9Label">Contents</label></td>
+      </tr>
+      <tr>
+          <th>A</th>
+          <td> <label id="AregLabel">Contents</label> </td>
+          <td></td>
+          <td></td>
+          <td> <label id="StackALabel">Contents</label></td>
+      </tr>
+      <tr>
+          <th>B</th>
+          <td> <label id="BregLabel">Contents</label> </td>
+          <td></td>
+          <td></td>
+          <td> <label id="StackBLabel">Contents</label></td>
+      </tr>
+      <tr>
+          <th>C</th>
+          <td> <label id="CregLabel">Contents</label> </td>
+          <td></td>
+          <td></td>
+          <td> <label id="StackCLabel">Contents</label></td>
+      </tr>
+      <tr>
+          <th>D</th>
+          <td> <label id="DregLabel">Contents</label> </td>
+          <td></td>
+          <td></td>
+          <td> <label id="StackDLabel">Contents</label></td>
+      </tr>
+      <tr>
+          <th>E</th>
+          <td> <label id="EregLabel">Contents</label> </td>
+
+          <th>Program Counter</th>
+          <td> <label id="PCLabel">Contents</label> </td>
+
+          <td> <label id="StackELabel">Contents</label></td>
+      </tr>
+      <tr>
+          <th>F</th>
+          <td> <label id="FregLabel">Contents</label> </td>
+
+          <th>I Register</th>
+          <td> <label id="IregLabel">Contents</label> </td>
+
+          <td> <label id="StackFLabel">Contents</label></td>
+      </tr>
+  </table>
+
+  <h3>File Input</h3>
+  <div>
+  <label for="inputFile">Choose CHIP8 program to load</label>
+  <input type="file" id="inputFile" name="inputFile">
   </div>
+  <pre id = "FileInputDisplay">
+  <p> Loaded File: </p>
+  </pre>
+
+  <h2>Memory</h2>
+  <textarea id="MemoryTextarea" rows="32" cols="128" readonly> </textarea>
+
+  <table class="input_button">
+    <tr>
+      <th><kbd title="1">1</kbd></th>
+      <th><kbd title="2">2</kbd></th>
+      <th><kbd title="3">3</kbd></th>
+      <th><kbd title="C">C</kbd></th>
+    </tr>
+    <tr>
+      <th><kbd title="4">4</kbd></th>
+      <th><kbd title="5">5</kbd></th>
+      <th><kbd title="6">6</kbd></th>
+      <th><kbd title="D">D</kbd></th>
+    </tr>
+    <tr>
+      <th><kbd title="7">7</kbd></th>
+      <th><kbd title="8">8</kbd></th>
+      <th><kbd title="9">9</kbd></th>
+      <th><kbd title="E">E</kbd></th>
+    </tr>
+    <tr>
+      <th><kbd title="A">A</kbd></th>
+      <th><kbd title="0">0</kbd></th>
+      <th><kbd title="B">B</kbd></th>
+      <th><kbd title="F">F</kbd></th>
+    </tr>
+  </table>
 
   <script type="text/javascript" src="utils.js"> </script>
   <script type="text/javascript" src="Chip8.js"> </script>
