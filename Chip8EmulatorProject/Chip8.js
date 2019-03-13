@@ -140,18 +140,14 @@ var chip8 = {
     },
 
     togglePause() {
-        var x = document.getElementById("instructions");
-
-        if(!chip8.PAUSE) {
-            chip8.PAUSE = 1;
-            document.getElementById("PauseLabel").innerHTML = "PAUSED";
-            x.style.display = "block";
-        } else {
-            chip8.PAUSE = 0;
-            document.getElementById("PauseLabel").innerHTML = "UNPAUSED";
-            chip8.startExecution();
-            x.style.display = "none";
-        }
+         if(!chip8.PAUSE) {
+                chip8.PAUSE = 1;
+                document.getElementById("PauseLabel").innerHTML = "Execution Paused";
+            } else {
+                chip8.PAUSE = 0;
+                document.getElementById("PauseLabel").innerHTML = "Execution Unpaused";
+                chip8.startExecution();
+            }
     },
 
     // Reset the display
@@ -496,14 +492,14 @@ var chip8 = {
         document.getElementById("NameLabel").innerHTML = chip8.INSTRUCTINFO[1];
         document.getElementById("DescLabel").innerHTML = chip8.INSTRUCTINFO[2];
 
-        /*document.getElementById("DisTLabel").innerHTML = chip8.DELAYTIMER;
-        document.getElementById("SouTLabel").innerHTML = chip8.SOUNDTIMER;*/
+        document.getElementById("DisTLabel").innerHTML = chip8.DELAYTIMER;
+        document.getElementById("SouTLabel").innerHTML = chip8.SOUNDTIMER;
 
         document.getElementById("MemoryTextarea").innerHTML = "Start of CHIP 8 RAM reserved for interpreter (0 to 511)\n\n" + chip8.MEMORY.slice(0, 511)
                                                             + "\n\nStart of CHIP 8 Programs (512 to 1535)\n\n" + chip8.MEMORY.slice(512, 1535)
                                                             + "\n\nCHIP 8 Program / Data space (1536 to 4095)\n\n" + chip8.MEMORY.slice(1536, 4095);
 
-        //document.getElementById("PCLabel").innerHTML = chip8.PC;
+        document.getElementById("PCLabel").innerHTML = chip8.PC;
 
         document.getElementById("Stack0Label").innerHTML = chip8.STACK[0x0];
         document.getElementById("Stack1Label").innerHTML = chip8.STACK[0x1];
