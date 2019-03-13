@@ -46,10 +46,12 @@ var chip8 = {
 
     // Load a given program into memory
     loadProgram(program) {
+      chip8.reset();
             for (var i = 0; i < program.length; i++) {
                 chip8.MEMORY[0x200 + i*2] = program[i] >> 8
                 chip8.MEMORY[0x200 + i*2 + 1] = program[i] & 0x00FF
             }
+            chip8.startExecution();
     },
 
     // Load the array of character sprites into memory
@@ -487,7 +489,7 @@ var chip8 = {
         document.getElementById("FregLabel").innerHTML = chip8.VREGISTER[0xF];
         document.getElementById("IregLabel").innerHTML = chip8.IREGISTER;
 
-      
+
         document.getElementById("OpcodeLabel").innerHTML = chip8.INSTRUCTINFO[0];
         document.getElementById("NameLabel").innerHTML = chip8.INSTRUCTINFO[1];
         document.getElementById("DescLabel").innerHTML = chip8.INSTRUCTINFO[2];

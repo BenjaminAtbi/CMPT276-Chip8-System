@@ -10,7 +10,7 @@ function fileReader(theEvent) {
     document.getElementById("FileInputDisplay").innerText = theText; // sets text of "display" element to the result of file
     //console.log(theText);
     console.log(parseIt(theText));
-    chip8.loadProgram(parseIt(theText));
+    chip8.loadProgram(parseIt(theText));    // loads the file into memory
   }
   reader.readAsText(theFile); // option for output type and format (URL, string, etc.)
 }

@@ -304,4 +304,3 @@ testrun();
 chip8.reset();
 var program = [0x6100, 0x6200, 0xA000, 0xD125, 0x7104, 0x1206];
 chip8.loadProgram(program);
-chip8.startExecution();
