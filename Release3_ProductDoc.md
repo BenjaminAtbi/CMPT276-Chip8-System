@@ -14,7 +14,7 @@
 - Added goals for Release 3 in Use Cases
   - new subsection, detailing finished and unfinished features
 
-## Updates since Release 1
+## Updates since Release 2
 - Updated sections (testing, project progress) with new information from Release 3
 - Updated member roles for release
 - Added goals for Release 4 along with completed features in Use Cases
