@@ -31,5 +31,5 @@ Group Members:
 - The "Game" dropdown menu on the website is currently just for show, it does not actually load any programs. This is a planned feature for next release, along with the user being able to upload and test their own CHIP-8 programs
 
 **HOW TO TEST PROGRAM LOADING**
-- On the website, press the "Choose File" button and pick choose "ProgramLoadTest.txt" found in the "Chip8EmulatorProject" directory
+- On the website, press the "Choose File" button and select the file named "ProgramLoadTest.txt" found in the "Chip8EmulatorProject" directory
   - a sprite will display on the canvas to show that the program has been loaded
