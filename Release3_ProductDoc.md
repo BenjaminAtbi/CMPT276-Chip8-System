@@ -19,9 +19,10 @@
 - Updated member roles for release
 - Added goals for Release 4 along with completed features in Use Cases
 - all README files have been updated to include new information
- - Pong README now includes bonus features that may be implemented for final release
- - Invaders README includes new information for the prototype
- - General README includes directions on how to test program loading
+  -  Pong README now includes bonus features that may be implemented for final release
+  -  Invaders README includes new information for the prototype
+  -  General README includes directions on how to test program loading
+
 
 
 ## Introduction
