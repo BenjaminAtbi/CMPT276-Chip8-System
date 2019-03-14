@@ -32,4 +32,4 @@ Group Members:
 
 **HOW TO TEST PROGRAM LOADING**
 - On the website, press the "Choose File" button and pick choose "ProgramLoadTest.txt" found in the "Chip8EmulatorProject" directory
-  - A sprite will display on the canvas to show that the program has been loaded
+  - a sprite will display on the canvas to show that the program has been loaded
