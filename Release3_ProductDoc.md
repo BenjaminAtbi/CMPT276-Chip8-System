@@ -85,7 +85,7 @@ games for CHIP-8. The tool will be decided upon and development will begin after
 
 <p> Here is a list of each member and the role they played in the current release (Release 3)</p>
 
-- Nic - 
+- Nic - continued working on completing the step back portion of the visualizer and general bug fixing
 - Marko - 
 - Ben - n/a
 - Rakim - worked on game 2 (movement of aliens, working on visuals, coming up with final game design), created new design for website, documentation
