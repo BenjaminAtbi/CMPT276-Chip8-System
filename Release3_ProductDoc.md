@@ -1,4 +1,4 @@
- # <center> Project Document - RELEASE 2 </center>
+ # <center> Project Document - RELEASE 3 </center>
  
 ## Updates since Release 0
 - Added updates, risk management, and project progress sections
@@ -26,7 +26,7 @@
 
 
 ## Introduction
-<p> Our project is to develop a virtual machine that can run CHIP-8 programs (games, tools, etc.). Furthermore, we will be developing at least 2 CHIP-8 games, a debugger, and one other tool that would be useful for a software developer. The virtual machine will be put on an interactive website for people to use.</p>
+<p> Our project is to develop a virtual machine that can run CHIP-8 programs (games, tools, etc.). We will also be developing 2 CHIP-8 games, a debugger, and a tool that would be useful for a software developer. The virtual emulator will be put on an interactive website for people to use.</p>
 
 ## Meeting Schedule
 <p>Weekly meetings will be held Fridays at 11:00 am to 11:30 am at the SFU Surrey campus. Longer meetings will be held throughout the term as needed in order to meet milestones and schedule dates. We will also have meetings online through our Discord if need be. Each meeting will serve as means for each individual member to give an update of the work that was done by them over the past week. We will then also set goals for ourselves to reach before the next meeting.</p>
@@ -82,8 +82,8 @@ Due to the nature of the project, we may run into problems such as:
 ## Project Progress
 **RELEASE 3** 
 <p>Since the timeframe for this release was smaller, we were unable to complete any major features. For Release 3, we said that we would have a playable prototype of Space Invaders, where the user will be able to move the tank as well as shoot. We also stated that we would have the step back function complete for our visualizer, and that our emulator would be able to load and run any CHIP-8 programs. Additionally, we were hoping to begin development on the tool.</p>
-<p>The prototype for Space Invaders is playable; users can now move their tanks and shoot bullets. Furthermore, movement patterns for the aliens have also been implemented. The main feature that needs to be implemented is killing the aliens when a bullet hits them. Our game will consist of 3 levels: level 1 will have 2 aliens, level 2 will have 3 aliens, and level 3 will have 4 aliens. The player will have to beat all 3 levels to win.</p>
-<p>Unfortunately, we weren't able to complete the step back function for this release. However, progress has been made and a variety of bugs have been fixed both in the emulator and visualizer. While program loading is not complete, substantial progress has been made. Users can now upload a text (.txt) file on the website and the emulator will attempt to run the program. However, since Ben has not been able to fully implement key input opcodes not every program can be run. Additionally, our current system only accepts text (.txt) files, but we hope will be compatible with .ch8 files for the final release.</p>
+<p>The prototype for Space Invaders is playable; users can now move their tanks and shoot bullets. Movement patterns for the aliens have also been implemented. The main feature that needs to be implemented is killing the aliens when a bullet hits them. Our game will consist of 3 levels: level 1 will have 2 aliens, level 2 will have 3 aliens, and level 3 will have 4 aliens. The player will have to beat all 3 levels to win.</p>
+<p>Unfortunately, we weren't able to complete the step back function for this release. However, progress has been made and a variety of bugs have been fixed both in the emulator and visualizer. Program loading is now complete and the emulator successfully loads .txt files from a local file system and loads it into the memory of the emulator. We have decided to scrap the idea of loading binary files (.ch8) and have instead changed it to an optional feature for the final release.</p>
 <p>A new version of our website is currently being worked on. However, it is still a work in progress and therefore we haven't completely transitioned to it yet. We are still using our old website to test and run our emulator. We have slowed down the cycle speed on our emulator so that it is easier to see what is going on.</p>
 <p>We have not begun development on our tool, but we have discussed what it will be and how it will be implemented. As of right now, the plan is to have a standalone app. Some of the ideas include an app that converts .ch8 files into readable text format, a sprite/ audio editor that also allows users to change the cycle speed of the emulator, or a program that aids with writing
 games for CHIP-8. The tool will be decided upon and development will begin after the hand in of Release 3.</p>
@@ -91,7 +91,7 @@ games for CHIP-8. The tool will be decided upon and development will begin after
 <p> Here is a list of each member and the role they played in the current release (Release 3)</p>
 
 - Nic - continued working on completing the step back portion of the visualizer and general bug fixing
-- Marko - 
+- Marko - completed program loading and reading
 - Ben - n/a
 - Rakim - worked on game 2 (movement of aliens, working on visuals, coming up with final game design), created new design for website, documentation
 - Ronit - continued working on game 2 (tank movement, shooting, title screen)
@@ -100,17 +100,17 @@ games for CHIP-8. The tool will be decided upon and development will begin after
 <p>We will test that our games and tools function on an already completed emulator to ensure that our emulator runs in the same way. We will create a test program that will go through each of the CHIP-8 commands with several test cases to verify that they work properly. To test the games and tools someone would have to play or utilize them. Eventually, CircleCI will be implemented to automatically test the repository after every push. This is to ensure the validity of the code and make sure it matches the style that we have set for our project.</p>
 <p>As of Release 1, we have some testing programs implemented into our interpreter. Our first game, Pong, can be tested using any pre-existing emulators found online. In the following week after the hand in, we expect to have our automated testing programs integrated into our Github repository using CircleCI.</p>
 <p>As of Release 2, we have created additional automated testing programs for our emulator (for all opcodes except for the key input ones). When the webpage is opened, test.js is automatically run and the output of each test can be seen in the console. The visualizer allows users to pause the program and step forward one instruction at a time, as well as view the contents of the stack, registers and memory. Although our load program function isn't completely finished as of yet, we have set up a file reader that is able to read the contents of a .txt file and parse it into an array. On our website, this can be tested by pressing the "Choose File" button found under the "File Input" section. The display functions of the emulator can be seen in action when the website is loaded, where a sprite can be seen endlessly scrolling across the canvas. Our current cycle rate is very fast, so we suggest that the "Toggle Pause" and "Next" buttons be used to test our emulator. In addition to our emulator, our first game is finished and ready for testing using the steps found in the README file for the game. </p>
-<p>In Release 3, we only managed to implement one new feature which is program loading (only works with .txt files). To test this feature, upload the file named "test.txt" from the emulator directory. If the test is passed, a sprite will appear on the emulator screen. Otherwise, nothing will be displayed.  </p>
+<p>In Release 3, we only managed to implement one new usable feature which is program loading via plaintext opcodes in a .txt file. To test this feature, upload the file named "test.txt" from the emulator directory. If the test is passed, a sprite will appear on the emulator screen. Otherwise, nothing will be displayed.  </p>
 <p> Currently, the "Game" dropdown menu is just a placeholder and has no real function. It is not supposed to be an actual representation of our emulator loading a CHIP-8 program. This is a feature planned to be completed for the final release.</P>
 
 ## Use Cases
-<p>Since the next Release is the final one, we hope to have everything completed. This includes a complete emulator and visualizer (that allows for debugging). Our emulator should be able to run any CHIP-8 program: users should be able to pick between our finished versions of Pong or Space Invaders from the website, or upload their own programs (.ch8 files). Additionally, our tool should be completed and ready for use.</p>
+<p>Since the next Release is the final one, we hope to have everything completed. This includes a complete emulator and visualizer (that allows for debugging). Our emulator should be able to run any CHIP-8 program: users should be able to pick between our finished versions of Pong or Space Invaders from the website, or upload their own programs in .txt format. Additionally, our tool should be completed and ready for use.</p>
 <p>Below is a list of our finished and unfinished features:</p>
 
 **FINISHED**
 - All opcodes are complete and working
   - automated testing for all opcodes, except for key input opcodes, has been implemented
-- Able to read and parse .txt files
+- Able to load and execute any chip8 program via a .txt containing the opcodes in plaintext obtained from the user's local filesystem
 - Contents of the stack, registers, timers, memory are visible
 - Every instruction is displayed as it is executed
 - Execution of a program can be paused, and stepped forward
@@ -119,7 +119,6 @@ games for CHIP-8. The tool will be decided upon and development will begin after
 - New and intuitive layout for website (almost finished)
 
 **UNFINISHED**
-- Loading contents of .ch8 file into memory array; running programs read from files
 - Stepping back in the execution of a program
 - Completion of Space Invaders
 - Creation of a usable CHIP-8 tool
