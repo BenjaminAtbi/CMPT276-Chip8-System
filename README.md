@@ -11,6 +11,11 @@ Group Members:
 - Benjamin Atbi
 - Marko Miletic
 
+**NEW WEBSITE**
+- New HTML page named "index_new.html" has been created; it is a **prototype** for our new website
+  - not complete yet, but supports most features (program loading, memory/stack/register display, etc)
+  - will be completed for final release
+
 # HOW TO RUN THE TESTS AND GAMES
 - When index.html is opened in the Chip8EmulatorProject directory, tests are automatically run from test.js 
   - results are printed in the console of the browser 
@@ -31,5 +36,5 @@ Group Members:
 - The "Game" dropdown menu on the website is currently just for show, it does not actually load any programs. This is a planned feature for next release, along with the user being able to upload and test their own CHIP-8 programs
 
 **HOW TO TEST PROGRAM LOADING**
-- On the website, press the "Choose File" button and select the file named "ProgramLoadTest.txt" found in the "Chip8EmulatorProject" directory
+- On the website, press the "Choose File" button and select the file named "ProgramLoadTest.txt" found in the "Chip8EmulatorProject\TEST" directory
   - a sprite will display on the canvas to show that the program has been loaded
