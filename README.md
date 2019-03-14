@@ -11,11 +11,6 @@ Group Members:
 - Benjamin Atbi
 - Marko Miletic
 
-**NEW WEBSITE**
-- New HTML page named "index_new.html" has been created; it is a **prototype** for our new website
-  - not complete yet, but supports most features (program loading, memory/stack/register display, etc)
-  - will be completed for final release
-
 # HOW TO RUN THE TESTS AND GAMES
 - When index.html is opened in the Chip8EmulatorProject directory, tests are automatically run from test.js 
   - results are printed in the console of the browser 
@@ -34,6 +29,11 @@ Group Members:
   - contents of the .txt file are displayed on the webpage
 - The README files for both games contain links to a browser version of Octo which can be used to test them
 - The "Game" dropdown menu on the website is currently just for show, it does not actually load any programs. This is a planned feature for next release, along with the user being able to upload and test their own CHIP-8 programs
+
+**NEW WEBSITE**
+- New HTML page named "index_new.html" has been created; it is a **prototype** for our new website
+  - not complete yet, but supports most features (program loading, memory/stack/register display, etc)
+  - will be completed for final release
 
 **HOW TO TEST PROGRAM LOADING**
 - On the website, press the "Choose File" button and select the file named "ProgramLoadTest.txt" found in the "Chip8EmulatorProject\TEST" directory
