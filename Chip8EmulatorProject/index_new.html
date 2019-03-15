@@ -1,0 +1,200 @@
+<html>
+<head>
+  <title>Chip-8 Emulator</title>
+  <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/8bit-wonder" type="text/css"/>
+  <link rel="stylesheet" href="./css/index_new.css">
+</head>
+<body>
+  <header class="container">
+  <h1 class="title">CHIP-8 Emulator</h1>
+  </header>
+
+  <div class="form_style" style="display: inline-block;">
+    <form action="#">
+      <label for="game_option">Pick a game</label>
+      <select id="game_option" autofocus="true">
+        <option value = "1"> N/A </option>
+        <option value = "2"> N/A </option>
+      </select>
+
+      <label for="inputFile">or load a program</label>
+      <input type="file" id="inputFile" name="inputFile">  
+    </form>
+  </div>
+
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+
+  <table id = "pause_status">
+    <tr>
+        <th id="PauseLabel">UNPAUSED</th>
+    </tr>
+  </table>
+
+  <h3>Memory</h3>
+  
+  <div style="display: inline-block; padding-right: 90px; margin-left: 20px;">
+    <table id = "visualizer_table">
+        <tr>
+            <td colspan="2">Registers</td>
+            <td style = "padding-left: 30px;" >Stack</th>
+        </tr>
+        <tr>
+            <th>0</th>
+            <td id="0regLabel">Contents</td>
+            <td style = "padding-left: 30px;"> <label id="Stack0Label">Contents</label></td>
+        </tr>
+        <tr>
+            <th>1</th>
+            <td> <label id="1regLabel">Contents</label> </td>
+            <td style = "padding-left: 30px;"> <label id="Stack1Label">Contents</label></td>
+        </tr>
+        <tr>
+            <th>2</th>
+            <td> <label id="2regLabel">Contents</label> </td>
+            <td style = "padding-left: 30px;"> <label id="Stack2Label">Contents</label></td>
+        </tr>
+        <tr>
+            <th>3</th>
+            <td> <label id="3regLabel">Contents</label> </td>
+            <td style = "padding-left: 30px;"> <label id="Stack3Label">Contents</label></td>
+        </tr>
+        <tr>
+            <th>4</th>
+            <td> <label id="4regLabel">Contents</label> </td>
+            <td style = "padding-left: 30px;"> <label id="Stack4Label">Contents</label></td>
+        </tr>
+        <tr>
+            <th>5</th>
+            <td> <label id="5regLabel">Contents</label> </td>
+            <td style = "padding-left: 30px;"> <label id="Stack5Label">Contents</label></td>
+        </tr>
+        <tr>
+            <th>6</th>
+            <td> <label id="6regLabel">Contents</label> </td>
+            <td style = "padding-left: 30px;"> <label id="Stack6Label">Contents</label></td>
+        </tr>
+        <tr>
+            <th>7</th>
+            <td> <label id="7regLabel">Contents</label> </td>
+            <td style = "padding-left: 30px;"> <label id="Stack7Label">Contents</label></td>
+        </tr>
+        <tr>
+            <th>8</th>
+            <td> <label id="8regLabel">Contents</label> </td>
+            <td style = "padding-left: 30px;"> <label id="Stack8Label">Contents</label></td>
+        </tr>
+        <tr>
+            <th>9</th>
+            <td> <label id="9regLabel">Contents</label> </td>
+            <td style = "padding-left: 30px;"> <label id="Stack9Label">Contents</label></td>
+        </tr>
+        <tr>
+            <th>A</th>
+            <td> <label id="AregLabel">Contents</label> </td>
+            <td style = "padding-left: 30px;"> <label id="StackALabel">Contents</label></td>
+        </tr>
+        <tr>
+            <th>B</th>
+            <td> <label id="BregLabel">Contents</label> </td>
+            <td style = "padding-left: 30px;"> <label id="StackBLabel">Contents</label></td>
+        </tr>
+        <tr>
+            <th>C</th>
+            <td> <label id="CregLabel">Contents</label> </td>
+            <td style = "padding-left: 30px;"> <label id="StackCLabel">Contents</label></td>
+        </tr>
+        <tr>
+            <th>D</th>
+            <td> <label id="DregLabel">Contents</label> </td>
+            <td style = "padding-left: 30px;"> <label id="StackDLabel">Contents</label></td>
+        </tr>
+        <tr>
+            <th>E</th>
+            <td> <label id="EregLabel">Contents</label> </td>
+
+            <td style = "padding-left: 30px;"> <label id="StackELabel">Contents</label></td>
+        </tr>
+        <tr>
+            <th>F</th>
+            <td> <label id="FregLabel">Contents</label> </td>
+            <td style = "padding-left: 30px;"> <label id="StackFLabel">Contents</label></td>
+        </tr>
+        <tr>
+            <th>I</th>
+            <td> <label id="IregLabel">Contents</label> </td>
+        </tr>
+    </table>
+  </div>
+
+  <div class="screen" id = "emu_screen">
+    <canvas id="emulator_screen" width="640" height="320"></canvas>
+  </div>
+  
+  <textarea id="MemoryTextarea" rows="21" cols="100" style="display:inline-block" readonly style +> </textarea>
+
+  <br/>
+  <br/>
+  <br/>
+
+  <div id = "instructions" style="margin-left: 370px;">
+    <table id = "instructions_table">
+        <tr> 
+            <th style = "text-align: left">Opcode</th>
+            <td> <label id="OpcodeLabel">Contents</label> </td>
+        </tr>
+        <tr>
+            <th style = "text-align: left">Name</th>
+            <td> <label id="NameLabel">Contents</label> </td>
+        </tr>
+        <tr>
+            <th style = "text-align: left">Description</th>
+            <td> <label id="DescLabel">Contents</label> </td>
+        </tr>
+    </table>
+ </div>
+  
+  <br/>
+  <br/>
+
+  <div id="play_buttons">
+    <button type="button">Previous</button>
+    <button type="button" onclick="chip8.togglePause()">Toggle Pause</button>
+    <button type="button" onclick="chip8.nextCycle()">Next</button>
+  </div>
+
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+
+  <div>
+    <table>
+        <tr> 
+            <th style = "text-align: left">Display Timer:</th>
+            <td> <label id="DisTLabel">Contents</label> </td>
+        </tr>
+        <tr>
+            <th style = "text-align: left">Sound Timer:</th>
+            <td> <label id="SouTLabel">Contents</label> </td>
+        </tr>
+        <tr>
+            <th style = "text-align: left">Program Counter:</th>
+            <td> <label id="PCLabel">Contents</label> </td>
+        </tr>
+    </table>
+ </div>
+
+ <pre id = "FileInputDisplay">
+    <p> Loaded File: </p>
+  </pre>
+
+  <script type="text/javascript" src="utils.js"> </script>
+  <script type="text/javascript" src="Chip8.js"> </script>
+  <script type="text/javascript" src="test.js"> </script>
+  <script type="text/javascript" src="fileReader.js"> </script>
+
+</body>
+</html>

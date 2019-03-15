@@ -1,5 +1,4 @@
 #SPRITES
-: edge 0xFF 0xFF
 : left_paddle 0x80 0x80 0x80 0x80 0x80 0x80 0x80 0x80 0x80 0x80 0x80 0x80 0x80 0x80 0x80 
 : right_paddle 0x01 0x01 0x01 0x01 0x01 0x01 0x01 0x01 0x01 0x01 0x01 0x01 0x01 0x01 0x01 
 : ball 0x80 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00 
@@ -10,22 +9,19 @@
 :alias lefty      vd #left paddle vertical
 :alias leftx      ve #left paddle horizontal
 :alias leftScore  vb #left player score
-:alias leftHit    vc #tracks if left player hit ball
 
 :alias rightx     v6 #right paddle horizontal movement
 :alias righty     v7 #right paddle vertical
 :alias rightScore v8 #right player score
-:alias rightHit   v9 #tracks if right player hits ball
 
 :alias ball		  v5 #ball can move either up, angled down, or angled up
-:alias ballx	  v4 #ball horizontal
-:alias bally	  v3 #ball vertical
+:alias ballx	  v4 #ball x location
+:alias bally	  v3 #ball y location
+:alias ballHz     va #ball horizontla momentum (1 is right, -1 is left)
 
 #constant state of the ball moving up, down, or straight
-:const BALL_ST 1
-:const BALL_UP 2
-:const BALL_DN 3
-
+:const BALL_UP  3
+:const BALL_DN  4
 
 #
 #  Movement (Paddles, ball)
@@ -65,14 +61,14 @@
     sprite rightx righty 8
 ;
 
-: right_paddle_ai #computer controlled paddle (using random movement - for release 2)
+: right_paddle_ai #computer controlled paddle (using random movement - planned for a future release)
 ;
 
 : move_ball
     v1 := ballx
     v2 := bally
-
-    v1 += -1
+    
+    v1 += ballHz
 
     if ball == BALL_UP then v2 += -1
     if ball == BALL_DN then v2 += 1
@@ -81,10 +77,15 @@
     if v2 == 1 then ball := BALL_DN
     if v2 == 30 then ball := BALL_UP
 
-    #out of bounds check
-    if v1 == 63 then ball := 0
+    #out of bounds check for left side + augmenting score
     if v1 == 0 then ball := 0
+    if ball == 0 then rightScore += 1
     if ball == 0 then jump round_end
+
+    #out of bounds check for left side + augmenting score
+    if v1 == 63 then ball := 5
+    if ball == 5 then leftScore += 1
+    if ball == 5 then jump round_end
 
     #update position
     i := ball
@@ -94,6 +95,7 @@
     i := ball
     sprite ballx bally 1
 ;
+
 
 #
 #  Score checking
@@ -109,14 +111,6 @@
     v1 := 3       
 	i  := hex rightScore
 	sprite v0 v1 5
-;
-
-: score_tracker #a little buggy, will be fixed for release 2
-    if leftHit == 1 then leftScore += 1
-    if leftHit == 1 then leftHit := 0
-
-    if rightHit == 1 then rightScore += 1
-    if rightHit == 1 then rightHit := 0
 ;
 
 #
@@ -150,8 +144,8 @@
     sprite v0 v1 8
 ;
 
-: game_end #called when a player gets a score of 9
-    v0 := 64
+: game_end #called when a player gets a score of 4
+    v0 := 62
 	delay := v0
 	loop
 		v0 := delay
@@ -178,25 +172,14 @@
     #initialize coordinates
     leftx := 1
     lefty := 12
-    leftHit := 0
 
     rightx := 55
     righty := 12
-    rightHit := 1
 
     ballx := 31
     bally := 16
-    ball := BALL_DN #ball starts off angled down-left 
-
-    #draw borders
-    i  := edge
-	v0 := 0
-	v1 := 31
-	loop
-		sprite v0 v1 2
-		v0 += 8
-		if v0 != 64 then
-	again
+    ball := BALL_UP #ball starts off angled up-right 
+    ballHz := 1
 
     #draw the scoreboard (put in function along with scoretracking later)
     display_score
@@ -209,15 +192,16 @@
     i := right_paddle
     sprite rightx righty 8
 
-    #main program loop, loops until a player scores 9 times
+    #main program loop, loops until a player scores 5 times
     loop
-        while leftScore != 10
-        while rightScore != 10
+        while leftScore != 5
+        while rightScore != 5
 
         move_left_paddle
+        if vf != 0 then ballHz := 1
         move_right_paddle
+        if vf != 0 then ballHz := -1
         move_ball
-        score_tracker
     again
 
     #once the loop is broken by the score, executes the end game functions
