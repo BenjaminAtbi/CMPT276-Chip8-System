@@ -143,7 +143,7 @@ var chip8 = {
 
     togglePause() {
          if(!chip8.PAUSE) {
-                chip8.PAUSE = 1;
+                 chip8.PAUSE = 1;
                 document.getElementById("PauseLabel").innerHTML = "Execution Paused";
             } else {
                 chip8.PAUSE = 0;

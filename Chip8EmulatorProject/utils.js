@@ -51,10 +51,11 @@ class keyInput {
 class OpcodeManager {
 
     constructor() {
+        
     }
 
     getExecution(opcode) {
-        return new Execution(this.getInstruction(opcode));
+        return new Execution(this.getOpcode(opcode));
     }
 
     getOpcode(opcode) {
@@ -62,64 +63,69 @@ class OpcodeManager {
             case 0x0000:
                 switch (opcode) {
                     // 0nnn - SYS addr - THIS COMMAND IS NOT NECESSARY
-                    case 0x00E0: return CLS;
-                    case 0x00EE: return RET;
+                    case 0x00E0: return new  CLS();
+                    case 0x00EE: return new  RET();
                 }
                 break;
-            case 0x1000: return JP;
-            case 0x2000: return CALL;
-            case 0x3000: return SE_byte;
-            case 0x4000: return SNE;
-            case 0x5000: return SE_y;
-            case 0x6000: return LD_byte;
-            case 0x7000: return ADD;
+            case 0x1000: return new  JP();
+            case 0x2000: return new  CALL();
+            case 0x3000: return new  SE_byte();
+            case 0x4000: return new  SNE_kk();
+            case 0x5000: return new  SE_y();
+            case 0x6000: return new  LD_byte();
+            case 0x7000: return new  ADD();
             case 0x8000:
                 switch (opcode & 0x000F) { // Get the last digit of the opcode, the second and third digits are variable
-                    case 0x0000: return LD_y;
-                    case 0x0001: return OR;
-                    case 0x0002: return AND_byte;
-                    case 0x0003: return XOR;
-                    case 0x0004: return AND_y;
-                    case 0x0005: return SUB;
-                    case 0x0006: return SHRA;
-                    case 0x0007: return SUBN;
-                    case 0x000E: return SHL;
+                    case 0x0000: return new  LD_y();
+                    case 0x0001: return new  OR();
+                    case 0x0002: return new  AND_byte();
+                    case 0x0003: return new  XOR();
+                    case 0x0004: return new  AND_y();
+                    case 0x0005: return new  SUB();
+                    case 0x0006: return new  SHR();
+                    case 0x0007: return new  SUB_N();
+                    case 0x000E: return new  SHL();
                 }
                 break;
-            case 0x9000: return SNE;
-            case 0xA000: return LD;
-            case 0xB000: return JP;
-            case 0xC000: return RND;
-            case 0xD000: return DRW;
+            case 0x9000: return new  SNE_Vy();
+            case 0xA000: return new  LD();
+            case 0xB000: return new  JP();
+            case 0xC000: return new  RND();
+            case 0xD000: return new  DRW();
             case 0xE000:
                 switch (opcode & 0x00FF) {
-                    case 0x009E: return SKP;
-                    case 0x00A1: return SKNP;
+                    case 0x009E: return new  SKP();
+                    case 0x00A1: return new  SKNP();
                 }
                 break;
             case 0xF000:
                 switch (opcode & 0x00FF) {
-                    case 0x0007: return LD_Vx_DT;
-                    case 0x000A: return LD_K;
-                    case 0x0015: return LD_DT_Vx;
-                    case 0x0018: return LD_ST;
-                    case 0x001E: return AND_I;
-                    case 0x0029: return LD_F;
-                    case 0x0033: return LD_B;
-                    case 0x0055: return LD_I_Vx;
-                    case 0x0065: return LD_Vx_I;
+                    case 0x0007: return new  LD_Vx_DT();
+                    case 0x000A: return new  LD_K();
+                    case 0x0015: return new  LD_DT_Vx();
+                    case 0x0018: return new  LD_ST();
+                    case 0x001E: return new  AND_I();
+                    case 0x0029: return new  LD_F();
+                    case 0x0033: return new  LD_B();
+                    case 0x0055: return new  LD_I_Vx();
+                    case 0x0065: return new  LD_Vx_I();
                 }
                 break;
             default:
                 throw new Error("Invalid opcode: " + opcode.toString(16));
         }
     }
-
 }
 
 class Execution {
     constructor(instruction) {
         this.instr = instruction;
+    }
+
+    execute(chip8){
+        this.beforestate = instr.SaveState(chip8);
+        instr.execute;
+        this.afterstate = instr.SaveState(chip8);
     }
 }
 
@@ -129,252 +135,483 @@ class Execution {
 //********************************
 
 // clear the display
-function CLS(chip8, opcode) {
-    chip8.clearDisplay();
+//00E0
+class CLS {
+    execute(chip8, opcode) {
+        chip8.clearDisplay();
+    }
+
+    SaveState(chip8, state) {
+
+    }
 }
 
 // return from a subroutine
-function RET(chip8, opcode) {
-    chip8.PC = chip8.STACK[chip8.SP];
-    chip8.SP--;
+//00EE
+class RET {
+    execute(chip8, opcode) {
+        chip8.PC = chip8.STACK[chip8.SP];
+        chip8.SP--;
+    }
+
+    SaveState(chip8, state) {
+
+    }
 }
 
-//Jump to location
-function JP(chip8, opcode) {
-    chip8.PC = opcode & 0x0FFF;
+//Jump to location nnn
+//1nnn
+class JP {
+    execute(chip8, opcode) {
+        chip8.PC = opcode & 0x0FFF;
+    }
+
+    SaveState(chip8, state) {
+
+    }
 }
 
 //Call subroutine
-function CALL(chip8, opcode) {
-    chip8.SP++;
-    chip8.STACK[chip8.SP] = chip8.PC;
-    chip8.PC = opcode & 0x0FFF;
+//2nnn
+class CALL {
+    execute(chip8, opcode) {
+        chip8.STACK[chip8.SP] = chip8.PC;
+        chip8.SP++;
+        chip8.PC = opcode & 0x0FFF;
+    }
+
+    SaveState(chip8, state) {
+
+    }
 }
 
 //Skip next instruction if Vx = kk
-function SE_byte(chip8, opcode) {
-    if (chip8.VREGISTER[x] == opcode & 0x00FF) {
-        chip8.PC += 2;
+//3xkk
+class SE_byte {
+    execute(chip8, opcode) {
+        if (chip8.VREGISTER[x] == (opcode & 0x00FF)) {
+            chip8.PC += 2;
+          }
+    }
+
+    SaveState(chip8, state) {
+
     }
 }
 
 //Skip next instruction if Vx != kk
-function SNE(chip8, opcode) {
-    if (chip8.VREGISTER[x] != opcode & 0x00FF) {
-        chip8.PC += 2;
+//4xkk
+class SNE_kk {
+    execute(chip8, opcode) {
+        if (chip8.VREGISTER[x] != (opcode & 0x00FF)) {
+            chip8.PC += 2;
+        }
+    }
+
+    SaveState(chip8, state) {
+
     }
 }
 
 //Skip next instruction if Vx = Vy
-function SE_y(chip8, opcode) {
-    if (chip8.VREGISTER[x] == chip8.VREGISTER[y]) {
-        chip8.PC += 2;
+//5xy0
+class SE_y {
+    execute(chip8, opcode) {
+        if (chip8.VREGISTER[x] == chip8.VREGISTER[y]) {
+            chip8.PC += 2;
+        }
+    }
+
+    SaveState(chip8, state) {
+
     }
 }
 
 //Set Vx = kk
-function LD_byte(chip8, opcode) {
-    chip8.VREGISTER[x] = (opcode & 0x00FF);
+//6xkk
+class LD_byte {
+    execute(chip8, opcode) {
+        chip8.VREGISTER[x] = (opcode & 0x00FF);
+    }
+
+    SaveState(chip8, state) {
+
+    }
 }
 
 //Set Vx = Vx + kk
-function ADD(chip8, opcode) {
-    chip8.VREGISTER[x] = chip8.VREGISTER[x] + (opcode & 0x00FF);
+//7xkk
+class ADD {
+    execute(chip8, opcode) {
+        var sum =  chip8.VREGISTER[x] + (opcode & 0x00FF);
+
+                if (sum > 255) {
+                    sum -= 256;
+                }
+
+                chip8.VREGISTER[x] = sum;
+    }
+
+    SaveState(chip8, state) {
+
+    }
 }
 
 //Set Vx = Vy
-function LD_y(chip8, opcode) {
-    chip8.VREGISTER[x] = chip8.VREGISTER[y];
+//8xy0
+class LD_y {
+    execute(chip8, opcode) {
+        chip8.VREGISTER[x] = chip8.VREGISTER[y];
+    }
+
+    SaveState(chip8, state) {
+
+    }
 }
 
 //Set Vx = Vx OR Vy
-function OR(chip8, opcode) {
-    chip8.VREGISTER[x] = chip8.VREGISTER[x] | chip8.VREGISTER[y];
+//8xy1
+class OR {
+    execute(chip8, opcode) {
+        chip8.VREGISTER[x] = chip8.VREGISTER[x] | chip8.VREGISTER[y];
+    }
+
+    SaveState(chip8, state) {
+
+    }
 }
 
 //Set Vx = Vx AND Vy
-function AND_byte(chip8, opcode) {
-    chip8.VREGISTER[x] = chip8.VREGISTER[x] & chip8.VREGISTER[y];
+//8xy2
+class AND_byte {
+    execute(chip8, opcode) {
+        chip8.VREGISTER[x] = chip8.VREGISTER[x] & chip8.VREGISTER[y];
+    }
+
+    SaveState(chip8, state) {
+
+    }
 }
 
 //Set Vx = Vx XOR Vy
-function XOR(chip8, opcode) {
-    chip8.VREGISTER[x] = chip8.VREGISTER[x] ^ chip8.VREGISTER[y];
+//8xy3
+class XOR {
+    execute(chip8, opcode) {
+        chip8.VREGISTER[x] = chip8.VREGISTER[x] ^ chip8.VREGISTER[y];
+    }
+
+    SaveState(chip8, state) {
+
+    }
 }
 
 //Set Vx = Vx + Vy, set VF = carry
-function AND_y(chip8, opcode) {
-    if ((chip8.VREGISTER[x] + chip8.VREGISTER[y]) > 255) {
-        chip8.VREGISTER[15] = 1;
-    }
-    else {
-        chip8.VREGISTER[15] = 0;
-    }
-    chip8.VREGISTER[x] = (chip8.VREGISTER[x] + chip8.VREGISTER[y]) & 0x00FF;
+//8xy4
+class AND_y {
+    execute(chip8, opcode) {
+        if ((chip8.VREGISTER[x] + chip8.VREGISTER[y]) > 255) {
+            chip8.VREGISTER[15] = 1;
+        }
+        else {
+            chip8.VREGISTER[15] = 0;
+        }
+        chip8.VREGISTER[x] = (chip8.VREGISTER[x] + chip8.VREGISTER[y]) & 0x00FF;
 
+    }
+
+    SaveState(chip8, state) {
+
+    }
 }
 
 //Set Vx = Vx - Vy, set VF = NOT borrow
-function SUB(chip8, opcode) {
-    if (chip8.VREGISTER[x] > chip8.VREGISTER[y]) {
-        chip8.VREGISTER[15] = 1;
+//8xy5
+class SUB {
+    execute(chip8, opcode) {
+        if (chip8.VREGISTER[x] > chip8.VREGISTER[y]) {
+            chip8.VREGISTER[15] = 1;
+        }
+        else {
+            chip8.VREGISTER[15] = 0;
+        }
+        chip8.VREGISTER[x] = chip8.VREGISTER[x] - chip8.VREGISTER[y];
     }
-    else {
-        chip8.VREGISTER[15] = 0;
+
+    SaveState(chip8, state) {
+
     }
-    chip8.VREGISTER[x] = chip8.VREGISTER[x] - chip8.VREGISTER[y];
 }
 
 //Set Vx = Vx SHR Vy
-function SHRA(chip8, opcode) {
-    if (chip8.VREGISTER[x] & 0x0001 == 1) {
-        chip8.VREGISTER[15] = 1;
+//8xy6
+class SHR {
+    execute(chip8, opcode) {
+        chip8.VREGISTER[15] = (chip8.VREGISTER[x] & 0x0001);
+        chip8.VREGISTER[x] = chip8.VREGISTER[x] >> 1;
+        
     }
-    else {
-        chip8.VREGISTER[15] = 0;
-    }
-    chip8.VREGISTER[x] = chip8.VREGISTER[x] >> 1;
 
+    SaveState(chip8, state) {
+
+    }
 }
 
 //Set Vx = Vx - Vy, set VF = NOT borrow
-function SUBN(chip8, opcode) {
-    if (chip8.VREGISTER[x] < chip8.VREGISTER[y]) {
-        chip8.VREGISTER[15] = 1;
+//8xy7
+class SUB_N {
+    execute(chip8, opcode) {
+        if (chip8.VREGISTER[x] < chip8.VREGISTER[y]) {
+            chip8.VREGISTER[15] = 1;
+        }
+        else {
+            chip8.VREGISTER[15] = 0;
+        }
+        chip8.VREGISTER[x] = chip8.VREGISTER[y] - chip8.VREGISTER[x];
+        
     }
-    else {
-        chip8.VREGISTER[15] = 0;
-    }
-    chip8.VREGISTER[x] = chip8.VREGISTER[y] - chip8.VREGISTER[x];
+    
+    SaveState(chip8, state) {
 
+    }
 }
 
 //Set Vx = Vx SHL 1
-function SHL(chip8, opcode) {
-    if ((chip8.VREGISTER[x] & 0x80) == 1) {
-        chip8.VREGISTER[15] = 1;
+//8xyE
+class SHL {
+    execute(chip8, opcode) {
+        chip8.VREGISTER[15] = chip8.VREGISTER[x] >> 7;
+                        chip8.VREGISTER[x] = chip8.VREGISTER[x] << 1;
+                        
     }
-    else {
-        chip8.VREGISTER[15] = 0;
-    }
-    chip8.VREGISTER[x] = chip8.VREGISTER[x] << 1;
 
+    SaveState(chip8, state) {
+
+    }
 }
 
 //Skip next instruction if Vx != Vy
-function SNE(chip8, opcode) {
-    if (chip8.VREGISTER[x] != chip8.VREGISTER[y]) {
-        chip8.PC += 2;
+//9xy0
+class SNE_Vy {
+    execute(chip8, opcode) {
+        if (chip8.VREGISTER[x] != chip8.VREGISTER[y]) {
+            chip8.PC += 2;
+        }
+    }
+
+    SaveState(chip8, state) {
+
     }
 }
 
 //Set I = nnn
-function LD(chip8, opcode) {
-    chip8.IREGISTER = (opcode & 0x0FFF);
+//Annn
+class LD {
+    execute(chip8, opcode) {
+        chip8.IREGISTER = (opcode & 0x0FFF);
+    }
+
+    SaveState(chip8, state) {
+
+    }
 }
 
 //Jump to location nnn + V0
-function JP(chip8, opcode) {
-    chip8.PC = (opcode & 0x0FFF) + chip8.VREGISTER[0];
+//Bnnn
+class JP_V0 {
+    execute(chip8, opcode) {
+        chip8.PC = (opcode & 0x0FFF) + chip8.VREGISTER[0];
 
+    }
+
+    SaveState(chip8, state) {
+
+    }
 }
 
 
 //Set Vx = random byte AND kk
-function RND(chip8, opcode) {
-    chip8.VREGISTER[x] = ((Math.floor((Math.random() * 255))) & (opcode & 0x00FF));
+//Cxkk
+class RND {
+    execute(chip8, opcode) {
+        chip8.VREGISTER[x] = ((Math.floor((Math.random() * 255))) & (opcode & 0x00FF));
 
+    }
+
+    SaveState(chip8, state) {
+
+    }
 }
 
 //Display n-byte sprite starting at memory location I at (Vx, Vy), set VF = collision
-function DRW(chip8, opcode) {
-    var N = (opcode & 0x000F); // The height of the sprite
-    var startX = chip8.VREGISTER[x]; // The x coordinate of the sprite
-    var startY = chip8.VREGISTER[y]; // The y coordinate of the sprite
-    chip8.VREGISTER[0xF] = 0; // The VF register will act as a flag for if a pixel on the display is unset
-    var pixel; // The value of a pixel, taken from memory
+//Dxyn
+class DRW {
+    execute(chip8, opcode) {
+        var N = (opcode & 0x000F); // The height of the sprite
+        var startX = chip8.VREGISTER[x]; // The x coordinate of the sprite
+        var startY = chip8.VREGISTER[y]; // The y coordinate of the sprite
+        chip8.VREGISTER[0xF] = 0; // The VF register will act as a flag for if a pixel on the display is unset
+        var pixel; // The value of a pixel, taken from memory
 
-    for (var yCoord = 0; yCoord < N; yCoord++) { // There are N rows of length 8 pixels
-        pixel = chip8.MEMORY[chip8.IREGISTER + yCoord]; // The value of the current pixel is taken from memory
-        for (var xCoord = 0; xCoord < 8; xCoord++) {
-            if ((pixel & (0x80 >> xCoord)) != 0) { // If the current pixel is not empty
-                if (chip8.DISPLAY[(startX + xCoord) + ((startY + yCoord) * 64)] == 0) { // Check if the current pixel is already set or not
-                    chip8.DISPLAY[(startX + xCoord) + ((startY + yCoord) * 64)] = 1; // Set the current pixel if it is unset
-                } else {
-                    chip8.DISPLAY[(startX + xCoord) + ((startY + yCoord) * 64)] = 0; // Unset the pixel if it is already set
-                    chip8.VREGISTER[0xF] = 1; // Unsetting a pixel will set the VF register
+        for (var yCoord = 0; yCoord < N; yCoord++) { // There are N rows of length 8 pixels
+            pixel = chip8.MEMORY[chip8.IREGISTER + yCoord]; // The value of the current pixel is taken from memory
+            for (var xCoord = 0; xCoord < 8; xCoord++) {
+                if ((pixel & (0x80 >> xCoord)) != 0) { // If the current pixel is not empty
+                    if (chip8.DISPLAY[ (startX+xCoord) + ((startY+yCoord) * 64) ] == 1) { // Check if the current pixel is already set or not
+                        chip8.VREGISTER[0xF] = 1; // Unsetting a pixel will set the VF register
+                    }
+                    chip8.setPixel(startX+xCoord, startY+yCoord);
                 }
             }
         }
     }
+
+    SaveState(chip8, state) {
+
+    }
 }
 
 //Skip the next instruction if key with value of Vx is pressed
-function SKP(chip8, opcode) {
-    if (chip8.KEYS.keystate[chip8.VREGISTER[x]]) {
-        chip8.PC += 2;
+//Ex9E
+class SKP {
+    execute(chip8, opcode) {
+        if (chip8.KEYS.keystate[chip8.VREGISTER[x]]) {
+            chip8.PC += 2;
+        }
+    }
+
+    SaveState(chip8, state) {
+
     }
 }
 
 //Skip the next instruction if key with value of Vx is not pressed
-function SKNP(chip8, opcode) {
-    if (!chip8.KEYS.keystate[chip8.VREGISTER[x]]) {
-        chip8.PC += 2;
+//ExA1
+class SKNP {
+    execute(chip8, opcode) {
+        if (!chip8.KEYS.keystate[chip8.VREGISTER[x]]) {
+            chip8.PC += 2;
+        }
+    }
+
+    SaveState(chip8, state) {
+
     }
 }
 
 //Set Vx = delay timer value
-function LD_Vx_DT(chip8, opcode) {
-    chip8.VREGISTER[x] = chip8.DELAYTIMER;
+//Fx07
+class LD_Vx_DT {
+    execute(chip8, opcode) {
+        chip8.VREGISTER[x] = chip8.DELAYTIMER;
+    }
+
+    SaveState(chip8, state) {
+
+    }
 }
 
 //Wait for a key press, store the value of the key in Vx
-function LD_K(chip8, opcode) {
-    // NOT COMPLETED YET
+//Fx0A
+class LD_K {
+    execute(chip8, opcode) {
+        // NOT COMPLETED YET
 
+    }
+
+    SaveState(chip8, state) {
+
+    }
 }
 
 //Set delay timer = Vx
-function LD_DT_Vx(chip8, opcode) {
-    chip8.DELAYTIMER = chip8.VREGISTER[x];
+//Fx15
+class LD_DT_Vx {
+    execute(chip8, opcode) {
+        chip8.DELAYTIMER = chip8.VREGISTER[x];
+    }
+
+    SaveState(chip8, state) {
+
+    }
 }
 
 //Set sound timer = Vx
-function LD_ST(chip8, opcode) {
-    chip8.SOUNDTIMER = chip8.VREGISTER[x];
+//Fx18
+class LD_ST {
+    execute(chip8, opcode) {
+        chip8.SOUNDTIMER = chip8.VREGISTER[x];
+    }
+
+    SaveState(chip8, state) {
+
+    }
 }
 
 //Set I = I + Vx
-function ADD_I(chip8, opcode) {
-    chip8.IREGISTER += chip8.VREGISTER[x];
+//Fx1E
+class ADD_I {
+    execute(chip8, opcode) {
+        chip8.IREGISTER += chip8.VREGISTER[x];
+    }
+
+    SaveState(chip8, state) {
+
+    }
 }
 
 //Set I = location of sprite for digit Vx
-function LD_F(chip8, opcode) {
-    chip8.IREGISTER = chip8.VREGISTER[x] * 5; // Character sprites have a width of 5
+//Fx29
+class LD_F {
+    execute(chip8, opcode) {
+        chip8.IREGISTER = chip8.VREGISTER[x] * 5; // Character sprites have a width of 5
 
+    }
+
+    SaveState(chip8, state) {
+
+    }
 }
 
-
 //Store BCD representation of Vx in memory locations I, I+1, and I+2
-function LD_B(chip8, opcode) {
-    var number = chip8.VREGISTER[x];
-    chip8.MEMORY[chip8.IREGISTER + 2] = parseInt(number % 10);
-    chip8.MEMORY[chip8.IREGISTER + 1] = parseInt((number / 10) % 10);
-    chip8.MEMORY[chip8.IREGISTER] = parseInt((number / 100) % 10);
+//Fx33
+class LD_B {
+    execute(chip8, opcode) {
+        var number = chip8.VREGISTER[x];
+        chip8.MEMORY[chip8.IREGISTER + 2] = parseInt(number % 10);
+        chip8.MEMORY[chip8.IREGISTER + 1] = parseInt((number / 10) % 10);
+        chip8.MEMORY[chip8.IREGISTER] = parseInt((number / 100) % 10);
 
+    }
+
+    SaveState(chip8, state) {
+
+    }
 }
 
 //Store registers V0 through Vx in memory starting at location I
-function LD_I_Vx(chip8, opcode) {
-    for (var i = 0; i <= x; i++) {
-        chip8.MEMORY[chip8.IREGISTER + i] = chip8.VREGISTER[x];
+//Fx55
+class LD_I_Vx {
+    execute(chip8, opcode) {
+        for (var i = 0; i <= x; i++) {
+            chip8.MEMORY[chip8.IREGISTER + i] = chip8.VREGISTER[i];
+        }
+    }
+
+    SaveState(chip8, state) {
+
     }
 }
 
 //Read registers V0 through Vx from memory starting at location I
-function LD_Vx_I(chip8, opcode) {
-    for (var i = 0; i <= x; i++) {
-        chip8.VREGISTER[i] = chip8.MEMORY[chip8.IREGISTER + i];
+//Fx65
+class LD_Vx_I {
+    execute(chip8, opcode) {
+        for (var i = 0; i <= x; i++) {
+            chip8.VREGISTER[i] = chip8.MEMORY[chip8.IREGISTER + i];
+        }
+    }
+
+    SaveState(chip8, state) {
+
     }
 }
