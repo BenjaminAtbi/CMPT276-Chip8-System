@@ -48,8 +48,8 @@ var chip8 = {
     loadProgram(program) {
       chip8.reset();
             for (var i = 0; i < program.length; i++) {
-                chip8.MEMORY[0x200 + i*2] = program[i] >> 8
-                chip8.MEMORY[0x200 + i*2 + 1] = program[i] & 0x00FF
+                chip8.MEMORY[0x200 + i] = program[i];
+                //chip8.MEMORY[0x200 + i*2 + 1] = program[i] & 0x00FF;
             }
             chip8.startExecution();
     },
