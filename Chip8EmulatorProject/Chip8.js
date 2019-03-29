@@ -151,6 +151,20 @@ var chip8 = {
                 chip8.startExecution();
             }
     },
+    
+    cycleChange(cycle) {
+         if (cycle.value == '1') {
+            chip8.CYCLES = 1;
+         }
+
+         else if (cycle.value == '5') {
+            chip8.CYCLES = 5;
+         }
+
+         else if (cycle.value == '10') {
+            chip8.CYCLES = 10;
+         }
+    },
 
     // Reset the display
     clearDisplay() {
