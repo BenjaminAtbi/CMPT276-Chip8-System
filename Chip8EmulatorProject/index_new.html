@@ -21,6 +21,19 @@
       <input type="file" id="inputFile" name="inputFile">  
     </form>
   </div>
+ 
+
+  <div class ="cycleChange" style="display: inline-block;">
+    <form action="#">
+      <label>Cycle speed (per loop)</label>
+      <select id="cycle_change" autofocus="true" onchange = "chip8.cycleChange(this)">
+        <option value = "1"> 1 </option>
+        <option value = "5"> 5 </option>
+        <option value = "10"> 10 </option>
+      </select>
+    </form>
+  </div>
+
 
   <br/>
   <br/>
@@ -34,7 +47,6 @@
   </table>
 
   <h3>Memory</h3>
-  
   <div style="display: inline-block; padding-right: 90px; margin-left: 20px;">
     <table id = "visualizer_table">
         <tr>
@@ -154,7 +166,7 @@
             <td> <label id="DescLabel">Contents</label> </td>
         </tr>
     </table>
- </div>
+  </div>
   
   <br/>
   <br/>
@@ -170,7 +182,7 @@
   <br/>
   <br/>
 
-  <div>
+  <div id="timers_table">
     <table>
         <tr> 
             <th style = "text-align: left">Display Timer:</th>
