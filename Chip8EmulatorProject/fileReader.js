@@ -15,8 +15,21 @@ function fileReader(theEvent) {
   reader.readAsText(theFile); // option for output type and format (URL, string, etc.)
 }
 
+function parseIt(content) {
+  var regex = /([A-Z]|[0-9]){1,2}/gi;
+  var _2array = content.match(regex);
+  var opcodes = new Array;
+
+  for (i = 0; i < _2array.length; i++) {
+    opcodes.push(parseInt(_2array[i], 16));
+  }
+  return opcodes;
+}
+
+//  ***DECPRECATED FUNCTION***
 // takes a string and parses it into an array of integers (base 16)
 //    in groups of 4 using a regular expression
+/*
 function parseIt(content) {
   var regex = /([A-Z]|[0-9]){1,4}/gi;   // letters A to Z or numbers 0 to 9 in groups of 4 case insensitive
   var _4array = content.match(regex);   // split string into groups of 4
@@ -29,6 +42,7 @@ function parseIt(content) {
 
   //return content.match(regex);
 }
+*/
 
 // event listener for whenever the file button changes
 document.getElementById("inputFile").addEventListener("change", fileReader, false);

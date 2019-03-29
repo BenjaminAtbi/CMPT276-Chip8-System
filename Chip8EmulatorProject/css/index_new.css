@@ -19,7 +19,7 @@ h1 {
 h3 {
   position: absolute;
   transition: .5s ease;
-  top: 165px;
+  top: 195px;
   left: 1125px;
 }
 
@@ -32,6 +32,14 @@ h3 {
 .form_style{
   margin-top: 32px;
   margin-left:615px;
+
+  display: block;
+  color: white;
+}
+
+.cycleChange{
+  margin-top: 0px;
+  margin-left:730px;
 
   display: block;
   color: white;
