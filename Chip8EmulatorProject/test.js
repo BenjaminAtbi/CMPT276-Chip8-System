@@ -1,5 +1,4 @@
 var testrun = function(){
-
     chip8.reset();
     console.log("TESTING START");
 
