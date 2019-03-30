@@ -1,16 +1,18 @@
-var sprite = ["test1", "test2", "test3", "test4", "test5", "test6", "test7", "test8", "test9", "test10", "test11", "test12", "test13", "test14", "test15"];
+var data = new Array(8*5);
+data.fill(0);
 
-function setColor(pixel) {
-    pixel.style.backgroundColor = "black";
+function togglePixel(id) {
+    var button = document.getElementById(id);
+    if (button.style.getPropertyValue("background-color") == "black") {
+        button.style.setProperty("background-color", "white");
+        data[id] = 0;
+    } else {
+        button.style.setProperty("background-color", "black");
+        data[id] = 1;
+    }
+    console.log(data);
+    document.getElementById("dataArea").innerHTML = data;
 
-    updateText();
-    displayText();
-}
-
-function updateText() {
-    sprite = ["updating the text box works"];
-}
-
-function displayText() {
-    document.getElementById("SpriteInfoArea").innerHTML = "There should be 15 individual opcodes (maximum) for the sprite:\n\n" + sprite;
+    var combinedData = data.join('');
+    document.getElementById("hexArea").innerHTML = parseInt(combinedData, 2).toString(16);
 }
