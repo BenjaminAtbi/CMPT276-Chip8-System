@@ -1,4 +1,4 @@
-var data = new Array(8*5);
+var data = new Array(8*15);
 data.fill(0);
 
 function togglePixel(id) {
@@ -13,6 +13,18 @@ function togglePixel(id) {
     console.log(data);
     document.getElementById("dataArea").innerHTML = data;
 
+    binaryToHexadecimal();
+}
+
+function binaryToHexadecimal() {
+    var hexNum = '';
     var combinedData = data.join('');
-    document.getElementById("hexArea").innerHTML = parseInt(combinedData, 2).toString(16);
+
+    for (var i = 0; i < combinedData.length; i += 4) {
+        var byte = combinedData.substr(i, 4);
+        var hexByte = parseInt(byte, 2).toString(16);
+        hexNum += " " + hexByte;
+    }
+
+    document.getElementById("hexArea").innerHTML = hexNum;
 }
