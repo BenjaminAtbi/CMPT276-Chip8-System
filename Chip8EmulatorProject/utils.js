@@ -12,8 +12,8 @@ class keyInput {
 
         //Storage space for different keymappings
         this.savedmaps = {
-            default: new Map([['1', 1], ['2', 2], ['3', 3], ['4', 4], ['5', 5], ['6', 6], ['7', 7], ['8', 8], ['9', 9],
-            ['q', 10], ['w', 11], ['e', 12], ['r', 13], ['t', 14], ['y', 15]])
+            default: new Map([['x',0],['1', 1], ['2', 2], ['3', 3], ['q', 4], ['w', 5], ['e', 6], ['a', 7], ['s', 8], ['d', 9],
+            ['z', 10], ['c', 11], ['4', 12], ['r', 13], ['f', 14], ['v', 15]])
         };
 
         this.keymap = this.savedmaps[mapname];
@@ -24,13 +24,11 @@ class keyInput {
         document.addEventListener('keydown', function (event) {
             if (this.keyref.keymap.has(event.key)) {
                 this.keyref.keystate[this.keyref.keymap.get(event.key)] = true;
-                this.keyref.keypressed = true;
             }
         });
         document.addEventListener('keyup', function (event) {
             if (this.keyref.keymap.has(event.key)) {
-                this.keyref.keystate[this.keyref.keymap.get(event.key)] = true;
-                this.keyref.keypressed = true;
+                this.keyref.keystate[this.keyref.keymap.get(event.key)] = false;
             }
         })
 
@@ -736,6 +734,7 @@ class SKP extends Instruction{
     execute(chip8) {
         chip8.INSTRUCTINFO[1] = "SKP";
         chip8.INSTRUCTINFO[2] = "Skip the next instruction if key with value of Vx is pressed.";
+        console.log(chip8.KEYS.keystate)
         if (chip8.KEYS.keystate[chip8.VREGISTER[extractDigit(this.opcode,1)]]) {
             chip8.PC += 2;
         }
@@ -757,6 +756,7 @@ class SKNP extends Instruction{
     execute(chip8) {
         chip8.INSTRUCTINFO[1] = "SKNP";
         chip8.INSTRUCTINFO[2] = "Skip the next instruction if key with value of Vx is not pressed.";
+        console.log(chip8.KEYS.keystate)
         if (!chip8.KEYS.keystate[chip8.VREGISTER[extractDigit(this.opcode,1)]]) {
             chip8.PC += 2;
         }
