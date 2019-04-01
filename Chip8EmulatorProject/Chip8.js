@@ -16,7 +16,7 @@ var chip8 = {
 
     KEYS: new keyInput(), // Holds an array of all possible keys and whether they have been pressed
 
-    CYCLES: 1, // The number of cycles to run at a time per loop
+    CYCLES: 10, // The number of cycles to run at a time per loop
     PAUSE: 0, // Whether or not the emulator cycles are paused
     NEXT: 0, // Whether or not the next button has been clicked
 
@@ -24,7 +24,7 @@ var chip8 = {
 
     INSTRUCTINFO: new Array("OPCODE","NAME","DESC"),
 
-    VERBOSE: true,
+    VERBOSE: false,
 
     reset() {
         chip8.PC = 0x200; // Point the program counter to the start of the program memeory

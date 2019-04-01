@@ -1,7 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Fjalla+One);
 
 html {
-  height: 100%;
+  min-height: 100%;
 }
 
 body {
@@ -31,24 +31,51 @@ h3 {
 
 .form_style{
   margin-top: 32px;
-  margin-left:615px;
-
-  display: block;
+  margin-left:auto;
+  margin-right:auto;
+  width:50%;
+  display:block;
   color: white;
+}
+
+.option{
+  display: inline-block;
+}
+
+.minicell{
+  width: 20px;
 }
 
 .cycleChange{
   margin-top: 0px;
-  margin-left:730px;
+  margin-left: auto;
+  margin-right: auto;
+  width:50%;
 
   display: block;
   color: white;
 }
 
-#visualiser_table{
-  border: 1px solid black;
+.leftcolumn{
+  float:left;
+  width:30%;
+}
+
+.rightcolumn{
+  float:right;
+  width:69%;
+}
+
+.textcell{
+  width:20em;
+  text-align: left;
+  vertical-align: top;
+}
+
+#visualizer_table{
   text-align: center;
-  color: white;
+  table-layout: fixed;
+  width: 100%;
 }
 
 #game_option{
@@ -62,11 +89,14 @@ h3 {
 }
 
 #play_buttons {
-  margin-left:530px;
+  float:left;
+  margin-top: .5em;
+  margin-bottom: .5em;
 }
 
 #pause_status{
-  margin-left: 600px;
+margin: 0 auto;
+margin-bottom: 30px;
 }
 
 .input_button{
@@ -76,12 +106,14 @@ h3 {
 }
 
 .screen{
-  display: inline-block;
+  display: block;
   padding-right: 90px;
 }
 
 #instructions_table{
   font-size: 12px;
+  width:100%;
+  float:left;
 }
 
 
