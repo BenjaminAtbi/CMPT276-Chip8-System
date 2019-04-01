@@ -228,8 +228,9 @@ class RET extends Instruction{
     }
 
     execute(chip8) {
-        chip8.PC = chip8.STACK[chip8.SP];
         chip8.SP--;
+        chip8.PC = chip8.STACK[chip8.SP];
+        
     }
 
     saveState(chip8, state) {
