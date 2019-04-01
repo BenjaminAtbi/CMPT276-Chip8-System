@@ -1,0 +1,33 @@
+@import url(https://fonts.googleapis.com/css?family=Fjalla+One);
+
+body {
+    font-family: '8BITWONDERNominal';
+    background: linear-gradient(to bottom, #405166, #656f6f );
+}
+
+h1 {
+    text-align: center;
+    font-size: 40px;
+    line-height: 47px;
+    letter-spacing: 2px;
+}
+
+h2 {
+    font-size: 20px;
+}
+
+.buttonTable {
+    margin: auto;
+}
+
+.binTable {
+    padding-right: 50px;
+}
+
+
+.button {
+    background-color: white;
+    width: 30px;
+    height: 30px;
+    border: 1px solid black;
+}

@@ -1,0 +1,209 @@
+<html>
+
+<head>
+
+  <title>CHIP-8 SPRITE CREATOR</title>
+  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/8bit-wonder" type="text/css"/>
+  <script src ="sprite.js"></script>
+
+</head>
+
+<body>
+
+<h1>CHIP-8 SPRITE CREATOR</h1>
+
+<table class="buttonTable">
+
+        <tr>
+            <td><button id="0" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="1" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="2" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="3" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="4" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="5" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="6" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="7" class="button" onclick="togglePixel(this.id)"> </button></td>
+        </tr>
+    
+        <tr>
+            <td><button id="8" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="9" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="10" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="11" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="12" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="13" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="14" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="15" class="button" onclick="togglePixel(this.id)"> </button></td>
+        </tr>
+    
+        <tr>
+            <td><button id="16" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="17" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="18" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="19" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="20" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="21" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="22" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="23" class="button" onclick="togglePixel(this.id)"> </button></td>
+        </tr>
+    
+        <tr>
+            <td><button id="24" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="25" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="26" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="27" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="28" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="29" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="30" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="31" class="button" onclick="togglePixel(this.id)"> </button></td>
+        </tr>
+    
+        <tr>
+            <td><button id="32" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="33" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="34" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="35" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="36" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="37" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="38" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="39" class="button" onclick="togglePixel(this.id)"> </button></td>
+        </tr>
+    
+        <tr>
+            <td><button id="40" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="41" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="42" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="43" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="44" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="45" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="46" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="47" class="button" onclick="togglePixel(this.id)"> </button></td>
+        </tr>
+    
+        <tr>
+            <td><button id="48" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="49" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="50" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="51" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="52" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="53" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="54" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="55" class="button" onclick="togglePixel(this.id)"> </button></td>
+        </tr>
+    
+        <tr>
+            <td><button id="56" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="57" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="58" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="59" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="60" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="61" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="62" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="63" class="button" onclick="togglePixel(this.id)"> </button></td>
+        </tr>
+    
+        <tr>
+            <td><button id="64" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="65" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="66" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="67" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="68" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="69" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="70" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="71" class="button" onclick="togglePixel(this.id)"> </button></td>
+        </tr>
+    
+        <tr>
+            <td><button id="72" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="73" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="74" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="75" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="76" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="77" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="78" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="79" class="button" onclick="togglePixel(this.id)"> </button></td>
+        </tr>
+    
+        <tr>
+            <td><button id="80" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="81" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="82" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="83" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="84" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="85" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="86" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="87" class="button" onclick="togglePixel(this.id)"> </button></td>
+        </tr>
+    
+        <tr>
+            <td><button id="88" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="89" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="90" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="91" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="92" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="93" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="94" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="95" class="button" onclick="togglePixel(this.id)"> </button></td>
+        </tr>
+    
+        <tr>
+            <td><button id="96" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="97" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="98" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="99" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="100" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="101" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="102" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="103" class="button" onclick="togglePixel(this.id)"> </button></td>
+        </tr>
+    
+        <tr>
+            <td><button id="104" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="105" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="106" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="107" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="108" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="109" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="110" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="111" class="button" onclick="togglePixel(this.id)"> </button></td>
+        </tr>
+    
+        <tr>
+            <td><button id="112" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="113" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="114" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="115" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="116" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="117" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="118" class="button" onclick="togglePixel(this.id)"> </button></td>
+            <td><button id="119" class="button" onclick="togglePixel(this.id)"> </button></td>
+        </tr>
+    </table>
+
+    <br/>
+    <br/>
+
+    <div id = "dataTables" style ="text-align: center;">
+        <table class="BinTable" style="display: inline-block;">
+            <tr>
+                <td><h2 class="BinHeader">Binary Sprite Data</h1></td>
+            </tr>
+            <tr>
+                <td style ="text-align: center;"><textarea id="dataArea" class="binary" rows="15" cols="16" readonly> </textarea></td>
+            </tr>
+        </table>
+        
+        <table class="HexTable" style="display: inline-block;">
+            <tr>
+                <td><h2 class="HexHeader">Hexadecimal Sprite Data</h1></td>
+            </tr>
+            <tr>
+                <td style ="text-align: center;"><textarea id="hexArea" class="hex" rows="15" cols="16" readonly> </textarea></td>
+            </tr>
+        </table>
+    </div>  
+
+</body>
+
+</html>
