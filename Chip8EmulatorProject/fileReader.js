@@ -3,15 +3,13 @@ function loadFile(file){
   reader.onload = function(anotherEvent) {
     var text = reader.result; // get the file data from the reader
     printProgram(text)
-    console.log(text)
     chip8.loadProgram(parseFile(text));    // loads the file into memory
   }
   reader.readAsText(file); // option for output type and format (URL, string, etc.)
 }
 
 function selectGame(e){
-  chip8.loadProgram(parseFile(preloadedScripts[e.target.value]))
-  console.log(preloadedScripts[e.target.value])
+  chip8.loadProgram(parseFile(preloadedScripts.get(e.target.value)))
 }
 
 //to be improved
