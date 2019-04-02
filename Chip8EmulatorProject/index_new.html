@@ -12,7 +12,7 @@
   
 </head>
 <body>
-    <form action="#" class="form_style">
+    <form action="#" class="form_style" style ="text-align: center;">
       <div class="option">
         <label for="game_option">Pick a game</label>
         <select id="game_option" autofocus="true">
@@ -26,7 +26,7 @@
       </div>
     </form>
  
-  <div class ="cycleChange">
+  <div class ="cycleChange" style = "text-align: center;">
     <form action="#">
       <label>Cycle speed (per loop)</label>
       <select id="cycle_change" autofocus="true" onchange = "chip8.cycleChange(this)">
@@ -37,6 +37,8 @@
     </form>
   </div>
 
+  <br/>
+  <br/>
 
   <table id = "pause_status">
     <tr>
@@ -139,8 +141,10 @@
       </table>
     </div>
 
+    <br/>
+    <br/>
     
-    <div id="timers_table">
+    <div id="timers_table" style="margin-left: 20px;">
       <table>
           <tr> 
               <th style = "text-align: left">Display Timer:</th>
@@ -175,8 +179,11 @@
       <button type="button" onclick="chip8.nextCycle()">Next</button>
     </div>
 
+    <br/>
+    <br/>
+
     <div id = "instructions">
-      <table id = "instructions_table">
+      <table id = "instructions_table" style ="width:49%">
           <tr> 
               <th class = "textcell">Opcode</th>
               <td> <label id="OpcodeLabel">Contents</label> </td>
