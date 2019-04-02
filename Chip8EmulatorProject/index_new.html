@@ -4,20 +4,22 @@
   <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/8bit-wonder" type="text/css"/>
   <link rel="stylesheet" href="./css/index_new.css">
   
-  <header class="container">
-    <h1 class="title">CHIP-8 Emulator</h1>
-	<a class="toolLink" href="sprite_editor.html">Sprite Editor</a>
-	<a class="aboutLink" href="index_new.html">About</a>
-  </header>
-  
+  <script id = "preloadscripts" src="./scripts/preloadedscripts.js"></script>
+
 </head>
 <body>
+    <header class="container">
+        <h1 class="title">CHIP-8 Emulator</h1>
+      <a class="toolLink" href="sprite_editor.html">Sprite Editor</a>
+      <a class="aboutLink" href="index_new.html">About</a>
+    </header>
     <form action="#" class="form_style" style ="text-align: center;">
       <div class="option">
         <label for="game_option">Pick a game</label>
         <select id="game_option" autofocus="true">
-          <option value = "1"> N/A </option>
-          <option value = "2"> N/A </option>
+          <option value = "0"> Fighters </option>
+          <option value = "1"> Invaders</option>
+          <option value = "2"> Pong </option>
         </select>
       </div>
       <div class = "option">
@@ -160,7 +162,7 @@
           </tr>
       </table>
     
-    <pre id = "FileInputDisplay">
+      <pre id = "FileInputDisplay">
         <p> Loaded File: </p>
       </pre>
     </div>
