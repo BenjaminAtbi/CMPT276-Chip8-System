@@ -10,13 +10,14 @@
 <body>
     <header class="container">
         <h1 class="title">CHIP-8 Emulator</h1>
-      <a class="toolLink" href="sprite_editor.html">Sprite Editor</a>
+      <a class="toolLink" href="./sprite_editor/sprite_editor.html">Sprite Editor</a>
       <a class="aboutLink" href="index_new.html">About</a>
     </header>
     <form action="#" class="form_style" style ="text-align: center;">
       <div class="option">
         <label for="game_option">Pick a game</label>
         <select id="game_option" autofocus="true">
+          <option value = "null"> </option>
           <option value = "fighters"> Fighters </option>
           <option value = "invaders"> Invaders</option>
           <option value = "pong"> Pong </option>
@@ -44,7 +45,7 @@
 
   <table id = "pause_status">
     <tr>
-        <th id="PauseLabel">UNPAUSED</th>
+        <th id="PauseLabel">Execution Unpaused</th>
     </tr>
   </table>
 
