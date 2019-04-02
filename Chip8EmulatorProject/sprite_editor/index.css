@@ -1,15 +1,28 @@
 @import url(https://fonts.googleapis.com/css?family=Fjalla+One);
 
 body {
-    font-family: '8BITWONDERNominal';
-    background: linear-gradient(to bottom, #405166, #656f6f );
+  font-family: Monospace, Lucida Sans Unicode, Arial;
+  background: linear-gradient(to bottom, #343a4c, #212533);
+  color: #c6c6c6;
+}
+
+.container {
+	width: 100%;
+	padding-top: 0px;
+	border: 2px solid #4c4c4c;
+}
+
+.emuLink {
+	float:bottom;
+	color: #FFFFFF;
 }
 
 h1 {
-    text-align: center;
-    font-size: 40px;
-    line-height: 47px;
-    letter-spacing: 2px;
+  font-size: 42px;
+  margin: auto;
+  text-align: center;
+  line-height: 47px;
+  letter-spacing: 2px;
 }
 
 h2 {
