@@ -734,7 +734,6 @@ class SKP extends Instruction{
     execute(chip8) {
         chip8.INSTRUCTINFO[1] = "SKP";
         chip8.INSTRUCTINFO[2] = "Skip the next instruction if key with value of Vx is pressed.";
-        console.log(chip8.KEYS.keystate)
         if (chip8.KEYS.keystate[chip8.VREGISTER[extractDigit(this.opcode,1)]]) {
             chip8.PC += 2;
         }
@@ -756,7 +755,6 @@ class SKNP extends Instruction{
     execute(chip8) {
         chip8.INSTRUCTINFO[1] = "SKNP";
         chip8.INSTRUCTINFO[2] = "Skip the next instruction if key with value of Vx is not pressed.";
-        console.log(chip8.KEYS.keystate)
         if (!chip8.KEYS.keystate[chip8.VREGISTER[extractDigit(this.opcode,1)]]) {
             chip8.PC += 2;
         }
