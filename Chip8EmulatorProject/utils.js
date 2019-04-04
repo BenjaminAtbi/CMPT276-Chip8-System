@@ -53,8 +53,8 @@ class keyInput {
 //Acts as reference for opcode functions
 class OpcodeManager {
 
-    constructor() {
-        this.record = new RecordQueue()
+    constructor(recordlength) {
+        this.record = new RecordQueue(recordlength)
     }
 
     getExecution(opcode) {
@@ -146,9 +146,11 @@ class RecordQueue{
 
         //cyclical increment
         if(this.end == this.maxlength - 1){
-            this.end == 0
+            this.end = 0
+            console.log("end wrapped to 0")
         }else{
             this.end++
+            console.log("end increased to "+this.end)
         }   
 
         this.length++
@@ -156,7 +158,7 @@ class RecordQueue{
 
     dequeue(){
         if(this.length > 0){
-            element = this.list[this.front]
+            var element = this.list[this.front]
 
             //cyclical increment
             if(this.front == this.maxlength - 1){
@@ -259,15 +261,10 @@ class CondensedState {
 // base class for an instruction
 class Instruction {
     constructor(opcode) {
-        this.preState = []
         this.opcode = opcode
     }
 
     execute(chip8) {
-    }
-
-    getName() {
-        return this.name
     }
 
 }
@@ -275,15 +272,15 @@ class Instruction {
 // clear the display
 //00E0
 class CLS extends Instruction{
+    
+    name = 'CLS'
+    info = "Clear the display."
+
     constructor(opcode) {
         super(opcode)
-        this.name = 'CLS'
-        chip8.INSTRUCTINFO[0] = "0x" + opcode.toString(16);
     }
 
     execute(chip8) {
-        chip8.INSTRUCTINFO[1] = "CLS";
-        chip8.INSTRUCTINFO[2] = "Clear the display.";
         chip8.clearDisplay();
     }
 
@@ -297,15 +294,16 @@ class CLS extends Instruction{
 // return from a subroutine
 //00EE
 class RET extends Instruction{
+
+    name = "RET";
+    info = "Return from a subroutine.";
+
     constructor(opcode) {
         super(opcode)
-        this.name = 'RET'
-        chip8.INSTRUCTINFO[0] = "0x" + opcode.toString(16);
     }
 
     execute(chip8) {
-        chip8.INSTRUCTINFO[1] = "RET";
-        chip8.INSTRUCTINFO[2] = "Return from a subroutine.";
+
         chip8.SP--;
         chip8.PC = chip8.STACK[chip8.SP];
         
@@ -320,15 +318,14 @@ class RET extends Instruction{
 //Jump to location nnn
 //1nnn
 class JP extends Instruction{
+    name = "JP";
+    info = "Jump to location.";
     constructor(opcode) {
         super(opcode)
-        this.name = 'JP'
-        chip8.INSTRUCTINFO[0] = "0x" + opcode.toString(16);
     }
 
     execute(chip8) {
-        chip8.INSTRUCTINFO[1] = "JP";
-        chip8.INSTRUCTINFO[2] = "Jump to location.";
+
         chip8.PC = this.opcode & 0x0FFF;
     }
 
@@ -340,15 +337,16 @@ class JP extends Instruction{
 //Call subroutine
 //2nnn
 class CALL extends Instruction{
+
+    name = "CALL";
+    info = "Call subroutine.";
+
     constructor(opcode) {
         super(opcode)
-        this.name = 'CALL'
-        chip8.INSTRUCTINFO[0] = "0x" + opcode.toString(16);
     }
 
     execute(chip8) {
-        chip8.INSTRUCTINFO[1] = "CALL";
-        chip8.INSTRUCTINFO[2] = "Call subroutine.";
+
         chip8.STACK[chip8.SP] = chip8.PC;
         chip8.SP++;
         chip8.PC = this.opcode & 0x0FFF;
@@ -362,15 +360,16 @@ class CALL extends Instruction{
 //Skip next instruction if Vx = kk
 //3xkk
 class SE_byte extends Instruction{
+
+    name = "SE";
+    info = "Skip next instruction if Vx = kk.";
+
     constructor(opcode) {
         super(opcode)
-        this.name = 'SE_byte'
-        chip8.INSTRUCTINFO[0] = "0x" + opcode.toString(16);
     }
 
     execute(chip8) {
-        chip8.INSTRUCTINFO[1] = "SE";
-        chip8.INSTRUCTINFO[2] = "Skip next instruction if Vx = kk.";
+
         if (chip8.VREGISTER[extractDigit(this.opcode,1)] == (this.opcode & 0x00FF)) {
             chip8.PC += 2;
         }
@@ -384,15 +383,16 @@ class SE_byte extends Instruction{
 //Skip next instruction if Vx != kk
 //4xkk
 class SNE_kk extends Instruction{
+
+    name = "SNE";
+    info = "Skip next instruction if Vx != kk.";
+
     constructor(opcode) {
         super(opcode)
-        this.name = 'SNE_kk'
-        chip8.INSTRUCTINFO[0] = "0x" + opcode.toString(16);
     }
 
     execute(chip8) {
-        chip8.INSTRUCTINFO[1] = "SNE";
-        chip8.INSTRUCTINFO[2] = "Skip next instruction if Vx != kk.";
+
         if (chip8.VREGISTER[extractDigit(this.opcode,1)] != (this.opcode & 0x00FF)) {
             chip8.PC += 2;
         }
@@ -406,15 +406,16 @@ class SNE_kk extends Instruction{
 //Skip next instruction if Vx = Vy
 //5xy0
 class SE_y extends Instruction{
+
+    name = "SE";
+    info = "Skip next instruction if Vx = Vy.";
+
     constructor(opcode) {
         super(opcode)
-        this.name = 'SE_y'
-        chip8.INSTRUCTINFO[0] = "0x" + opcode.toString(16);
     }
 
     execute(chip8) {
-        chip8.INSTRUCTINFO[1] = "SE";
-        chip8.INSTRUCTINFO[2] = "Skip next instruction if Vx = Vy.";
+
         if (chip8.VREGISTER[extractDigit(this.opcode,1)] == chip8.VREGISTER[extractDigit(this.opcode,2)]) {
             chip8.PC += 2;
         }
@@ -428,15 +429,14 @@ class SE_y extends Instruction{
 //Set Vx = kk
 //6xkk
 class LD_byte extends Instruction{
+    name = "LD";
+    info = "Set Vx = kk.";
+
     constructor(opcode) {
         super(opcode)
-        this.name = 'LD_byte'
-        chip8.INSTRUCTINFO[0] = "0x" + opcode.toString(16);
     }
 
     execute(chip8) {
-        chip8.INSTRUCTINFO[1] = "LD";
-        chip8.INSTRUCTINFO[2] = "Set Vx = kk.";
         chip8.VREGISTER[extractDigit(this.opcode,1)] = (this.opcode & 0x00FF);
     }
 
@@ -448,15 +448,15 @@ class LD_byte extends Instruction{
 //Set Vx = Vx + kk
 //7xkk
 class ADD extends Instruction{
+
+    name = "ADD";
+    info = "Set Vx = Vx + kk.";
+
     constructor(opcode) {
         super(opcode)
-        this.name = 'ADD'
-        chip8.INSTRUCTINFO[0] = "0x" + opcode.toString(16);
     }
 
     execute(chip8) {
-        chip8.INSTRUCTINFO[1] = "ADD";
-        chip8.INSTRUCTINFO[2] = "Set Vx = Vx + kk.";
         var sum = chip8.VREGISTER[extractDigit(this.opcode,1)] + (this.opcode & 0x00FF);
 
         if (sum > 255) {
@@ -474,14 +474,14 @@ class ADD extends Instruction{
 //Set Vx = Vy
 //8xy0
 class LD_y extends Instruction{
+
+    name = "LD";
+    info = "Set Vx = Vy.";
+
     constructor(opcode) {
         super(opcode)
-        this.name = 'LD_y'
-        chip8.INSTRUCTINFO[0] = "0x" + opcode.toString(16);
     }
     execute(chip8) {
-        chip8.INSTRUCTINFO[1] = "LD";
-        chip8.INSTRUCTINFO[2] = "Set Vx = Vy.";
         chip8.VREGISTER[extractDigit(this.opcode,1)] = chip8.VREGISTER[extractDigit(this.opcode,2)];
     }
 
@@ -493,14 +493,14 @@ class LD_y extends Instruction{
 //Set Vx = Vx OR Vy
 //8xy1
 class OR extends Instruction{
+
+    name = "OR";
+    info = "Set Vx = Vx OR Vy.";
+
     constructor(opcode) {
         super(opcode)
-        this.name = 'OR'
-        chip8.INSTRUCTINFO[0] = "0x" + opcode.toString(16);
     }
     execute(chip8) {
-        chip8.INSTRUCTINFO[1] = "OR";
-        chip8.INSTRUCTINFO[2] = "Set Vx = Vx OR Vy.";
         let x = extractDigit(this.opcode,1)
         let y = extractDigit(this.opcode,2)
         chip8.VREGISTER[x] = chip8.VREGISTER[x] | chip8.VREGISTER[y];
@@ -514,14 +514,14 @@ class OR extends Instruction{
 //Set Vx = Vx AND Vy
 //8xy2
 class AND_byte extends Instruction{
+
+    name = "AND";
+    info = "Set Vx = Vx AND Vy.";
+
     constructor(opcode) {
         super(opcode)
-        this.name = 'AND_byte'
-        chip8.INSTRUCTINFO[0] = "0x" + opcode.toString(16);
     }
     execute(chip8) {
-        chip8.INSTRUCTINFO[1] = "AND";
-        chip8.INSTRUCTINFO[2] = "Set Vx = Vx AND Vy.";
         let x = extractDigit(this.opcode,1)
         let y = extractDigit(this.opcode,2)
         chip8.VREGISTER[x] = chip8.VREGISTER[x] & chip8.VREGISTER[y];
@@ -535,14 +535,14 @@ class AND_byte extends Instruction{
 //Set Vx = Vx XOR Vy
 //8xy3
 class XOR extends Instruction{
+
+    name = "XOR";
+    info = "Set Vx = Vx XOR Vy.";
+
     constructor(opcode) {
         super(opcode)
-        this.name = 'XOR'
-        chip8.INSTRUCTINFO[0] = "0x" + opcode.toString(16);
     }
     execute(chip8) {
-        chip8.INSTRUCTINFO[1] = "XOR";
-        chip8.INSTRUCTINFO[2] = "Set Vx = Vx XOR Vy.";
         let x = extractDigit(this.opcode,1)
         let y = extractDigit(this.opcode,2)
         chip8.VREGISTER[x] = chip8.VREGISTER[x] ^ chip8.VREGISTER[y];
@@ -556,14 +556,14 @@ class XOR extends Instruction{
 //Set Vx = Vx + Vy, set VF = carry
 //8xy4
 class AND_y extends Instruction{
+
+    name = "ADD";
+    info = "Set Vx = Vx + Vy, set VF = carry.";
+
     constructor(opcode) {
         super(opcode)
-        this.name = 'AND_y'
-        chip8.INSTRUCTINFO[0] = "0x" + opcode.toString(16);
     }
     execute(chip8) {
-        chip8.INSTRUCTINFO[1] = "ADD";
-        chip8.INSTRUCTINFO[2] = "Set Vx = Vx + Vy, set VF = carry.";
         let x = extractDigit(this.opcode,1)
         let y = extractDigit(this.opcode,2)
         if ((chip8.VREGISTER[x] + chip8.VREGISTER[y]) > 255) {
@@ -584,14 +584,14 @@ class AND_y extends Instruction{
 //Set Vx = Vx - Vy, set VF = NOT borrow
 //8xy5
 class SUB extends Instruction{
+
+    name = "SUB";
+    info = "Set Vx = Vx - Vy, set VF = NOT borrow.";
+
     constructor(opcode) {
         super(opcode)
-        this.name = 'SUB'
-        chip8.INSTRUCTINFO[0] = "0x" + opcode.toString(16);
     }
     execute(chip8) {
-        chip8.INSTRUCTINFO[1] = "SUB";
-        chip8.INSTRUCTINFO[2] = "Set Vx = Vx - Vy, set VF = NOT borrow.";
         let x = extractDigit(this.opcode,1)
         let y = extractDigit(this.opcode,2)
         if (chip8.VREGISTER[x] > chip8.VREGISTER[y]) {
@@ -611,14 +611,14 @@ class SUB extends Instruction{
 //Set Vx = Vx SHR Vy
 //8xy6
 class SHR extends Instruction{
+
+    name = "SHR";
+    info = "Set Vx = Vx SHR Vy.";
+
     constructor(opcode) {
         super(opcode)
-        this.name = 'SHR'
-        chip8.INSTRUCTINFO[0] = "0x" + opcode.toString(16);
     }
     execute(chip8) {
-        chip8.INSTRUCTINFO[1] = "SHR";
-        chip8.INSTRUCTINFO[2] = "Set Vx = Vx SHR Vy.";
         let x = extractDigit(this.opcode,1)
         let y = extractDigit(this.opcode,2)
         chip8.VREGISTER[15] = (chip8.VREGISTER[x] & 0x0001);
@@ -634,14 +634,14 @@ class SHR extends Instruction{
 //Set Vx = Vx - Vy, set VF = NOT borrow
 //8xy7
 class SUB_N extends Instruction{
+
+    name = "SUBN";
+    info = "Set Vx = Vx - Vy, set VF = NOT borrow.";
+
     constructor(opcode) {
         super(opcode)
-        this.name = 'SUB_N'
-        chip8.INSTRUCTINFO[0] = "0x" + opcode.toString(16);
     }
     execute(chip8) {
-        chip8.INSTRUCTINFO[1] = "SUBN";
-        chip8.INSTRUCTINFO[2] = "Set Vx = Vx - Vy, set VF = NOT borrow.";
         let x = extractDigit(this.opcode,1)
         let y = extractDigit(this.opcode,2)
         if (chip8.VREGISTER[x] < chip8.VREGISTER[y]) {
@@ -662,14 +662,14 @@ class SUB_N extends Instruction{
 //Set Vx = Vx SHL 1
 //8xyE
 class SHL extends Instruction{
+
+    name = "SHL";
+    info = "Set Vx = Vx SHL 1.";
+
     constructor(opcode) {
         super(opcode)
-        this.name = 'SHL'
-        chip8.INSTRUCTINFO[0] = "0x" + opcode.toString(16);
     }
     execute(chip8) {
-        chip8.INSTRUCTINFO[1] = "SHL";
-        chip8.INSTRUCTINFO[2] = "Set Vx = Vx SHL 1.";
         let x = extractDigit(this.opcode,1)
         chip8.VREGISTER[15] = chip8.VREGISTER[x] >> 7;
         chip8.VREGISTER[x] = chip8.VREGISTER[x] << 1;
@@ -684,14 +684,14 @@ class SHL extends Instruction{
 //Skip next instruction if Vx != Vy
 //9xy0
 class SNE_Vy extends Instruction{
+
+    name = "SNE";
+    info = "Skip next instruction if Vx != Vy.";
+
     constructor(opcode) {
         super(opcode)
-        this.name = 'SNE_Vy'
-        chip8.INSTRUCTINFO[0] = "0x" + opcode.toString(16);
     }
     execute(chip8) {
-        chip8.INSTRUCTINFO[1] = "SNE";
-        chip8.INSTRUCTINFO[2] = "Skip next instruction if Vx != Vy.";
         let x = extractDigit(this.opcode,1)
         let y = extractDigit(this.opcode,2)
         if (chip8.VREGISTER[x] != chip8.VREGISTER[y]) {
@@ -707,14 +707,15 @@ class SNE_Vy extends Instruction{
 //Set I = nnn
 //Annn
 class LD extends Instruction{
+
+    name = "LD";
+    info = "Set I = nnn.";
+
     constructor(opcode) {
         super(opcode)
-        this.name = 'LD'
-        chip8.INSTRUCTINFO[0] = "0x" + opcode.toString(16);
     }
+
     execute(chip8) {
-        chip8.INSTRUCTINFO[1] = "LD";
-        chip8.INSTRUCTINFO[2] = "Set I = nnn.";
         chip8.IREGISTER = (this.opcode & 0x0FFF);
     }
 
@@ -726,14 +727,14 @@ class LD extends Instruction{
 //Jump to location nnn + V0
 //Bnnn
 class JP_V0 extends Instruction{
+
+    name = "JP";
+    info = "Jump to location nnn + V0.";
+
     constructor(opcode) {
         super(opcode)
-        this.name = 'JP_V0'
-        chip8.INSTRUCTINFO[0] = "0x" + opcode.toString(16);
     }
     execute(chip8) {
-       chip8.INSTRUCTINFO[1] = "JP";
-       chip8.INSTRUCTINFO[2] = "Jump to location nnn + V0.";
        chip8.PC = (this.opcode & 0x0FFF) + chip8.VREGISTER[0];
     }
 
@@ -746,14 +747,14 @@ class JP_V0 extends Instruction{
 //Set Vx = random byte AND kk
 //Cxkk
 class RND extends Instruction{
+
+    name = "RND";
+    info = "Set Vx = random byte AND kk";
+
     constructor(opcode) {
         super(opcode)
-        this.name = 'RND'
-        chip8.INSTRUCTINFO[0] = "0x" + opcode.toString(16);
     }
     execute(chip8) {
-        chip8.INSTRUCTINFO[1] = "RND";
-        chip8.INSTRUCTINFO[2] = "Set Vx = random byte AND kk";
         chip8.VREGISTER[extractDigit(this.opcode,1)] = ((Math.floor((Math.random() * 255))) & (this.opcode & 0x00FF));
 
     }
@@ -766,14 +767,14 @@ class RND extends Instruction{
 //Display n-byte sprite starting at memory location I at (Vx, Vy), set VF = collision
 //Dxyn
 class DRW extends Instruction{
+
+    name = "DRW";
+    info = "Display n-byte sprite starting at memory location I at (Vx, Vy), set VF = collision.";
+
     constructor(opcode) {
         super(opcode)
-        this.name = 'DRW'
-        chip8.INSTRUCTINFO[0] = "0x" + opcode.toString(16);
     }
     execute(chip8) {
-        chip8.INSTRUCTINFO[1] = "DRW";
-        chip8.INSTRUCTINFO[2] = "Display n-byte sprite starting at memory location I at (Vx, Vy), set VF = collision.";
         var N = (this.opcode & 0x000F); // The height of the sprite
         var startX = chip8.VREGISTER[extractDigit(this.opcode,1)]; // The x coordinate of the sprite
         var startY = chip8.VREGISTER[extractDigit(this.opcode,2)]; // The y coordinate of the sprite
@@ -801,14 +802,14 @@ class DRW extends Instruction{
 //Skip the next instruction if key with value of Vx is pressed
 //Ex9E
 class SKP extends Instruction{
+
+    name = "SKP";
+    info = "Skip the next instruction if key with value of Vx is pressed.";
+
     constructor(opcode) {
         super(opcode)
-        this.name = 'SKP'
-        chip8.INSTRUCTINFO[0] = "0x" + opcode.toString(16);
     }
     execute(chip8) {
-        chip8.INSTRUCTINFO[1] = "SKP";
-        chip8.INSTRUCTINFO[2] = "Skip the next instruction if key with value of Vx is pressed.";
         if (chip8.KEYS.keystate[chip8.VREGISTER[extractDigit(this.opcode,1)]]) {
             chip8.PC += 2;
         }
@@ -822,14 +823,14 @@ class SKP extends Instruction{
 //Skip the next instruction if key with value of Vx is not pressed
 //ExA1
 class SKNP extends Instruction{
+
+    name = "SKNP";
+    info = "Skip the next instruction if key with value of Vx is not pressed.";
+
     constructor(opcode) {
         super(opcode)
-        this.name = 'SKNP'
-        chip8.INSTRUCTINFO[0] = "0x" + opcode.toString(16);
     }
     execute(chip8) {
-        chip8.INSTRUCTINFO[1] = "SKNP";
-        chip8.INSTRUCTINFO[2] = "Skip the next instruction if key with value of Vx is not pressed.";
         if (!chip8.KEYS.keystate[chip8.VREGISTER[extractDigit(this.opcode,1)]]) {
             chip8.PC += 2;
         }
@@ -843,14 +844,14 @@ class SKNP extends Instruction{
 //Set Vx = delay timer value
 //Fx07
 class LD_Vx_DT extends Instruction{
+
+    name = "LD";
+    info = "Set Vx = delay timer value.";
+
     constructor(opcode) {
         super(opcode)
-        this.name = 'LD_Vx_DT'
-        chip8.INSTRUCTINFO[0] = "0x" + opcode.toString(16);
     }
     execute(chip8) {
-        chip8.INSTRUCTINFO[1] = "LD";
-        chip8.INSTRUCTINFO[2] = "Set Vx = delay timer value.";
         chip8.VREGISTER[extractDigit(this.opcode,1)] = chip8.DELAYTIMER;
     }
 
@@ -861,23 +862,26 @@ class LD_Vx_DT extends Instruction{
 
 //Wait for a key press, store the value of the key in Vx
 //Fx0A
-//uses LD_K_Endhalt below
+//Calback function is implemented below
 class LD_K extends Instruction{
+
+    name = "LD";
+    info = "Wait for a key press, store the value of the key in Vx.";
+
     constructor(opcode) {
         super(opcode)
-        this.name = 'LD_K'
-        chip8.INSTRUCTINFO[0] = "0x" + opcode.toString(16);
     }
     execute(chip8) {
 
+        // sets an internal halt
         chip8.HALT = true
-        var endhalt = LD_K_Endhalt
 
-        //tell the listener which register to deposit key value into
+        // create callback function that deposits key value into correct register
+        var endhalt = LD_K_Endhalt
         endhalt.register = extractDigit(this.opcode,1)
+
+        // add callback function to document listener
         document.addEventListener('keydown',LD_K_Endhalt)
-        chip8.INSTRUCTINFO[1] = "LD";
-        chip8.INSTRUCTINFO[2] = "Wait for a key press, store the value of the key in Vx.";
     }
 
     saveState(chip8, state) {
@@ -885,12 +889,15 @@ class LD_K extends Instruction{
     }
 }
 
-//function used by LD_K to process key events
+//function used by LD_K as callback function
 function LD_K_Endhalt(e){
+
+    // does not remove halt if user has paused execution
     if(!chip8.PAUSE){
         chip8.HALT = false
         chip8.VREGISTER[this.register] = e.key
         chip8.startExecution()
+        //trust no-one not even yourself
         document.removeEventListener('keydown',LD_K_Endhalt)
     }
 }
@@ -898,14 +905,14 @@ function LD_K_Endhalt(e){
 //Set delay timer = Vx
 //Fx15
 class LD_DT_Vx extends Instruction{
+
+    name = "LD";
+    info = "Set delay timer = Vx.";
+
     constructor(opcode) {
         super(opcode)
-        this.name = 'LD_DT_Vx'
-        chip8.INSTRUCTINFO[0] = "0x" + opcode.toString(16);
     }
     execute(chip8) {
-        chip8.INSTRUCTINFO[1] = "LD";
-        chip8.INSTRUCTINFO[2] = "Set delay timer = Vx.";
         chip8.DELAYTIMER = chip8.VREGISTER[extractDigit(this.opcode,1)];
     }
 
@@ -917,14 +924,14 @@ class LD_DT_Vx extends Instruction{
 //Set sound timer = Vx
 //Fx18
 class LD_ST extends Instruction{
+
+    name = "LD";
+    info = "Set sound timer = Vx.";
+
     constructor(opcode) {
         super(opcode)
-        this.name = 'LD_ST'
-        chip8.INSTRUCTINFO[0] = "0x" + opcode.toString(16);
     }
     execute(chip8) {
-        chip8.INSTRUCTINFO[1] = "LD";
-        chip8.INSTRUCTINFO[2] = "Set sound timer = Vx.";
         chip8.SOUNDTIMER = chip8.VREGISTER[extractDigit(this.opcode,1)];
     }
 
@@ -936,14 +943,14 @@ class LD_ST extends Instruction{
 //Set I = I + Vx
 //Fx1E
 class ADD_I extends Instruction{
+
+    name = "ADD";
+    info = "Set I = I + Vx.";
+
     constructor(opcode) {
         super(opcode)
-        this.name = 'ADD_I'
-        chip8.INSTRUCTINFO[0] = "0x" + opcode.toString(16);
     }
     execute(chip8) {
-        chip8.INSTRUCTINFO[1] = "ADD";
-        chip8.INSTRUCTINFO[2] = "Set I = I + Vx.";
         chip8.IREGISTER += chip8.VREGISTER[extractDigit(this.opcode,1)];
     }
 
@@ -955,14 +962,14 @@ class ADD_I extends Instruction{
 //Set I = location of sprite for digit Vx
 //Fx29
 class LD_F extends Instruction{
+
+    name = "LD";
+    info = "Set I = location of sprite for digit Vx.";
+
     constructor(opcode) {
         super(opcode)
-        this.name = 'LD_F'
-        chip8.INSTRUCTINFO[0] = "0x" + opcode.toString(16);
     }
     execute(chip8) {
-        chip8.INSTRUCTINFO[1] = "LD";
-        chip8.INSTRUCTINFO[2] = "Set I = location of sprite for digit Vx.";
         chip8.IREGISTER = chip8.VREGISTER[extractDigit(this.opcode,1)] * 5; // Character sprites have a width of 5
 
     }
@@ -975,14 +982,14 @@ class LD_F extends Instruction{
 //Store BCD representation of Vx in memory locations I, I+1, and I+2
 //Fx33
 class LD_B extends Instruction{
+
+    name = "LD";
+    info = "Store BCD representation of Vx in memory locations I, I+1, and I+2.";
+
     constructor(opcode) {
         super(opcode)
-        this.name = 'LD_B'
-        chip8.INSTRUCTINFO[0] = "0x" + opcode.toString(16);
     }
     execute(chip8) {
-        chip8.INSTRUCTINFO[1] = "LD";
-        chip8.INSTRUCTINFO[2] = "Store BCD representation of Vx in memory locations I, I+1, and I+2.";
         var number = chip8.VREGISTER[extractDigit(this.opcode,1)];
         chip8.MEMORY[chip8.IREGISTER + 2] = parseInt(number % 10);
         chip8.MEMORY[chip8.IREGISTER + 1] = parseInt((number / 10) % 10);
@@ -998,14 +1005,15 @@ class LD_B extends Instruction{
 //Store registers V0 through Vx in memory starting at location I
 //Fx55
 class LD_I_Vx extends Instruction{
+
+    name = "LD";
+    info = "Store registers V0 through Vx in memory starting at location I.";
+
     constructor(opcode) {
         super(opcode)
-        this.name = 'LD_I_Vx'
-        chip8.INSTRUCTINFO[0] = "0x" + opcode.toString(16);
     }
     execute(chip8) {
-        chip8.INSTRUCTINFO[1] = "LD";
-        chip8.INSTRUCTINFO[2] = "Store registers V0 through Vx in memory starting at location I.";
+
         let x = extractDigit(this.opcode,1)
         for (var i = 0; i <= x; i++) {
             chip8.MEMORY[chip8.IREGISTER + i] = chip8.VREGISTER[i];
@@ -1020,14 +1028,14 @@ class LD_I_Vx extends Instruction{
 //Read registers V0 through Vx from memory starting at location I
 //Fx65
 class LD_Vx_I extends Instruction{
+
+    name = "LD";
+    info = "Read registers V0 through Vx from memory starting at location I.";
+
     constructor(opcode) {
         super(opcode)
-        this.name = 'LD_Vx_I'
-        chip8.INSTRUCTINFO[0] = "0x" + opcode.toString(16);
     }
     execute(chip8) {
-        chip8.INSTRUCTINFO[1] = "LD";
-        chip8.INSTRUCTINFO[2] = "Read registers V0 through Vx from memory starting at location I.";
         let x = extractDigit(this.opcode,1)
         for (var i = 0; i <= x; i++) {
             chip8.VREGISTER[i] = chip8.MEMORY[chip8.IREGISTER + i];
@@ -1038,8 +1046,3 @@ class LD_Vx_I extends Instruction{
 
     }
 }
-
-
-//EXTERNAL CODE SNIPPETS
-//code.iamkate.com
-function Queue(){var a=[],b=0;this.getLength=function(){return a.length-b};this.isEmpty=function(){return 0==a.length};this.enqueue=function(b){a.push(b)};this.dequeue=function(){if(0!=a.length){var c=a[b];2*++b>=a.length&&(a=a.slice(b),b=0);return c}};this.peek=function(){return 0<a.length?a[b]:void 0}};

@@ -19,11 +19,9 @@ var chip8 = {
     CYCLES: 10, // The number of cycles to run at a time per loop
     PAUSE: false, // Whether or not the emulator is externally paused
     HALT: false, // Whether execution is internally halted
-    
-    OPCODEMANAGER: new OpcodeManager(), 
-    recordLength: 100, // default length of the execution record 
-
-    INSTRUCTINFO: new Array("OPCODE","NAME","DESC"),
+     
+    OPCODEMANAGER: new OpcodeManager(100), 
+     // 100 = default length of the execution record
 
     VERBOSE: false,
 
@@ -228,11 +226,6 @@ var chip8 = {
         document.getElementById("EregLabel").innerHTML = chip8.VREGISTER[0xE];
         document.getElementById("FregLabel").innerHTML = chip8.VREGISTER[0xF];
         document.getElementById("IregLabel").innerHTML = chip8.IREGISTER;
-
-
-        document.getElementById("OpcodeLabel").innerHTML = chip8.INSTRUCTINFO[0];
-        document.getElementById("NameLabel").innerHTML = chip8.INSTRUCTINFO[1];
-        document.getElementById("DescLabel").innerHTML = chip8.INSTRUCTINFO[2];
 
         document.getElementById("DisTLabel").innerHTML = chip8.DELAYTIMER;
         document.getElementById("SouTLabel").innerHTML = chip8.SOUNDTIMER;

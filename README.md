@@ -35,6 +35,3 @@ Group Members:
 **HOW TO TEST PROGRAM LOADING AND READING**
 - On the website, press the "Choose File" button and select the file named "ProgramLoadTest.txt" found in the "Chip8EmulatorProject\TEST" directory
   - a sprite will display on the canvas to show that the program has been loaded and read successfully
-
-**ACKNOWLEDGEMENTS**
-http://code.iamkate.com for their queue implementation
