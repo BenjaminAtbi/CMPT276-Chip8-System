@@ -139,7 +139,7 @@ var chip8 = {
             instruction.execute(chip8)    
             chip8.OPCODEMANAGER.record.enqueue(instruction)
         } catch(err) {
-            console.log(err.message, "opcode: "+ opcode.toString(16), "instruction: "+instruction)
+            console.error(err.message, "opcode: "+ opcode.toString(16), "instruction: "+instruction)
         }
     },
 
