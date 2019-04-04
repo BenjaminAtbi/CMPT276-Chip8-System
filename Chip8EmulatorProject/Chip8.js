@@ -180,6 +180,10 @@ var chip8 = {
          else if (cycle.value == '10') {
             chip8.CYCLES = 10;
          }
+
+         else if (cycle.value == '20') {
+            chip8.CYCLES = 20;
+         }
     },
 
     // Reset the display
