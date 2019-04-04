@@ -47,3 +47,9 @@ h2 {
     height: 30px;
     border: 1px solid black;
 }
+
+.resetButton {
+    display: block;
+    margin: auto;
+    margin-top: 10px;
+}
