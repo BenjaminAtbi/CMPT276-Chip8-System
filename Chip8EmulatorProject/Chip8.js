@@ -21,6 +21,7 @@ var chip8 = {
     HALT: false, // Whether execution is internally halted
     
     OPCODEMANAGER: new OpcodeManager(), 
+    recordLength: 100, // default length of the execution record 
 
     INSTRUCTINFO: new Array("OPCODE","NAME","DESC"),
 
@@ -48,6 +49,7 @@ var chip8 = {
 
         chip8.PAUSE = false
         chip8.HALT = false
+
         
         document.getElementById("PauseLabel").innerHTML = "Execution Unpaused";
     },
@@ -120,14 +122,15 @@ var chip8 = {
             chip8.execute(opcode); // Execute command
     },
 
+    // execute one instruction and save it in the record
     execute(opcode) {
         instruction = chip8.OPCODEMANAGER.getInstruction(opcode)
         if(chip8.VERBOSE){
             console.log(instruction)
         }
         instruction.execute(chip8)    
+        chip8.OPCODEMANAGER.record.enqueue(instruction)
     },
-
 
     updateTimers() {
         if (chip8.DELAYTIMER > 0) chip8.DELAYTIMER--;

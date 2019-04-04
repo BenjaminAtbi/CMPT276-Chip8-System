@@ -54,7 +54,7 @@ class keyInput {
 class OpcodeManager {
 
     constructor() {
-
+        this.record = new RecordQueue()
     }
 
     getExecution(opcode) {
@@ -121,6 +121,78 @@ class OpcodeManager {
 
 }
 
+//for our purposes, end is the most recent record, and front is the oldest
+// * Structure automatically clears the earliest element if a new element is added while length is max
+// * access elements directly using get(index). 0 indexed, with 0 being front (oldest) record
+// * getFromEnd(index) is convenience function to access elements directly with 0 being end (newest) record
+class RecordQueue{
+    constructor(maxlength){
+        this.list = []
+        this.maxlength = maxlength
+        this.front = 0
+        this.end = 0
+        this.length = 0
+    }
+
+    //add an element to the record
+    enqueue(element){
+        
+        //make space for new element if list is full
+        if(this.end == this.front & this.length > 1){
+            this.dequeue()
+        }
+
+        this.list[this.end] = element
+
+        //cyclical increment
+        if(this.end == this.maxlength - 1){
+            this.end == 0
+        }else{
+            this.end++
+        }   
+
+        this.length++
+    }
+
+    dequeue(){
+        if(this.length > 0){
+            element = this.list[this.front]
+
+            //cyclical increment
+            if(this.front == this.maxlength - 1){
+                this.front == 0
+            }else{
+                this.front++
+            }
+
+            this.length--
+            return element
+        }
+
+        return undefined
+    }
+
+    get(relativeindex){
+        if(relativeindex >= this.length){
+            throw new RangeError("index out of bounds. length:"+this.length+ " requested index: "+relativeindex)
+        }
+        return this.list[(this.front + relativeindex) % this.maxlength]
+    }
+
+    getFromEnd(relativeindex){
+        if(relativeindex >= this.length){
+            throw new RangeError("index out of bounds. length:"+this.length+ " requested index: "+relativeindex)
+        }
+
+        if(relativeindex < this.end){
+            return this.list[this.end - 1 - relativeindex]
+        } else {
+            return this.list[this.maxlength - 1 - relativeindex - this.end]
+        }
+    }
+
+}
+
 // wraps code representing the execution of a specified opcode
 // * execute the instruction
 // * saves StateChange record
@@ -134,8 +206,6 @@ class Execution {
 
     }
 }
-
-
 
 var VarEnum = {
     PC: 1,
@@ -968,3 +1038,8 @@ class LD_Vx_I extends Instruction{
 
     }
 }
+
+
+//EXTERNAL CODE SNIPPETS
+//code.iamkate.com
+function Queue(){var a=[],b=0;this.getLength=function(){return a.length-b};this.isEmpty=function(){return 0==a.length};this.enqueue=function(b){a.push(b)};this.dequeue=function(){if(0!=a.length){var c=a[b];2*++b>=a.length&&(a=a.slice(b),b=0);return c}};this.peek=function(){return 0<a.length?a[b]:void 0}};
