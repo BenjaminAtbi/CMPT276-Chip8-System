@@ -8,8 +8,8 @@
 class keyInput {
     constructor(mapname = "default") {
         //is any key pressed
-        this.keypressed = false;
-
+        this.keyspressed = 0;
+        this.lastKey
         //Storage space for different keymappings
         this.savedmaps = {
             default: new Map([['x',0],['1', 1], ['2', 2], ['3', 3], ['q', 4], ['w', 5], ['e', 6], ['a', 7], ['s', 8], ['d', 9],
@@ -22,13 +22,18 @@ class keyInput {
 
         document.keyref = this;
         document.addEventListener('keydown', function (event) {
-            if (this.keyref.keymap.has(event.key)) {
-                this.keyref.keystate[this.keyref.keymap.get(event.key)] = true;
+            var key = this.keyref.keymap.get(event.key)
+            if (this.keyref.keystate[key] == false) {
+                this.keyref.keystate[key] = true;
+                this.keyref.lastKey = event.key
+                this.keyref.keyspressed++
             }
         });
         document.addEventListener('keyup', function (event) {
-            if (this.keyref.keymap.has(event.key)) {
-                this.keyref.keystate[this.keyref.keymap.get(event.key)] = false;
+            var key = this.keyref.keymap.get(event.key)
+            if (this.keyref.keystate[key] == true) {
+                this.keyref.keystate[key] = false;
+                this.keyref.keyspressed--
             }
         })
 
@@ -786,6 +791,7 @@ class LD_Vx_DT extends Instruction{
 
 //Wait for a key press, store the value of the key in Vx
 //Fx0A
+//uses LD_K_Endhalt below
 class LD_K extends Instruction{
     constructor(opcode) {
         super(opcode)
@@ -793,7 +799,13 @@ class LD_K extends Instruction{
         chip8.INSTRUCTINFO[0] = "0x" + opcode.toString(16);
     }
     execute(chip8) {
-        // NOT COMPLETED YET
+
+        chip8.HALT = true
+        var endhalt = LD_K_Endhalt
+
+        //tell the listener which register to deposit key value into
+        endhalt.register = extractDigit(this.opcode,1)
+        document.addEventListener('keydown',LD_K_Endhalt)
         chip8.INSTRUCTINFO[1] = "LD";
         chip8.INSTRUCTINFO[2] = "Wait for a key press, store the value of the key in Vx.";
     }
@@ -801,6 +813,13 @@ class LD_K extends Instruction{
     saveState(chip8, state) {
 
     }
+}
+
+function LD_K_Endhalt(e){
+    chip8.HALT = false
+    chip8.VREGISTER[this.register] = e.key
+    chip8.startExecution()
+    document.removeEventListener('keydown',LD_K_Endhalt)
 }
 
 //Set delay timer = Vx

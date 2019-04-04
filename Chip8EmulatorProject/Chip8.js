@@ -17,9 +17,9 @@ var chip8 = {
     KEYS: new keyInput(), // Holds an array of all possible keys and whether they have been pressed
 
     CYCLES: 10, // The number of cycles to run at a time per loop
-    PAUSE: 0, // Whether or not the emulator cycles are paused
-    NEXT: 0, // Whether or not the next button has been clicked
-
+    PAUSE: false, // Whether or not the emulator is externally paused
+    HALT: false, // Whether execution is internally halted
+    
     OPCODEMANAGER: new OpcodeManager(), 
 
     INSTRUCTINFO: new Array("OPCODE","NAME","DESC"),
@@ -44,8 +44,8 @@ var chip8 = {
         chip8.loadFont();
         chip8.KEYS = new keyInput();
 
-        chip8.PAUSE = 0;
-        chip8.NEXT = 0;
+        chip8.PAUSE = false
+        chip8.HALT = false
     },
 
     // Load a given program into memory
@@ -85,49 +85,44 @@ var chip8 = {
     },
 
     startExecution() {
-        chip8.PAUSE = 0;
         requestAnimationFrame(chip8.emulateCycles);
     },
 
     emulateCycles() {
-        if(!chip8.PAUSE) {
-            for (var i = 0; i < chip8.CYCLES; i++) {
-                chip8.executeNextOpcode();
-
-                chip8.beep();
-                chip8.updateTimers();
-                chip8.updateDisplay();
-                chip8.updateVisualizer();
-            }
-
+        for(var i = 0; i < chip8.CYCLES & !chip8.PAUSE & !chip8.HALT; i++){
+            chip8.nextCycle()
+        }
+        if(!chip8.PAUSE & !chip8.HALT){
             requestAnimationFrame(chip8.emulateCycles);
         }
     },
 
+    nextCycle() {
+        chip8.executeNextOpcode();
+        chip8.beep();
+        chip8.updateTimers();
+        chip8.updateDisplay();
+        chip8.updateVisualizer();
+    },
+
     // Run a CPU cycle
     executeNextOpcode() {
-        if(!chip8.PAUSE || chip8.NEXT) {
             var opcode = chip8.MEMORY[chip8.PC] << 8 | chip8.MEMORY[chip8.PC + 1]; // Decode command
             if (chip8.VERBOSE){
                 console.log("Executing opcode: "+opcode.toString(16))
             }
             chip8.PC += 2;
             chip8.execute(opcode); // Execute command
+    },
+
+    execute(opcode) {
+        instruction = chip8.OPCODEMANAGER.getInstruction(opcode)
+        if(chip8.VERBOSE){
+            console.log(instruction)
         }
+        instruction.execute(chip8)    
     },
 
-    nextCycle() {
-        chip8.NEXT = 1;
-
-        chip8.executeNextOpcode();
-
-        chip8.beep();
-        chip8.updateTimers();
-        chip8.updateDisplay();
-        chip8.updateVisualizer();
-
-        chip8.NEXT = 0;
-    },
 
     updateTimers() {
         if (chip8.DELAYTIMER > 0) chip8.DELAYTIMER--;
@@ -150,10 +145,10 @@ var chip8 = {
 
     togglePause() {
          if(!chip8.PAUSE) {
-                 chip8.PAUSE = 1;
+                 chip8.PAUSE = true;
                 document.getElementById("PauseLabel").innerHTML = "Execution Paused";
             } else {
-                chip8.PAUSE = 0;
+                chip8.PAUSE = false;
                 document.getElementById("PauseLabel").innerHTML = "Execution Unpaused";
                 chip8.startExecution();
             }
@@ -205,14 +200,6 @@ var chip8 = {
 
         chip8.DISPLAY[xCoord + (yCoord*64)] ^= 1; // Xor the pixel to flip it from on to off or vice versa
 
-    },
-
-    execute(opcode) {
-        instruction = chip8.OPCODEMANAGER.getInstruction(opcode)
-        if(chip8.VERBOSE){
-            console.log(instruction)
-        }
-        instruction.execute(chip8)    
     },
 
     updateVisualizer() {
