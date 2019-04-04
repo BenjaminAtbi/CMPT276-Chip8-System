@@ -46,6 +46,8 @@ var chip8 = {
 
         chip8.PAUSE = false
         chip8.HALT = false
+        
+        document.getElementById("PauseLabel").innerHTML = "Execution Unpaused";
     },
 
     // Load a given program into memory
