@@ -10,9 +10,21 @@ function togglePixel(id) {
         button.style.setProperty("background-color", "black");
         data[id] = 1;
     }
-    console.log(data);
-    document.getElementById("dataArea").innerHTML = data;
 
+    document.getElementById("dataArea").innerHTML = data;
+    binaryToHexadecimal();
+}
+
+function reset() {
+    for (var i = 0; i < 120; i++) {
+        var button = document.getElementById(i);
+        if (button.style.getPropertyValue("background-color") == "black") {
+            button.style.setProperty("background-color", "white");
+            data[i] = 0;
+        }
+    }
+
+    document.getElementById("dataArea").innerHTML = data;
     binaryToHexadecimal();
 }
 
