@@ -209,49 +209,21 @@ var chip8 = {
     },
 
     updateVisualizer() {
-        document.getElementById("0regLabel").innerHTML = chip8.VREGISTER[0x0];
-        document.getElementById("1regLabel").innerHTML = chip8.VREGISTER[0x1];
-        document.getElementById("2regLabel").innerHTML = chip8.VREGISTER[0x2];
-        document.getElementById("3regLabel").innerHTML = chip8.VREGISTER[0x3];
-        document.getElementById("4regLabel").innerHTML = chip8.VREGISTER[0x4];
-        document.getElementById("5regLabel").innerHTML = chip8.VREGISTER[0x5];
-        document.getElementById("6regLabel").innerHTML = chip8.VREGISTER[0x6];
-        document.getElementById("7regLabel").innerHTML = chip8.VREGISTER[0x7];
-        document.getElementById("8regLabel").innerHTML = chip8.VREGISTER[0x8];
-        document.getElementById("9regLabel").innerHTML = chip8.VREGISTER[0x9];
-        document.getElementById("AregLabel").innerHTML = chip8.VREGISTER[0xA];
-        document.getElementById("BregLabel").innerHTML = chip8.VREGISTER[0xB];
-        document.getElementById("CregLabel").innerHTML = chip8.VREGISTER[0xC];
-        document.getElementById("DregLabel").innerHTML = chip8.VREGISTER[0xD];
-        document.getElementById("EregLabel").innerHTML = chip8.VREGISTER[0xE];
-        document.getElementById("FregLabel").innerHTML = chip8.VREGISTER[0xF];
-        document.getElementById("IregLabel").innerHTML = chip8.IREGISTER;
 
+        for (var i = 0; i <= 0xF; i++){
+            document.getElementById(i.toString(16).toUpperCase() + "regLabel").innerHTML = chip8.VREGISTER[i];
+            document.getElementById("Stack" + i.toString(16).toUpperCase() + "Label").innerHTML = chip8.STACK[i];
+        }
+
+        document.getElementById("IregLabel").innerHTML = chip8.IREGISTER;
         document.getElementById("DisTLabel").innerHTML = chip8.DELAYTIMER;
         document.getElementById("SouTLabel").innerHTML = chip8.SOUNDTIMER;
 
-        document.getElementById("MemoryTextarea").innerHTML = "Start of CHIP 8 RAM reserved for interpreter (0 to 511)\n\n" + chip8.MEMORY.slice(0, 511)
-                                                            + "\n\nStart of CHIP 8 Programs (512 to 1535)\n\n" + chip8.MEMORY.slice(512, 1535)
-                                                            + "\n\nCHIP 8 Program / Data space (1536 to 4095)\n\n" + chip8.MEMORY.slice(1536, 4095);
+        // document.getElementById("MemoryTextarea").innerHTML = "Start of CHIP 8 RAM reserved for interpreter (0 to 511)\n\n" + chip8.MEMORY.slice(0, 511)
+        //                                                     + "\n\nStart of CHIP 8 Programs (512 to 1535)\n\n" + chip8.MEMORY.slice(512, 1535)
+        //                                                     + "\n\nCHIP 8 Program / Data space (1536 to 4095)\n\n" + chip8.MEMORY.slice(1536, 4095);
 
         document.getElementById("PCLabel").innerHTML = chip8.PC;
-
-        document.getElementById("Stack0Label").innerHTML = chip8.STACK[0x0];
-        document.getElementById("Stack1Label").innerHTML = chip8.STACK[0x1];
-        document.getElementById("Stack2Label").innerHTML = chip8.STACK[0x2];
-        document.getElementById("Stack3Label").innerHTML = chip8.STACK[0x3];
-        document.getElementById("Stack4Label").innerHTML = chip8.STACK[0x4];
-        document.getElementById("Stack5Label").innerHTML = chip8.STACK[0x5];
-        document.getElementById("Stack6Label").innerHTML = chip8.STACK[0x6];
-        document.getElementById("Stack7Label").innerHTML = chip8.STACK[0x7];
-        document.getElementById("Stack8Label").innerHTML = chip8.STACK[0x8];
-        document.getElementById("Stack9Label").innerHTML = chip8.STACK[0x9];
-        document.getElementById("StackALabel").innerHTML = chip8.STACK[0xA];
-        document.getElementById("StackBLabel").innerHTML = chip8.STACK[0xB];
-        document.getElementById("StackCLabel").innerHTML = chip8.STACK[0xC];
-        document.getElementById("StackDLabel").innerHTML = chip8.STACK[0xD];
-        document.getElementById("StackELabel").innerHTML = chip8.STACK[0xE];
-        document.getElementById("StackFLabel").innerHTML = chip8.STACK[0xF];
     },
 
     // Test Functions

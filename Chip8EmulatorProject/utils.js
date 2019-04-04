@@ -147,10 +147,8 @@ class RecordQueue{
         //cyclical increment
         if(this.end == this.maxlength - 1){
             this.end = 0
-            console.log("end wrapped to 0")
         }else{
             this.end++
-            console.log("end increased to "+this.end)
         }   
 
         this.length++
