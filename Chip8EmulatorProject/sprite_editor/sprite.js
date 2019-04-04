@@ -17,14 +17,34 @@ function togglePixel(id) {
 }
 
 function binaryToHexadecimal() {
-    var hexNum = '';
+    var hexNum = "";
     var combinedData = data.join('');
 
     for (var i = 0; i < combinedData.length; i += 4) {
         var byte = combinedData.substr(i, 4);
         var hexByte = parseInt(byte, 2).toString(16);
-        hexNum += " " + hexByte;
+        hexNum += hexByte;
     }
 
-    document.getElementById("hexArea").innerHTML = hexNum;
+    var newHex = "";
+
+    for (var i = 0; i < hexNum.length; i++) {
+        if ((i+1) % 4 == 0) {
+            newHex += hexNum[i] + " ";
+        }
+
+        else {
+            newHex += hexNum[i];
+        }
+    }
+
+    var prefData = "";
+    for (var i = 0; i < hexNum.length; i++) {
+        if ((i+1) % 2 == 0) {
+            prefData += "0x" + hexNum[i - 1] + hexNum[i] + " ";
+        }
+    }
+
+    document.getElementById("hexArea").innerHTML = newHex;
+    document.getElementById("prefArea").innerHTML = prefData;
 }
