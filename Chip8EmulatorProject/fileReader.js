@@ -3,13 +3,13 @@ function loadFile(file){
   reader.onload = function(anotherEvent) {
     var text = reader.result; // get the file data from the reader
     printProgram(text)
-    chip8.loadProgram(parseFile(text));    // loads the file into memory
+    chip8.loadProgram('external', parseFile(text));    // loads the file into memory
   }
   reader.readAsText(file); // option for output type and format (URL, string, etc.)
 }
 
 function selectGame(e){
-  chip8.loadProgram(parseFile(preloadedScripts.get(e.target.value)))
+  chip8.loadProgram(e.target.value, parseFile(preloadedScripts.get(e.target.value)))
 }
 
 //to be improved
@@ -39,4 +39,9 @@ function fileInputReader(theEvent) {
 // event listener for whenever the file button changes
 document.getElementById("inputFile").addEventListener("change", fileInputReader, false);
 document.getElementById("game_option").addEventListener("change",selectGame,false)
+
+var defaultGame = 'zoom'
+
+chip8.loadProgram(defaultGame, parseFile(preloadedScripts.get(defaultGame)))
+
 

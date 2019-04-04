@@ -1,3 +1,5 @@
+
+
 var chip8 = {
 
     PC: 0, // The program counter
@@ -23,6 +25,11 @@ var chip8 = {
     OPCODEMANAGER: new OpcodeManager(100), 
      // 100 = default length of the execution record
 
+    PROGRAM_NAME: "default",
+    // name of the program being run
+
+    aframeID: null, //id of requested animation frame, if any
+
     VERBOSE: false,
 
     program: null, //stored 
@@ -47,18 +54,18 @@ var chip8 = {
 
         chip8.PAUSE = false
         chip8.HALT = false
-
         
         document.getElementById("PauseLabel").innerHTML = "Execution Unpaused";
     },
 
     // Load a given program into memory
-    loadProgram(program) {
-    chip8.program = program
-    chip8.reset();
-    for (var i = 0; i < program.length; i++) {
-        chip8.MEMORY[0x200 + i] = program[i];
-        //chip8.MEMORY[0x200 + i*2 + 1] = program[i] & 0x00FF;
+    loadProgram(name, program) {
+        window.cancelAnimationFrame(chip8.aframeID)
+        chip8.PROGRAM_NAME = name
+        chip8.reset();
+        for (var i = 0; i < program.length; i++) {
+            chip8.MEMORY[0x200 + i] = program[i];
+            //chip8.MEMORY[0x200 + i*2 + 1] = program[i] & 0x00FF;
     }
     chip8.startExecution();
     },
@@ -90,15 +97,16 @@ var chip8 = {
     },
 
     startExecution() {
-        requestAnimationFrame(chip8.emulateCycles);
+        chip8.aframeID = requestAnimationFrame(chip8.emulateCycles);
     },
 
     emulateCycles() {
+        chip8.aframeID = null
         for(var i = 0; i < chip8.CYCLES & !chip8.PAUSE & !chip8.HALT; i++){
             chip8.nextCycle()
         }
         if(!chip8.PAUSE & !chip8.HALT){
-            requestAnimationFrame(chip8.emulateCycles);
+            chip8.aframeID = requestAnimationFrame(chip8.emulateCycles);
         }
     },
 

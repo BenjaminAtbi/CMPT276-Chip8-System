@@ -17,7 +17,7 @@
       <div class="option">
         <label for="game_option">Pick a game</label>
         <select id="game_option" autofocus="true">
-          <option value = "null"> </option>
+          <option value = "zoom"> Zoom </option>
           <option value = "fighters"> Fighters </option>
           <option value = "invaders"> Invaders</option>
           <option value = "pong"> Pong </option>
@@ -180,7 +180,7 @@
       <button type="button">Previous</button>
       <button type="button" onclick="chip8.togglePause()">Toggle Pause</button>
       <button type="button" onclick="chip8.nextCycle()">Next</button>
-      <button type="button" onclick="chip8.loadProgram(chip8.program)">Restart</button>
+      <button type="button" onclick="chip8.loadProgram(chip8.PROGRAM_NAME, parseFile(preloadedScripts.get(chip8.PROGRAM_NAME)))">Reset</button>
     </div>
 
     <br/>

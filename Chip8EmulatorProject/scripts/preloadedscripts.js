@@ -7,8 +7,8 @@
 
 var preloadedScripts = new Map([
 
-['null',
-``],
+['zoom',
+`6100 6200 A000 D125 7104 1206`],
     
 ['fighters',
 `1433 8020 70d8 245a ff40 3018 1878 4cc6
