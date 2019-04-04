@@ -130,12 +130,17 @@ var chip8 = {
 
     // execute one instruction and save it in the record
     execute(opcode) {
-        instruction = chip8.OPCODEMANAGER.getInstruction(opcode)
         if(chip8.VERBOSE){
             console.log(instruction)
         }
-        instruction.execute(chip8)    
-        chip8.OPCODEMANAGER.record.enqueue(instruction)
+
+        try {
+            instruction = chip8.OPCODEMANAGER.getInstruction(opcode)
+            instruction.execute(chip8)    
+            chip8.OPCODEMANAGER.record.enqueue(instruction)
+        } catch(err) {
+            console.log(err.message, "opcode: "+ opcode, "instruction: "+instruction)
+        }
     },
 
     updateTimers() {
