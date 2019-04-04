@@ -26,6 +26,8 @@ var chip8 = {
 
     VERBOSE: false,
 
+    program: null, //stored 
+
     reset() {
         chip8.PC = 0x200; // Point the program counter to the start of the program memeory
         chip8.MEMORY = chip8.MEMORY.map(()=>0);
@@ -52,12 +54,13 @@ var chip8 = {
 
     // Load a given program into memory
     loadProgram(program) {
-      chip8.reset();
-            for (var i = 0; i < program.length; i++) {
-                chip8.MEMORY[0x200 + i] = program[i];
-                //chip8.MEMORY[0x200 + i*2 + 1] = program[i] & 0x00FF;
-            }
-            chip8.startExecution();
+    chip8.program = program
+    chip8.reset();
+    for (var i = 0; i < program.length; i++) {
+        chip8.MEMORY[0x200 + i] = program[i];
+        //chip8.MEMORY[0x200 + i*2 + 1] = program[i] & 0x00FF;
+    }
+    chip8.startExecution();
     },
 
     // Load the array of character sprites into memory
