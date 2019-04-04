@@ -815,11 +815,14 @@ class LD_K extends Instruction{
     }
 }
 
+//function used by LD_K to process key events
 function LD_K_Endhalt(e){
-    chip8.HALT = false
-    chip8.VREGISTER[this.register] = e.key
-    chip8.startExecution()
-    document.removeEventListener('keydown',LD_K_Endhalt)
+    if(!chip8.PAUSE){
+        chip8.HALT = false
+        chip8.VREGISTER[this.register] = e.key
+        chip8.startExecution()
+        document.removeEventListener('keydown',LD_K_Endhalt)
+    }
 }
 
 //Set delay timer = Vx
