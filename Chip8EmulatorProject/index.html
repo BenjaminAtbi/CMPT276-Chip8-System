@@ -171,6 +171,9 @@
   </div>
 
   <div class=rightcolumn>
+    
+    <div id="command_log_div"> </div>
+    
     <div class="screen" id = "emu_screen">
       <canvas id="emulator_screen" width="640" height="320"></canvas>
     </div>
@@ -187,22 +190,6 @@
     <br/>
     <br/>
 
-    <div id = "instructions">
-      <table id = "instructions_table" style ="width:49%">
-          <tr> 
-              <th class = "textcell">Opcode</th>
-              <td> <label id="OpcodeLabel">Contents</label> </td>
-          </tr>
-          <tr>
-              <th class = "textcell">Name</th>
-              <td> <label id="NameLabel">Contents</label> </td>
-          </tr>
-          <tr>
-              <th class = "textcell">Description</th>
-              <td> <label  id="DescLabel">Contents</label> </td>
-          </tr>
-      </table>
-    </div>
   </div>
 
 
@@ -212,6 +199,7 @@
   <script type="text/javascript" src="Chip8.js"> </script>
   <script type="text/javascript" src="test.js"> </script>
   <script type="text/javascript" src="fileReader.js"> </script>
+  <script> chip8.createLog(); </script>
 
 </body>
 </html>
