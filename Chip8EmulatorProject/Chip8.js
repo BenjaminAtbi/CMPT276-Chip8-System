@@ -33,6 +33,8 @@ var chip8 = {
     VERBOSE: false,
 
     program: null, //stored 
+    
+    COMMANDLOGLENGTH: 0,
 
     reset() {
         chip8.PC = 0x200; // Point the program counter to the start of the program memeory
@@ -54,6 +56,8 @@ var chip8 = {
 
         chip8.PAUSE = false
         chip8.HALT = false
+        
+        chip8.COMMANDLOGLENGTH = 0;
         
         document.getElementById("PauseLabel").innerHTML = "Execution Unpaused";
     },
@@ -128,6 +132,27 @@ var chip8 = {
             chip8.execute(opcode); // Execute command
     },
 
+    createLog() {
+      for (var i = 0; i < 100; i++) {
+          var commandLbl = document.createElement("LABEL");
+          commandLbl.setAttribute("id", i);
+          document.getElementById("command_log_div").appendChild(commandLbl);
+      }
+      document.getElementById(0).style.color="red";
+    },
+
+    addToLog(commandInfo) {
+      if (chip8.COMMANDLOGLENGTH < 100) {
+        document.getElementById(chip8.COMMANDLOGLENGTH).innerHTML = commandInfo;
+        chip8.COMMANDLOGLENGTH++;
+      } else {
+        for (var i = 99; i > 0; i--) {
+          document.getElementById(i).innerHTML = document.getElementById(i-1).innerHTML;
+        }
+        document.getElementById(0).innerHTML = commandInfo;
+      }
+    },
+    
     // execute one instruction and save it in the record
     execute(opcode) {
 
@@ -239,6 +264,8 @@ var chip8 = {
         //                                                     + "\n\nCHIP 8 Program / Data space (1536 to 4095)\n\n" + chip8.MEMORY.slice(1536, 4095);
 
         document.getElementById("PCLabel").innerHTML = chip8.PC;
+        
+        chip8.addToLog(chip8.OPCODEMANAGER.record.getFromEnd(0).name + " " + chip8.OPCODEMANAGER.record.getFromEnd(0).opcode.toString(16) + " ");
     },
 
     // Test Functions
