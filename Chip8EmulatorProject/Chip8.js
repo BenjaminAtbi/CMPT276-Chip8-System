@@ -21,8 +21,8 @@ var chip8 = {
     CYCLES: 10, // The number of cycles to run at a time per loop
     PAUSE: false, // Whether or not the emulator is externally paused
     HALT: false, // Whether execution is internally halted
-     
-    OPCODEMANAGER: new OpcodeManager(100), 
+
+    OPCODEMANAGER: new OpcodeManager(100),
      // 100 = default length of the execution record
 
     PROGRAM_NAME: "default",
@@ -32,7 +32,9 @@ var chip8 = {
 
     VERBOSE: false,
 
-    program: null, //stored 
+    program: null, //stored
+
+    COMMANDLOGLENGTH: 0,
 
     reset() {
         chip8.PC = 0x200; // Point the program counter to the start of the program memeory
@@ -54,7 +56,9 @@ var chip8 = {
 
         chip8.PAUSE = false
         chip8.HALT = false
-        
+
+        chip8.COMMANDLOGLENGTH = 0;
+
         document.getElementById("PauseLabel").innerHTML = "Execution Unpaused";
     },
 
@@ -75,7 +79,7 @@ var chip8 = {
         var font = [
               0xF0, 0x90, 0x90, 0x90, 0xF0, // 0
               0x20, 0x60, 0x20, 0x20, 0x70, // 1
-              0xF0, 0x10, 0xF0, 0x80, 0xF0, // 2    
+              0xF0, 0x10, 0xF0, 0x80, 0xF0, // 2
               0xF0, 0x10, 0xF0, 0x10, 0xF0, // 3
               0x90, 0x90, 0xF0, 0x10, 0x10, // 4
               0xF0, 0x80, 0xF0, 0x10, 0xF0, // 5
@@ -128,13 +132,36 @@ var chip8 = {
             chip8.execute(opcode); // Execute command
     },
 
+    createLog() {
+      for (var i = 0; i < 100; i++) {
+          var commandLbl = document.createElement("LABEL");
+          commandLbl.setAttribute("id", i);
+          document.getElementById("command_log_div").appendChild(commandLbl);
+      }
+      document.getElementById(0).style.color="red";
+    },
+
+    addToLog(commandInfo) {
+      if (chip8.COMMANDLOGLENGTH < 100) {
+        document.getElementById(chip8.COMMANDLOGLENGTH).innerHTML = commandInfo;
+        chip8.COMMANDLOGLENGTH++;
+      } else {
+        for (var i = 99; i > 0; i--) {
+          document.getElementById(i).innerHTML = document.getElementById(i-1).innerHTML;
+        }
+        document.getElementById(0).innerHTML = commandInfo;
+      }
+    },
+
     // execute one instruction and save it in the record
     execute(opcode) {
+        if(chip8.VERBOSE){
+            console.log(instruction)
+        }
 
         try {
-            var instruction = chip8.OPCODEMANAGER.getInstruction(opcode)
-            
-            instruction.execute(chip8)    
+            instruction = chip8.OPCODEMANAGER.getInstruction(opcode)
+            instruction.execute(chip8)
             chip8.OPCODEMANAGER.record.enqueue(instruction)
         } catch(err) {
             console.error(err.message, "opcode: "+ opcode.toString(16), "instruction: "+instruction)
@@ -160,6 +187,25 @@ var chip8 = {
 
     },
 
+    updateDescription(program_name) {
+      switch (program_name.value) {
+        case 'zoom':
+          document.getElementById("programDescription").innerHTML = "zoom Description Goes Here 1";
+          break;
+        case 'fighters':
+          document.getElementById("programDescription").innerHTML = "fighters Description Goes Here 1";
+          break;
+        case 'invaders':
+          document.getElementById("programDescription").innerHTML = "invaders Description Goes Here 1";
+          break;
+        case 'pong':
+          document.getElementById("programDescription").innerHTML = "pong Description Goes Here 1";
+          break;
+        default:
+
+      }
+    },
+
     togglePause() {
          if(!chip8.PAUSE) {
                  chip8.PAUSE = true;
@@ -170,7 +216,7 @@ var chip8 = {
                 chip8.startExecution();
             }
     },
-    
+
     cycleChange(cycle) {
          if (cycle.value == '1') {
             chip8.CYCLES = 1;
@@ -239,6 +285,9 @@ var chip8 = {
         //                                                     + "\n\nCHIP 8 Program / Data space (1536 to 4095)\n\n" + chip8.MEMORY.slice(1536, 4095);
 
         document.getElementById("PCLabel").innerHTML = chip8.PC;
+
+        chip8.addToLog(chip8.OPCODEMANAGER.record.getFromEnd(0).name + " " + chip8.OPCODEMANAGER.record.getFromEnd(0).opcode.toString(16) + " ");
+
     },
 
     // Test Functions

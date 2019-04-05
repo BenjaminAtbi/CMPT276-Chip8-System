@@ -3,9 +3,9 @@
   <title>Chip 8 Emulator</title>
   <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/8bit-wonder" type="text/css"/>
   <link rel="stylesheet" href="./css/index_new.css">
-  
+
   <script id = "preloadscripts" src="./scripts/preloadedscripts.js"></script>
-  
+
 </head>
 <body>
     <header class="container">
@@ -16,7 +16,7 @@
     <form action="#" class="form_style" style ="text-align: center;">
       <div class="option">
         <label for="game_option">Pick a game</label>
-        <select id="game_option" autofocus="true">
+        <select id="game_option" autofocus="true" onchange = "chip8.updateDescription(this)">
           <option value = "zoom"> Zoom </option>
           <option value = "fighters"> Fighters </option>
           <option value = "invaders"> Invaders</option>
@@ -25,10 +25,10 @@
       </div>
       <div class = "option">
         <label for="inputFile">or load a program</label>
-        <input type="file" id="inputFile" name="inputFile">  
+        <input type="file" id="inputFile" name="inputFile">
       </div>
     </form>
- 
+
   <div class ="cycleChange" style = "text-align: center;">
     <form action="#">
       <label>Cycle speed (per loop)</label>
@@ -147,10 +147,10 @@
 
     <br/>
     <br/>
-    
+
     <div id="timers_table" style="margin-left: 20px;">
       <table>
-          <tr> 
+          <tr>
               <th style = "text-align: left">Display Timer:</th>
               <td> <label id="DisTLabel">Contents</label> </td>
           </tr>
@@ -163,55 +163,41 @@
               <td> <label id="PCLabel">Contents</label> </td>
           </tr>
       </table>
-    
-      <pre id = "FileInputDisplay">
+
+      <pre id = "FileInputDisplay" style="display:none">
         <p> Loaded File: </p>
       </pre>
     </div>
   </div>
 
   <div class=rightcolumn>
+      
     <div class="screen" id = "emu_screen">
       <canvas id="emulator_screen" width="640" height="320"></canvas>
     </div>
-    
+
+    <div id="command_log_div"> </div>
+
     <textarea id="MemoryTextarea" rows="21" cols="100" style="display:none" readonly style +> </textarea>
 
     <div id="play_buttons">
-      <button type="button">Previous</button>
-      <button type="button" onclick="chip8.togglePause()">Toggle Pause</button>
-      <button type="button" onclick="chip8.nextCycle()">Next</button>
-      <button type="button" onclick="loadProgramByName(chip8.PROGRAM_NAME)">Reset</button>
+            <button type="button">Previous</button>
+            <button type="button" onclick="chip8.togglePause()">Toggle Pause</button>
+            <button type="button" onclick="chip8.nextCycle()">Next</button>
+            <button type="button" onclick="loadProgramByName(chip8.PROGRAM_NAME)">Reset</button>
     </div>
 
-    <br/>
-    <br/>
-
-    <div id = "instructions">
-      <table id = "instructions_table" style ="width:49%">
-          <tr> 
-              <th class = "textcell">Opcode</th>
-              <td> <label id="OpcodeLabel">Contents</label> </td>
-          </tr>
-          <tr>
-              <th class = "textcell">Name</th>
-              <td> <label id="NameLabel">Contents</label> </td>
-          </tr>
-          <tr>
-              <th class = "textcell">Description</th>
-              <td> <label  id="DescLabel">Contents</label> </td>
-          </tr>
-      </table>
-    </div>
+    <br/><br/>
+    
+    <label id="programDescription" style="text-align: center;"></label>
   </div>
-
-
 
   <script type="text/javascript" src="utils.js"> </script>
   <script type="text/javascript" src="opcodes.js"> </script>
   <script type="text/javascript" src="Chip8.js"> </script>
   <script type="text/javascript" src="test.js"> </script>
   <script type="text/javascript" src="fileReader.js"> </script>
+  <script> chip8.createLog(); </script>
 
 </body>
 </html>
