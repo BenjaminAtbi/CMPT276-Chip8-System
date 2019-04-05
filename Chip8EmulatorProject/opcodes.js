@@ -68,72 +68,6 @@ class OpcodeManager {
     }
 }
 
-// wraps code representing the execution of a specified opcode
-// * execute the instruction
-// * saves StateChange record
-class Execution {
-    constructor(opcode) {
-        this.opcode = opcode;
-        this.instruction = OpcodeManager.getInstruction(opcode);
-    }
-
-    execute(chip8) {
-
-    }
-}
-
-var VarEnum = {
-    PC: 1,
-    SP: 2,
-    DELAYTIMER: 3,
-    SOUNDTIMER: 4,
-    IREGISTER: 5,
-    VREGISTER: 6,
-    MEMORY: 7,
-    STACK: 8,
-    DISPLAY: 9
-}
-
-//extract a specified digit from
-extractDigit = function(opcode, digit){
-    if(digit >=4 || digit < 0){
-        throw new Error("Invalid argument: " + digit + "is not number 0 < n < 4.")
-    }
-    return opcode >> (12 - 4 * digit) & 0x000F
-}
-
-//represents a single value of some state variable
-// varID is the number assigned to the state variable by VarEnum
-// ex. PC = 7
-// ex. STACK[3] = 256
-class SingleStateValue {
-    constructor(varID, value, position = 0){
-        this.varID = varID
-        this.value = value
-        this.position = position
-    }
-}
-
-//represents a range of values within a array-type state variable, all assigned the same value
-class RangeStateValue {
-
-}
-
-//represents specifically chosen state values
-class CondensedState {
-    values = []
-    constructor(initialVals) {
-        for ( i in initialVals){
-            this.values.push(i)
-        }
-    }
-
-    add(value){
-        this.values.push(value)
-    }
-}
-
-
 //********************************
 //Opcode functions
 //********************************
@@ -141,10 +75,9 @@ class CondensedState {
 // base class for an instruction
 class Instruction {
 
-    stateRecord = []
-
     constructor(opcode) {
         this.opcode = opcode
+        this.stateRecord = new CondensedState()
     }
 
     execute(chip8) {
@@ -236,7 +169,9 @@ class CALL extends Instruction{
     }
 
     saveState(chip8, state) {
-        
+        this.stateRecord.push(new SingleStateValue(VarEnum.STACK,chip8.STACK[chip8.SP],chip8.SP))
+        this.stateRecord.push(new SingleStateValue(VarEnum.SP,chip8.SP,0))
+        this.stateRecord.push(new SingleStateValue(VarEnum.PC,chip8.PC,0))
     }
 }
 
@@ -259,7 +194,7 @@ class SE_byte extends Instruction{
     }
 
     saveState(chip8, state) {
-
+        this.stateRecord.push(new SingleStateValue(VarEnum.PC,chip8.PC,0))
     }
 }
 
@@ -282,7 +217,7 @@ class SNE_kk extends Instruction{
     }
 
     saveState(chip8, state) {
-
+        this.stateRecord.push(new SingleStateValue(VarEnum.PC,chip8.PC,0))
     }
 }
 
@@ -305,7 +240,7 @@ class SE_y extends Instruction{
     }
 
     saveState(chip8, state) {
-
+        this.stateRecord.push(new SingleStateValue(VarEnum.PC,chip8.PC,0))
     }
 }
 
