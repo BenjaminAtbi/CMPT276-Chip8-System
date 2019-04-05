@@ -135,7 +135,8 @@ button:hover {
 }
 
 #play_buttons {
-  margin-left: 175px;
+  margin-top: 5px;
+  margin-left: 210px;
 }
 
 #pause_status{
@@ -165,7 +166,7 @@ margin-bottom: 30px;
   max-width: 100px;
   max-height: 400px;
   overflow-y: scroll;
-  margin-left: 800px;
+  margin-left: 900px;
 }
 
 #programDescription {

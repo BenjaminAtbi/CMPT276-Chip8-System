@@ -18,6 +18,7 @@
         <label for="game_option">Pick a game</label>
         <select id="game_option" autofocus="true" onchange = "chip8.updateDescription(this)">
           <option value = "zoom"> Zoom </option>
+          <option value = "team"> Team Intro </option>
           <option value = "fighters"> Fighters </option>
           <option value = "invaders"> Invaders</option>
           <option value = "pong"> Pong </option>
@@ -173,7 +174,7 @@
   <div class=rightcolumn>
       
     <div class="screen" id = "emu_screen">
-      <canvas id="emulator_screen" width="640" height="320"></canvas>
+      <canvas id="emulator_screen" width="768" height="384"></canvas>
     </div>
 
     <div id="command_log_div"> </div>
@@ -188,8 +189,6 @@
     </div>
 
     <br/><br/>
-    
-    <label id="programDescription" style="text-align: center;"></label>
   </div>
 
   <script type="text/javascript" src="utils.js"> </script>

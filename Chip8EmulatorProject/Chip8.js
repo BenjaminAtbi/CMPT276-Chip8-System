@@ -14,7 +14,7 @@ var chip8 = {
     SOUNDTIMER: 0, // Timer used for sound effects, a beep is made when the timer is nonzero
 
     DISPLAY: new Uint8Array(64 * 32), // The display resolution is 64 * 32, color is monochrome
-    SCALE: 10, // Because the resolution of 64*32 is quite small the screen is scaled up for visibility
+    SCALE: 12, // Because the resolution of 64*32 is quite small the screen is scaled up for visibility
 
     KEYS: new keyInput(), // Holds an array of all possible keys and whether they have been pressed
 
@@ -49,7 +49,7 @@ var chip8 = {
         chip8.SOUNDTIMER = 0;
 
         chip8.DISPLAY = chip8.DISPLAY.map(()=>0);
-        chip8.SCALE = 10;
+        chip8.SCALE = 12;
 
         chip8.loadFont();
         chip8.KEYS = new keyInput();
