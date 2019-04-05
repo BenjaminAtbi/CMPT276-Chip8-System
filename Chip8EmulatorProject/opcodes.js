@@ -259,7 +259,8 @@ class LD_byte extends Instruction{
     }
 
     saveState(chip8, state) {
-
+        var index = extractDigit(this.opcode,1)
+        this.stateRecord.push(new SingleStateValue(VarEnum.VREGISTER,chip8.VREGISTER[index],index))
     }
 }
 
@@ -285,7 +286,8 @@ class ADD extends Instruction{
     }
 
     saveState(chip8, state) {
-
+        var index = extractDigit(this.opcode,1)
+        this.stateRecord.push(new SingleStateValue(varEnum.VREGISTER,chip8.VREGISTER[index]))
     }
 }
 
