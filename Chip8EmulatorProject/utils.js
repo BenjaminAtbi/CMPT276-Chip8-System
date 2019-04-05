@@ -61,7 +61,7 @@ class RecordQueue{
 
     //add an element to the record
     enqueue(element){
-        
+
         //make space for new element if list is full
         if(this.end == this.front & this.length > 1){
             this.dequeue()
@@ -74,7 +74,7 @@ class RecordQueue{
             this.end = 0
         }else{
             this.end++
-        }   
+        }
         this.length++
     }
 
@@ -114,61 +114,4 @@ class RecordQueue{
         }
     }
 
-}
-
-var VarEnum = {
-    PC: 1,
-    SP: 2,
-    DELAYTIMER: 3,
-    SOUNDTIMER: 4,
-    IREGISTER: 5,
-    VREGISTER: 6,
-    MEMORY: 7,
-    STACK: 8,
-    DISPLAY: 9
-}
-
-//extract a specified digit from
-extractDigit = function(opcode, digit){
-    if(digit >=4 || digit < 0){
-        throw new Error("Invalid argument: " + digit + "is not number 0 < n < 4.")
-    }
-    return opcode >> (12 - 4 * digit) & 0x000F
-}
-
-//represents a single value of some state variable
-// varID is the number assigned to the state variable by VarEnum
-// ex. PC = 7
-// ex. STACK[3] = 256
-class SingleStateValue {
-    constructor(varID, value, position = 0){
-        this.varID = varID
-        this.value = value
-        this.position = position
-    }
-}
-
-//represents a range of values within a array-type state variable, all assigned the same value
-class RangeStateValue {
-
-}
-
-//represents specifically chosen state values
-class CondensedState {
-    values = []
-    constructor(initialVals) {
-        if(initialVals instanceof Array){
-            this.values = this.values.concat(initialVals)
-        } else {
-            this.values.push(initialVals)
-        }
-    }
-
-    push(value){
-        this.values.push(value)
-    }
-
-    restore(chip8){
-        //apply state vals to chip8
-    }
 }
