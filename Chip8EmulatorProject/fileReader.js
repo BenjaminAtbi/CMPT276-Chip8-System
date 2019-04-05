@@ -3,11 +3,12 @@ function loadFile(file) {
   reader.onload = function(anotherEvent) {
     var text = reader.result; // get the file data from the reader
     printProgram(text);
-    preloadedScripts.set('external',text);
+    preloadedScripts['external'] = new Script('external',text,'No description provided');
     chip8.loadProgram('external', parseFile(text));    // loads the file into memory
   }
   reader.readAsText(file); // option for output type and format (URL, string, etc.)
 }
+
 
 function loadBinary(file) {
   var reader = new FileReader();
@@ -17,18 +18,20 @@ function loadBinary(file) {
     var opcodes = Array.from(new Uint8Array(reader.result));
 
     printProgram(opcodes.join(" "));
-    preloadedScripts.set('external', opcodes.join(" "));
+    preloadedScripts['external'] = new Script('external',opcodes.join(" "),'No description provided');
     chip8.loadProgram('external', opcodes);
   }
   reader.readAsArrayBuffer(file);
 }
 
+//called by dropdown menu
 function selectGame(e){
   loadProgramByName(e.target.value)
 }
 
+
 function loadProgramByName(name){
-  var text = preloadedScripts.get(name)
+  var text = preloadedScripts[name].code
   printProgram(text)
   chip8.loadProgram(name, parseFile(text));
 }
@@ -65,11 +68,16 @@ function fileInputReader(theEvent) {
   }
 }
 
+function updateDescription(program_name) {
+  document.getElementById("programDescription").innerHTML = preloadedScripts[program_name].description
+}
 
 // event listener for whenever the file button changes
 document.getElementById("inputFile").addEventListener("change", fileInputReader, false);
 document.getElementById("game_option").addEventListener("change",selectGame,false)
 
+
+//game loaded on pageload
 var defaultGame = 'zoom'
 
-chip8.loadProgram(defaultGame, parseFile(preloadedScripts.get(defaultGame)))
+chip8.loadProgram(defaultGame, parseFile(preloadedScripts[defaultGame].code))

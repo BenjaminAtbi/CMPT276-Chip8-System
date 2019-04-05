@@ -187,25 +187,6 @@ var chip8 = {
 
     },
 
-    updateDescription(program_name) {
-      switch (program_name.value) {
-        case 'zoom':
-          document.getElementById("programDescription").innerHTML = "zoom Description Goes Here 1";
-          break;
-        case 'fighters':
-          document.getElementById("programDescription").innerHTML = "fighters Description Goes Here 1";
-          break;
-        case 'invaders':
-          document.getElementById("programDescription").innerHTML = "invaders Description Goes Here 1";
-          break;
-        case 'pong':
-          document.getElementById("programDescription").innerHTML = "pong Description Goes Here 1";
-          break;
-        default:
-
-      }
-    },
-
     togglePause() {
          if(!chip8.PAUSE) {
                  chip8.PAUSE = true;

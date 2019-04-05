@@ -5,13 +5,29 @@
 * for each game in the map, the key must match the 'value' of the option tag that selects that game
 */
 
-var preloadedScripts = new Map([
+function Script(name,code,description){
+    this.name = name
+    this.code = code
+    this.description = description
+}
 
-['zoom',
-`6100 6200 A000 D125 7104 1206`],
+
+
+function preloadedScripts(){
+
+    this.zoom = new Script('zoom',`6100 6200 A000 D125 7104 1206`,"Zoom description"),
     
-['fighters',
-`14d3 8020 70d8 a824 5aff 5a78 48dc f4fc
+    this.fighters = new Script('fighters',fightersCode,'fighters description'),
+    
+    this.invaders = new Script('invaders',invadersCode,'invaders description'),
+
+    this.pong = new Script('pong',pongCode,'pong description'),
+
+    this.external = new Script('external','','no external file loaded')
+
+}
+
+var fightersCode = `14d3 8020 70d8 a824 5aff 5a78 48dc f4fc
 a8b8 e078 48de f56f 304a ddb7 ffbe 750e
 e0b0 d020 c0c0 c0c0 c0c0 c0c0 e080 e020
 e0e0 a0e0 8080 e0a0 e0a0 a0e0 8080 80e0
@@ -58,10 +74,9 @@ ee00 e060 1a61 09a2 63d0 1570 04a2 68d0
 04a2 68d0 1570 04a2 5ed0 1570 04a2 63d0
 1500 ee22 e922 8f23 6b3f 0014 7124 013f
 0014 a34d 0023 8d3d 0023 ad37 0024 4914
-d700 ee`],
-    
-['invaders',
-`153f 0000 0000 3078 3030 4800 0000 0000
+d700 ee`
+
+var invadersCode = `153f 0000 0000 3078 3030 4800 0000 0000
 0000 0000 0000 0808 1c1c 1c00 0000 0000
 0000 0000 0008 081c 1c1c 0000 0000 0080
 003c 4240 4040 3c02 0202 423c 0000 0000
@@ -114,10 +129,9 @@ ff23 bd3f 0013 ff45 1413 ff3e 0023 6b4e
 bf23 2f23 933f 0013 ff23 bd3f 0013 ff45
 1413 ff3e 0023 6b4e 0023 5515 2100 ee24
 1b69 0124 8500 e069 0124 cf00 e069 0125
-0700 ee`],
+0700 ee`
 
-['pong',
-`132f 8080 8080 8080 8080 8080 8080 8080
+var pongCode = `132f 8080 8080 8080 8080 8080 8080 8080
 8001 0101 0101 0101 0101 0101 0101 0101
 8000 0000 0000 0000 0000 0000 0000 003c
 4281 8080 809f 9181 423c 0000 0000 2424
@@ -139,5 +153,6 @@ fb60 40f0 15f0 0730 0013 2500 e000 ee6e
 016d 0c66 3767 0c64 1f63 1065 036a 0122
 d7a2 20d4 31a2 02de d8a2 11d6 784b 0513
 6548 0513 6522 4d3f 006a 0122 733f 006a
-ff22 9b13 4d23 1300 ee`]
-])
+ff22 9b13 4d23 1300 ee`
+
+var preloadedScripts = new preloadedScripts()

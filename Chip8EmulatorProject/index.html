@@ -16,7 +16,7 @@
     <form action="#" class="form_style" style ="text-align: center;">
       <div class="option">
         <label for="game_option">Pick a game</label>
-        <select id="game_option" autofocus="true" onchange = "chip8.updateDescription(this)">
+        <select id="game_option" autofocus="true" onchange = "updateDescription(this.value)">
           <option value = "zoom"> Zoom </option>
           <option value = "fighters"> Fighters </option>
           <option value = "invaders"> Invaders</option>
