@@ -3,9 +3,9 @@
   <title>Chip 8 Emulator</title>
   <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/8bit-wonder" type="text/css"/>
   <link rel="stylesheet" href="./css/index_new.css">
-  
+
   <script id = "preloadscripts" src="./scripts/preloadedscripts.js"></script>
-  
+
 </head>
 <body>
     <header class="container">
@@ -25,10 +25,10 @@
       </div>
       <div class = "option">
         <label for="inputFile">or load a program</label>
-        <input type="file" id="inputFile" name="inputFile">  
+        <input type="file" id="inputFile" name="inputFile">
       </div>
     </form>
- 
+
   <div class ="cycleChange" style = "text-align: center;">
     <form action="#">
       <label>Cycle speed (per loop)</label>
@@ -147,10 +147,10 @@
 
     <br/>
     <br/>
-    
+
     <div id="timers_table" style="margin-left: 20px;">
       <table>
-          <tr> 
+          <tr>
               <th style = "text-align: left">Display Timer:</th>
               <td> <label id="DisTLabel">Contents</label> </td>
           </tr>
@@ -163,7 +163,7 @@
               <td> <label id="PCLabel">Contents</label> </td>
           </tr>
       </table>
-    
+
       <pre id = "FileInputDisplay">
         <p> Loaded File: </p>
       </pre>
@@ -171,13 +171,13 @@
   </div>
 
   <div class=rightcolumn>
-    
+
     <div id="command_log_div"> </div>
-    
+
     <div class="screen" id = "emu_screen">
       <canvas id="emulator_screen" width="640" height="320"></canvas>
     </div>
-    
+
     <textarea id="MemoryTextarea" rows="21" cols="100" style="display:none" readonly style +> </textarea>
 
     <div id="play_buttons">
@@ -191,8 +191,6 @@
     <br/>
 
   </div>
-
-
 
   <script type="text/javascript" src="utils.js"> </script>
   <script type="text/javascript" src="opcodes.js"> </script>
