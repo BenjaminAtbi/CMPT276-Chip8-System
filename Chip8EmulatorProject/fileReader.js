@@ -1,12 +1,26 @@
-function loadFile(file){
+function loadFile(file) {
   var reader = new FileReader(); // create FileReader()
   reader.onload = function(anotherEvent) {
     var text = reader.result; // get the file data from the reader
-    printProgram(text)
-    preloadedScripts.set('external',text)
+    printProgram(text);
+    preloadedScripts.set('external',text);
     chip8.loadProgram('external', parseFile(text));    // loads the file into memory
   }
   reader.readAsText(file); // option for output type and format (URL, string, etc.)
+}
+
+function loadBinary(file) {
+  var reader = new FileReader();
+  reader.onload = function(anotherEvent) {
+    // creates an array of ints where each index is the decimal representation of each
+    //  byte from the binary file
+    var opcodes = Array.from(new Uint8Array(reader.result));
+
+    printProgram(opcodes.join(" "));
+    preloadedScripts.set('external', opcodes.join(" "));
+    chip8.loadProgram('external', opcodes);
+  }
+  reader.readAsArrayBuffer(file);
 }
 
 function selectGame(e){
@@ -14,7 +28,7 @@ function selectGame(e){
 }
 
 function loadProgramByName(name){
-  var text = preloadedScripts.get(name) 
+  var text = preloadedScripts.get(name)
   printProgram(text)
   chip8.loadProgram(name, parseFile(text));
 }
@@ -39,7 +53,16 @@ function parseFile(content) {
 //    in an array of ints
 function fileInputReader(theEvent) {
   var theFile = theEvent.target.files[0]; // get the file
-  loadFile(theFile)
+
+  if (theFile.type === "text/plain" ) {   // file is .txt
+    loadFile(theFile);
+  }
+  else if (theFile.type === "") {   // file is .ch8 (or other obscure extension)
+    loadBinary(theFile);
+  }
+  else {
+    console.log("error: invalid file type!");
+  }
 }
 
 
@@ -50,5 +73,3 @@ document.getElementById("game_option").addEventListener("change",selectGame,fals
 var defaultGame = 'zoom'
 
 chip8.loadProgram(defaultGame, parseFile(preloadedScripts.get(defaultGame)))
-
-
