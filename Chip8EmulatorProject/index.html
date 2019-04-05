@@ -16,7 +16,7 @@
     <form action="#" class="form_style" style ="text-align: center;">
       <div class="option">
         <label for="game_option">Pick a game</label>
-        <select id="game_option" autofocus="true">
+        <select id="game_option" autofocus="true" onchange = "chip8.updateDescription(this)">
           <option value = "zoom"> Zoom </option>
           <option value = "fighters"> Fighters </option>
           <option value = "invaders"> Invaders</option>
@@ -177,6 +177,8 @@
     <div class="screen" id = "emu_screen">
       <canvas id="emulator_screen" width="640" height="320"></canvas>
     </div>
+
+    <label id="programDescription"></label>
 
     <textarea id="MemoryTextarea" rows="21" cols="100" style="display:none" readonly style +> </textarea>
 
