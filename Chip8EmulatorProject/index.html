@@ -164,34 +164,32 @@
           </tr>
       </table>
 
-      <pre id = "FileInputDisplay">
+      <pre id = "FileInputDisplay" style="display:none">
         <p> Loaded File: </p>
       </pre>
     </div>
   </div>
 
   <div class=rightcolumn>
-
-    <div id="command_log_div"> </div>
-
+      
     <div class="screen" id = "emu_screen">
       <canvas id="emulator_screen" width="640" height="320"></canvas>
     </div>
 
-    <label id="programDescription"></label>
+    <div id="command_log_div"> </div>
 
     <textarea id="MemoryTextarea" rows="21" cols="100" style="display:none" readonly style +> </textarea>
 
     <div id="play_buttons">
-      <button type="button">Previous</button>
-      <button type="button" onclick="chip8.togglePause()">Toggle Pause</button>
-      <button type="button" onclick="chip8.nextCycle()">Next</button>
-      <button type="button" onclick="loadProgramByName(chip8.PROGRAM_NAME)">Reset</button>
+            <button type="button">Previous</button>
+            <button type="button" onclick="chip8.togglePause()">Toggle Pause</button>
+            <button type="button" onclick="chip8.nextCycle()">Next</button>
+            <button type="button" onclick="loadProgramByName(chip8.PROGRAM_NAME)">Reset</button>
     </div>
 
-    <br/>
-    <br/>
-
+    <br/><br/>
+    
+    <label id="programDescription" style="text-align: center;"></label>
   </div>
 
   <script type="text/javascript" src="utils.js"> </script>
