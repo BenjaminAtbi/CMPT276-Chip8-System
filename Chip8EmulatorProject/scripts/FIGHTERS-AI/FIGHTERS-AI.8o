@@ -1,0 +1,398 @@
+# SPRITES
+: bullet 0x80
+: ship 0x20 0x70 0xD8 0xA8
+: alien 0x24 0x5A 0xFF 0x5A
+: obstacle 0x78 0x48 0xDC 0xF4 0xFC 0xA8 0xB8 0xE0 
+: obstacle_2 0x78 0x48 0xDE 0xF5 0x6F
+: obstacle_3 0x30 0x4A 0xDD 0xB7 0xFF 0xBE 0x75 0x0E 
+: obstacle_4 0xE0 0xB0 0xD0 0x20
+: border 0xC0 0xC0 0xC0 0xC0 0xC0 0xC0 0xC0 0xC0
+
+#letters
+: letter_s 0xE0 0x80 0xE0 0x20 0xE0
+: letter_p 0xE0 0xA0 0xE0 0x80 0x80
+: letter_a 0xE0 0xA0 0xE0 0xA0 0xA0
+: letter_c 0xE0 0x80 0x80 0x80 0xE0 
+: letter_e 0xE0 0x80 0xE0 0x80 0xE0
+
+: letter_f 0xE0 0x80 0xE0 0x80 0x80
+: letter_i 0xE0 0x40 0x40 0x40 0xE0
+: letter_g 0xE0 0x80 0x80 0xA0 0xE0 
+: letter_h 0xA0 0xA0 0xE0 0xA0 0xA0
+: letter_t 0xE0 0x40 0x40 0x40 0x40
+: letter_r 0xE0 0xA0 0xC0 0xA0 0xA0
+
+: letter_y 0xA0 0xA0 0xE0 0x20 0xE0
+: letter_o 0xE0 0xA0 0xA0 0xA0 0xE0
+: letter_u 0xA0 0xA0 0xA0 0xA0 0xE0
+
+: letter_l 0x80 0x80 0x80 0x80 0xE0
+
+: letter_v 0xA0 0xA0 0xA0 0xA0 0x40 
+
+
+: tape 0xFF 0x0A 0x44 0xA0 0xFF
+: title_ship 0x10 0x10 0x28 0x28 0x6C 0x6C 0xBA 0xAA
+: title_alien 0x18 0x24 0x5A 0x7E 0xE7 0x5A
+
+# REGISTER MAP
+:alias player1x    ve
+:alias player1fire vd
+:alias player1bx   v9
+:alias player1by   v8
+
+:alias player2x    vc
+:alias player2y    vb
+:alias player2fire v7
+:alias player2bx   v6
+:alias player2by   v5
+:alias ai_vert     v4
+
+#bullet angles
+:const straight    1
+:const left        2
+:const right       3
+
+#############
+# FUNCTIONS #
+#############
+: initialize
+    player1fire := 0
+    player2fire := 0
+    ai_vert := 1
+
+    # left border
+    i := border
+    v0 := 0
+    v1 := 0
+    loop
+        sprite v0 v1 8
+        v1 += 8
+        if v1 != 32 then
+    again
+
+    # right border
+    v0 := 62
+    v1 := 0
+    loop
+        sprite v0 v1 8
+        v1 += 8
+        if v1 != 32 then
+    again
+
+    i := ship
+    player1x := 30
+    v1 := 27
+    sprite player1x v1 4
+
+    i := alien
+    player2x := 28
+    player2y := 1
+    sprite player2x player2y 4
+
+    i := obstacle_3
+    v0 := 9
+    v1 := 13
+    sprite v0 v1 7
+
+    i := obstacle_4
+    v0 := 21
+    v1 := 15
+    sprite v0 v1 4
+
+    i := obstacle
+    v0 := 29
+    v1 := 13
+    sprite v0 v1 8
+
+    i := obstacle_4
+    v0 := 39
+    v1 := 15
+    sprite v0 v1 4
+
+    i := obstacle_2
+    v0 := 47
+    v1 := 15
+    sprite v0 v1 5
+;
+
+: display_title
+    v0 := 5
+    v1 := 5
+    i := letter_s
+    sprite v0 v1 5
+    v0 += 4
+    i := letter_p
+    sprite v0 v1 5
+    v0 += 4
+    i := letter_a
+    sprite v0 v1 5
+    v0 += 4
+    i := letter_c
+    sprite v0 v1 5
+    v0 += 4
+    i := letter_e
+    sprite v0 v1 5
+
+    v0 := 5
+    v1 := 15
+    i := letter_f
+    sprite v0 v1 5
+    v0 += 4
+    i := letter_i
+    sprite v0 v1 5
+    v0 += 4
+    i := letter_g
+    sprite v0 v1 5
+    v0 += 4
+    i := letter_h
+    sprite v0 v1 5
+    v0 += 4
+    i := letter_t
+    sprite v0 v1 5
+    v0 += 4
+    i := letter_e
+    sprite v0 v1 5
+    v0 += 4
+    i := letter_r
+    sprite v0 v1 5
+    v0 += 4
+    i := letter_s
+    sprite v0 v1 5
+
+    v0 += 15
+    v1 += -1
+    i := title_ship
+    sprite v0 v1 8
+
+    v0 += 3
+    v1 += -3
+    i := bullet
+    sprite v0 v1 1
+
+    v0 += -8
+    v1 += -9
+    i := title_alien
+    sprite v0 v1 6
+
+    i := tape
+    v0 := 0
+    v1 := 24
+    loop
+        sprite v0 v1 5
+        v0 += 8
+        if v0 != 64 then
+    again
+
+    v2 := key
+    if v2 == 5 then clear
+    clear
+;
+
+#PLAYER1
+: move_player_one
+    v1 := player1x
+    v2 := 27
+    
+    v0 := 7
+    if v0 key then v1 += -1
+
+    v0 := 9
+    if v0 key then v1 += 1
+
+    if v1 == 1 then v1 := 2
+    if v1 == 58 then v1 := 57
+
+    i := ship
+    sprite player1x v2 4
+    player1x := v1
+    sprite player1x v2 4
+;
+
+: fire_bullet_one
+    v0 := 8
+    if v0 -key then return
+    player1fire := straight
+    v0 := 7
+    if v0 key then player1fire := left
+    v0 := 9
+    if v0 key then player1fire := right
+    
+    player1bx := player1x
+    player1bx += 2
+    player1by := 26
+
+    i := bullet
+    sprite player1bx player1by 1
+;
+
+: move_bullet_one
+    i := bullet
+    sprite player1bx player1by 1
+    player1by += -1
+    if player1fire == left then player1bx += -1
+    if player1fire == right then player1bx += 1
+
+    if player1bx == 2 then player1fire := right
+    if player1bx == 60 then player1fire := left
+
+    if player1by == 0 then player1fire := 0
+    if player1fire == 0 then return
+
+    sprite player1bx player1by 1
+    if vf == 0 then return
+    player1fire := 0
+
+;
+
+# PLAYER 2
+: player_two_ai
+    v1 += -1          return # move left
+	v1 +=  1          return # move right
+    v1 += -1          return # move left
+	v1 +=  1          return # move right
+    v2 += ai_vert     return
+	v0 := v0          return # does nothing
+    fire_bullet_two   return # fire bullet
+    fire_bullet_two   return # fire bullet
+    fire_bullet_two   return # fire bullet
+
+: ai_select_move
+    v0 := random 0b11100
+    jump0 player_two_ai
+
+: move_player_two
+    v1 := player2x
+    v2 := player2y
+    
+    #AI selects option of movement
+    ai_select_move
+
+    #bound checking
+    if v1 == 1 then v1 := 2
+    if v1 == 55 then v1 := 54
+
+    if v2 == 1 then ai_vert := 1
+    if v2 == 8 then ai_vert := -1
+
+    #updating position
+    i := alien
+    sprite player2x player2y 4
+    player2x := v1
+    player2y := v2
+    sprite player2x player2y 4
+;
+
+: fire_bullet_two
+    if player2fire != 0 then return
+    player2fire := straight
+
+    #randomize direction
+    v0 := random 0b11
+    if v0 == 1 then player2fire := left
+    if v0 == 2 then player2fire := right
+    
+    #bullet initial
+    player2bx := player2x
+    player2bx += 3
+    player2by := player2y
+    player2by += 5
+
+    i := bullet
+    sprite player2bx player2by 1
+;
+
+: move_bullet_two
+    i := bullet
+    sprite player2bx player2by 1
+    player2by += 1
+    if player2fire == left then player2bx += -1
+    if player2fire == right then player2bx += 1
+
+    if player2bx == 2 then player2fire := right
+    if player2bx == 60 then player2fire := left
+
+    if player2by == 32 then player2fire := 0
+    if player2fire == 0 then return
+    sprite player2bx player2by 1
+
+    if vf == 0 then return
+    player2fire := 0
+;
+
+# GAME CONTROL
+: player_one_dead
+    clear
+    
+    v0 := 26
+    v1 := 9
+    i := letter_y
+    sprite v0 v1 5
+    v0 += 4
+    i := letter_o
+    sprite v0 v1 5
+    v0 += 4
+    i := letter_u
+    sprite v0 v1 5
+
+    v0 := 24
+    v1 := 17
+    i := letter_l
+    sprite v0 v1 5
+    v0 += 4
+    i := letter_o
+    sprite v0 v1 5
+    v0 += 4
+    i := letter_s
+    sprite v0 v1 5
+    v0 += 4
+    i := letter_e
+    sprite v0 v1 5
+;
+
+: player_two_dead
+    clear
+
+    v0 := 18
+    v1 := 12
+    i := letter_v
+    sprite v0 v1 5
+    v0 += 4
+    i := letter_i
+    sprite v0 v1 5
+    v0 += 4
+    i := letter_c
+    sprite v0 v1 5
+    v0 += 4
+    i := letter_t
+    sprite v0 v1 5
+    v0 += 4
+    i := letter_o
+    sprite v0 v1 5
+    v0 += 4
+    i := letter_r
+    sprite v0 v1 5
+    v0 += 4
+    i := letter_y
+    sprite v0 v1 5
+;
+
+
+
+: main
+   display_title
+
+   initialize
+   loop
+        move_player_one
+        if vf != 0 then jump player_one_dead
+        move_player_two
+        if vf != 0 then jump player_two_dead
+
+        #bullet
+        if player1fire != 0 then move_bullet_one
+        if player1fire == 0 then fire_bullet_one
+        if player2fire != 0 then move_bullet_two
+   again
+;
+
