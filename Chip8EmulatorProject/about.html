@@ -1,0 +1,56 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>About Team 11</title>
+    <link rel="stylesheet" href="./css/index_new.css">
+  </head>
+  <body>
+
+    <header class="container">
+        <h1 class="title">About Our Chip 8 System</h1>
+      <a class="toolLink" href="index.html"">Go back to emulator</a>
+    </header>
+
+    <div class="aboutDiv">
+
+      <p>Our names are Marko Miletic, Benjamin Atbi, Rakim Zubair, Ronit Chawla and Nicholas Vasiu, and we are team 11 of CMPT 276. </p>
+      <p>Our goal was to develop an emulator that could run any CHIP-8 programs (games, tools, etc.),
+      and to also develop 2 CHIP-8 games, a debugger, and a useful CHIP-8 tool that other developers could make use of.</p>
+      <p>Our emulator's features include:</p>
+      <ul>
+        <li>The ability to run any CHIP-8 program, accept keyboard inputs, and display output on screen.</li>
+        <li>Selectable cycle speed, which can speed up or slow down the execution of the emulator for ease of observation.</li>
+        <li>The option to pause execution, step through program commands one at a time, or reset the current program's execution.</li>
+        <li>A file loader that allows users to upload their own CHIP-8 files to be executed on our emulator. This loader can accept CHIP-8 files in either .txt or .ch8 format.</li>
+      </ul>
+      <p>Additionally our debugger can:</p>
+      <ul>
+        <li>Display the current state of the emulator's registers, stack, counters and memory. Useful for developers trying to find bugs in their code or just for users trying to get an idea of the emulator's inner workings.</li>
+        <li>Keep a log of the last 100 commands to be executed so far, so users can see the emulator step through a program in real time.</li>
+        <li>Step backwards through executed commands in the log, so that users can see the emulator in a previous state.</li>
+      </ul>
+      <p>Along with our emulator, we have created our own games programmed in the CHIP-8 language, and designed to run on our emulator.</p>
+      <p>Our first game is a version of the well known classic, PONG.</p>
+      <ul>
+        <li>The game can be played by 2 human players. Move your paddle to bounce the ball, and try to get it past the opponent's paddle to score a point. The first player to score 5 points wins the game.</li>
+        <li>Player 1 can move their paddle up with the 1 key, and down with the Q key.</li>
+        <li>Player 2 can move their paddle up with the 3 key, and down with the E key.</li>
+      </ul>
+      <p>Our second game, called Space Fighters, was inspired by the classic games Space Invaders and Outlaw.</p>
+      <ul>
+        <li>In this game one player goes up against a computer AI. Move your ship to avoid your opponent's bullets, use asteroids as cover and shoot the enemy ship down to win the game.</li>
+        <li>Use the A key to move left, the D key to move right and the S key to shoot a bullet.</li>
+        <li>Shooting a bullet while moving will angle it in the direction you are going. Bullets will also bounce off the edge of the screen.</li>
+        <li>Bullets will stop when they collide with an asteroid, taking a chunk out of the asteroid at the same time.</li>
+      </ul>
+      <p>And finally, we have created a sprite editor tool that should prove useful to users who want to try CHIP-8 programming themselves.</p>
+      <ul>
+        <li>Simply click on squares to fill them in, and start drawing your own sprite.</li>
+        <li>Click on filled in squares to erase them.</li>
+        <li>Below users can find their sprite data converted into binary and hexadecimal formats. Drawing on screen is much faster and more enjoyable than manually writing sprite data by yourself!</li>
+      </ul>
+
+    </div>
+
+  </body>
+</html>
