@@ -59,7 +59,6 @@ var chip8 = {
 
         chip8.COMMANDLOGLENGTH = 0;
 
-        document.getElementById("PauseLabel").innerHTML = "Execution Unpaused";
     },
 
     // Load a given program into memory
@@ -101,6 +100,7 @@ var chip8 = {
     },
 
     startExecution() {
+        document.getElementById("PauseLabel").innerHTML = "Execution Unpaused";
         chip8.aframeID = requestAnimationFrame(chip8.emulateCycles);
     },
 
