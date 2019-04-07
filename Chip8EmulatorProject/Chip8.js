@@ -136,6 +136,7 @@ var chip8 = {
       for (var i = 0; i < 100; i++) {
           var commandLbl = document.createElement("LABEL");
           commandLbl.setAttribute("id", i);
+          commandLbl.setAttribute('class','record')
           document.getElementById("command_log_div").appendChild(commandLbl);
       }
       document.getElementById(0).style.color="red";

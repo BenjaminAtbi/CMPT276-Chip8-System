@@ -5,10 +5,6 @@ class OpcodeManager {
         this.record = new RecordQueue(recordlength)
     }
 
-    getExecution(opcode) {
-        return new Execution(opcode);
-    }
-
     getInstruction(opcode) {
         switch (opcode & 0xF000) { // Get the first digit of the opcode
             case 0x0000:
@@ -157,11 +153,11 @@ class Instruction {
 //00E0
 class CLS extends Instruction{
 
-    name = 'CLS'
-    info = "Clear the display."
-
     constructor(opcode) {
         super(opcode)
+        this.name = 'CLS'
+        this.info = "Clear the display."
+        
     }
 
     execute(chip8) {
@@ -179,11 +175,10 @@ class CLS extends Instruction{
 //00EE
 class RET extends Instruction{
 
-    name = "RET";
-    info = "Return from a subroutine.";
-
     constructor(opcode) {
         super(opcode)
+        this.name = "RET";
+        this.info = "Return from a subroutine.";
     }
 
     execute(chip8) {
@@ -202,10 +197,11 @@ class RET extends Instruction{
 //Jump to location nnn
 //1nnn
 class JP extends Instruction{
-    name = "JP";
-    info = "Jump to location.";
+
     constructor(opcode) {
         super(opcode)
+        this.name = "JP";
+        this.info = "Jump to location.";
     }
 
     execute(chip8) {
@@ -222,11 +218,10 @@ class JP extends Instruction{
 //2nnn
 class CALL extends Instruction{
 
-    name = "CALL";
-    info = "Call subroutine.";
-
     constructor(opcode) {
         super(opcode)
+        this.name = "CALL";
+        this.info = "Call subroutine.";
     }
 
     execute(chip8) {
@@ -245,11 +240,10 @@ class CALL extends Instruction{
 //3xkk
 class SE_byte extends Instruction{
 
-    name = "SE";
-    info = "Skip next instruction if Vx = kk.";
-
     constructor(opcode) {
         super(opcode)
+        this.name = "SE";
+        this.info = "Skip next instruction if Vx = kk.";
     }
 
     execute(chip8) {
@@ -268,11 +262,10 @@ class SE_byte extends Instruction{
 //4xkk
 class SNE_kk extends Instruction{
 
-    name = "SNE";
-    info = "Skip next instruction if Vx != kk.";
-
     constructor(opcode) {
         super(opcode)
+        this.name = "SNE";
+        this.info = "Skip next instruction if Vx != kk.";
     }
 
     execute(chip8) {
@@ -291,11 +284,10 @@ class SNE_kk extends Instruction{
 //5xy0
 class SE_y extends Instruction{
 
-    name = "SE";
-    info = "Skip next instruction if Vx = Vy.";
-
     constructor(opcode) {
         super(opcode)
+        this.name = "SE";
+        this.info = "Skip next instruction if Vx = Vy.";
     }
 
     execute(chip8) {
@@ -313,11 +305,11 @@ class SE_y extends Instruction{
 //Set Vx = kk
 //6xkk
 class LD_byte extends Instruction{
-    name = "LD";
-    info = "Set Vx = kk.";
 
     constructor(opcode) {
         super(opcode)
+        this.name = "LD";
+        this.info = "Set Vx = kk.";
     }
 
     execute(chip8) {
@@ -334,11 +326,10 @@ class LD_byte extends Instruction{
 //7xkk
 class ADD extends Instruction{
 
-    name = "ADD";
-    info = "Set Vx = Vx + kk.";
-
     constructor(opcode) {
         super(opcode)
+        this.name = "ADD";
+        this.info = "Set Vx = Vx + kk.";
     }
 
     execute(chip8) {
@@ -361,11 +352,10 @@ class ADD extends Instruction{
 //8xy0
 class LD_y extends Instruction{
 
-    name = "LD";
-    info = "Set Vx = Vy.";
-
     constructor(opcode) {
         super(opcode)
+        this.name = "LD";
+        this.info = "Set Vx = Vy.";
     }
     execute(chip8) {
         chip8.VREGISTER[extractDigit(this.opcode,1)] = chip8.VREGISTER[extractDigit(this.opcode,2)];
@@ -380,11 +370,10 @@ class LD_y extends Instruction{
 //8xy1
 class OR extends Instruction{
 
-    name = "OR";
-    info = "Set Vx = Vx OR Vy.";
-
     constructor(opcode) {
         super(opcode)
+        this.name = "OR";
+        this.info = "Set Vx = Vx OR Vy.";
     }
     execute(chip8) {
         let x = extractDigit(this.opcode,1)
@@ -401,11 +390,10 @@ class OR extends Instruction{
 //8xy2
 class AND_byte extends Instruction{
 
-    name = "AND";
-    info = "Set Vx = Vx AND Vy.";
-
     constructor(opcode) {
         super(opcode)
+        this.name = "AND";
+        this.info = "Set Vx = Vx AND Vy.";
     }
     execute(chip8) {
         let x = extractDigit(this.opcode,1)
@@ -422,11 +410,10 @@ class AND_byte extends Instruction{
 //8xy3
 class XOR extends Instruction{
 
-    name = "XOR";
-    info = "Set Vx = Vx XOR Vy.";
-
     constructor(opcode) {
         super(opcode)
+        this.name = "XOR";
+        this.info = "Set Vx = Vx XOR Vy.";
     }
     execute(chip8) {
         let x = extractDigit(this.opcode,1)
@@ -443,11 +430,10 @@ class XOR extends Instruction{
 //8xy4
 class AND_y extends Instruction{
 
-    name = "ADD";
-    info = "Set Vx = Vx + Vy, set VF = carry.";
-
     constructor(opcode) {
         super(opcode)
+        this.name = "ADD";
+        this.info = "Set Vx = Vx + Vy, set VF = carry.";
     }
     execute(chip8) {
         let x = extractDigit(this.opcode,1)
@@ -471,11 +457,10 @@ class AND_y extends Instruction{
 //8xy5
 class SUB extends Instruction{
 
-    name = "SUB";
-    info = "Set Vx = Vx - Vy, set VF = NOT borrow.";
-
     constructor(opcode) {
         super(opcode)
+        this.name = "SUB";
+        this.info = "Set Vx = Vx - Vy, set VF = NOT borrow.";
     }
     execute(chip8) {
         let x = extractDigit(this.opcode,1)
@@ -498,11 +483,12 @@ class SUB extends Instruction{
 //8xy6
 class SHR extends Instruction{
 
-    name = "SHR";
-    info = "Set Vx = Vx SHR Vy.";
+
 
     constructor(opcode) {
         super(opcode)
+        this.name = "SHR";
+        this.info = "Set Vx = Vx SHR Vy.";
     }
     execute(chip8) {
         let x = extractDigit(this.opcode,1)
@@ -521,11 +507,10 @@ class SHR extends Instruction{
 //8xy7
 class SUB_N extends Instruction{
 
-    name = "SUBN";
-    info = "Set Vx = Vx - Vy, set VF = NOT borrow.";
-
     constructor(opcode) {
         super(opcode)
+        this.name = "SUBN";
+        this.info = "Set Vx = Vx - Vy, set VF = NOT borrow.";
     }
     execute(chip8) {
         let x = extractDigit(this.opcode,1)
@@ -549,11 +534,10 @@ class SUB_N extends Instruction{
 //8xyE
 class SHL extends Instruction{
 
-    name = "SHL";
-    info = "Set Vx = Vx SHL 1.";
-
     constructor(opcode) {
         super(opcode)
+        this.name = "SHL";
+        this.info = "Set Vx = Vx SHL 1.";
     }
     execute(chip8) {
         let x = extractDigit(this.opcode,1)
@@ -571,11 +555,10 @@ class SHL extends Instruction{
 //9xy0
 class SNE_Vy extends Instruction{
 
-    name = "SNE";
-    info = "Skip next instruction if Vx != Vy.";
-
     constructor(opcode) {
         super(opcode)
+        this.name = "SNE";
+        this.info = "Skip next instruction if Vx != Vy.";
     }
     execute(chip8) {
         let x = extractDigit(this.opcode,1)
@@ -594,11 +577,10 @@ class SNE_Vy extends Instruction{
 //Annn
 class LD extends Instruction{
 
-    name = "LD";
-    info = "Set I = nnn.";
-
     constructor(opcode) {
         super(opcode)
+        this.name = "LD";
+        this.info = "Set I = nnn.";
     }
 
     execute(chip8) {
@@ -614,11 +596,10 @@ class LD extends Instruction{
 //Bnnn
 class JP_V0 extends Instruction{
 
-    name = "JP";
-    info = "Jump to location nnn + V0.";
-
     constructor(opcode) {
         super(opcode)
+        this.name = "JP";
+        this.info = "Jump to location nnn + V0.";
     }
     execute(chip8) {
        chip8.PC = (this.opcode & 0x0FFF) + chip8.VREGISTER[0];
@@ -634,11 +615,10 @@ class JP_V0 extends Instruction{
 //Cxkk
 class RND extends Instruction{
 
-    name = "RND";
-    info = "Set Vx = random byte AND kk";
-
     constructor(opcode) {
         super(opcode)
+        this.name = "RND";
+        this.info = "Set Vx = random byte AND kk";
     }
     execute(chip8) {
         chip8.VREGISTER[extractDigit(this.opcode,1)] = ((Math.floor((Math.random() * 255))) & (this.opcode & 0x00FF));
@@ -654,11 +634,10 @@ class RND extends Instruction{
 //Dxyn
 class DRW extends Instruction{
 
-    name = "DRW";
-    info = "Display n-byte sprite starting at memory location I at (Vx, Vy), set VF = collision.";
-
     constructor(opcode) {
         super(opcode)
+        this.name = "DRW";
+        this.info = "Display n-byte sprite starting at memory location I at (Vx, Vy), set VF = collision.";
     }
     execute(chip8) {
         var N = (this.opcode & 0x000F); // The height of the sprite
@@ -689,11 +668,10 @@ class DRW extends Instruction{
 //Ex9E
 class SKP extends Instruction{
 
-    name = "SKP";
-    info = "Skip the next instruction if key with value of Vx is pressed.";
-
     constructor(opcode) {
         super(opcode)
+        this.name = "SKP";
+        this.info = "Skip the next instruction if key with value of Vx is pressed.";
     }
     execute(chip8) {
         if (chip8.KEYS.keystate[chip8.VREGISTER[extractDigit(this.opcode,1)]]) {
@@ -710,11 +688,10 @@ class SKP extends Instruction{
 //ExA1
 class SKNP extends Instruction{
 
-    name = "SKNP";
-    info = "Skip the next instruction if key with value of Vx is not pressed.";
-
     constructor(opcode) {
         super(opcode)
+        this.name = "SKNP";
+        this.info = "Skip the next instruction if key with value of Vx is not pressed.";
     }
     execute(chip8) {
         if (!chip8.KEYS.keystate[chip8.VREGISTER[extractDigit(this.opcode,1)]]) {
@@ -731,11 +708,10 @@ class SKNP extends Instruction{
 //Fx07
 class LD_Vx_DT extends Instruction{
 
-    name = "LD";
-    info = "Set Vx = delay timer value.";
-
     constructor(opcode) {
         super(opcode)
+        this.name = "LD";
+        this.info = "Set Vx = delay timer value.";
     }
     execute(chip8) {
         chip8.VREGISTER[extractDigit(this.opcode,1)] = chip8.DELAYTIMER;
@@ -751,11 +727,10 @@ class LD_Vx_DT extends Instruction{
 //Calback function is implemented below
 class LD_K extends Instruction{
 
-    name = "LD";
-    info = "Wait for a key press, store the value of the key in Vx.";
-
     constructor(opcode) {
         super(opcode)
+        this.name = "LD";
+        this.info = "Wait for a key press, store the value of the key in Vx.";
     }
     execute(chip8) {
 
@@ -792,11 +767,10 @@ function LD_K_Endhalt(e){
 //Fx15
 class LD_DT_Vx extends Instruction{
 
-    name = "LD";
-    info = "Set delay timer = Vx.";
-
     constructor(opcode) {
         super(opcode)
+        this.name = "LD";
+        this.info = "Set delay timer = Vx.";
     }
     execute(chip8) {
         chip8.DELAYTIMER = chip8.VREGISTER[extractDigit(this.opcode,1)];
@@ -811,11 +785,10 @@ class LD_DT_Vx extends Instruction{
 //Fx18
 class LD_ST extends Instruction{
 
-    name = "LD";
-    info = "Set sound timer = Vx.";
-
     constructor(opcode) {
         super(opcode)
+        this.name = "LD";
+        this.info = "Set sound timer = Vx.";
     }
     execute(chip8) {
         chip8.SOUNDTIMER = chip8.VREGISTER[extractDigit(this.opcode,1)];
@@ -830,11 +803,10 @@ class LD_ST extends Instruction{
 //Fx1E
 class ADD_I extends Instruction{
 
-    name = "ADD";
-    info = "Set I = I + Vx.";
-
     constructor(opcode) {
         super(opcode)
+        this.name = "ADD";
+        this.info = "Set I = I + Vx.";
     }
     execute(chip8) {
         chip8.IREGISTER += chip8.VREGISTER[extractDigit(this.opcode,1)];
@@ -849,11 +821,10 @@ class ADD_I extends Instruction{
 //Fx29
 class LD_F extends Instruction{
 
-    name = "LD";
-    info = "Set I = location of sprite for digit Vx.";
-
     constructor(opcode) {
         super(opcode)
+        this.name = "LD";
+        this.info = "Set I = location of sprite for digit Vx.";
     }
     execute(chip8) {
         chip8.IREGISTER = chip8.VREGISTER[extractDigit(this.opcode,1)] * 5; // Character sprites have a width of 5
@@ -869,11 +840,10 @@ class LD_F extends Instruction{
 //Fx33
 class LD_B extends Instruction{
 
-    name = "LD";
-    info = "Store BCD representation of Vx in memory locations I, I+1, and I+2.";
-
     constructor(opcode) {
         super(opcode)
+        this.name = "LD";
+        this.info = "Store BCD representation of Vx in memory locations I, I+1, and I+2.";
     }
     execute(chip8) {
         var number = chip8.VREGISTER[extractDigit(this.opcode,1)];
@@ -892,11 +862,10 @@ class LD_B extends Instruction{
 //Fx55
 class LD_I_Vx extends Instruction{
 
-    name = "LD";
-    info = "Store registers V0 through Vx in memory starting at location I.";
-
     constructor(opcode) {
         super(opcode)
+        this.name = "LD";
+        this.info = "Store registers V0 through Vx in memory starting at location I.";
     }
     execute(chip8) {
 
@@ -915,11 +884,10 @@ class LD_I_Vx extends Instruction{
 //Fx65
 class LD_Vx_I extends Instruction{
 
-    name = "LD";
-    info = "Read registers V0 through Vx from memory starting at location I.";
-
     constructor(opcode) {
         super(opcode)
+        this.name = "LD";
+        this.info = "Read registers V0 through Vx from memory starting at location I.";
     }
     execute(chip8) {
         let x = extractDigit(this.opcode,1)

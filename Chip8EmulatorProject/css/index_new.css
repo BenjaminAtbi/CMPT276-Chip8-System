@@ -91,6 +91,7 @@ button:hover {
   width: 20px;
 }
 
+
 .cycleChange{
   margin-top: 0px;
   margin-left: auto;
@@ -101,14 +102,34 @@ button:hover {
   color: white;
 }
 
+#column_container{
+  display:flex;
+  flex-basis: 
+}
 .leftcolumn{
-  float:left;
-  width:30%;
+  margin-right: 30px;
+  margin-left: 30px;
+  flex-basis: 200px;
+  min-width: 200px;
+  flex-grow: 1
+}
+
+.centercolumn{
+  flex-basis: 768px;
+  flex-grow: 2;
 }
 
 .rightcolumn{
-  float:right;
-  width:69%;
+  margin-left: 30px;
+  margin-right: 30px;
+  flex-basis: 200px;
+  min-width: 200px;
+  flex-grow:1
+}
+
+#center_fit{
+  width: 768px;
+  margin: auto;
 }
 
 .textcell{
@@ -120,6 +141,7 @@ button:hover {
 #visualizer_table{
   text-align: center;
   table-layout: fixed;
+  padding-right: 35px;
   width: 100%;
 }
 
@@ -127,6 +149,9 @@ button:hover {
   margin-left: 2px;
 }
 
+#datatable{
+  display: inline-block;
+}
 #emulator_screen{
   float: left;
   margin: auto;
@@ -137,6 +162,7 @@ button:hover {
 #play_buttons {
   margin-top: 5px;
   margin-left: 210px;
+  float:left;
 }
 
 #pause_status{
@@ -151,7 +177,6 @@ margin-bottom: 30px;
 }
 
 .screen{
-  display: block;
   padding-right: 90px;
 }
 
@@ -162,11 +187,15 @@ margin-bottom: 30px;
 }
 
 #command_log_div {
+  min-width:100px;
   border: 3px solid white;
-  max-width: 100px;
   max-height: 400px;
   overflow-y: scroll;
-  margin-left: 900px;
+}
+
+.record {
+  display:inline-block;
+  width:100%;
 }
 
 #programDescription {

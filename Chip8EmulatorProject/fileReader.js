@@ -76,6 +76,8 @@ function updateDescription(program_name) {
 document.getElementById("inputFile").addEventListener("change", fileInputReader, false);
 document.getElementById("game_option").addEventListener("change",selectGame,false)
 
+//create initial labels
+chip8.createLog()
 
 //game loaded on pageload
 var defaultGame = 'zoom'
