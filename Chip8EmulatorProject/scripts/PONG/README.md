@@ -16,5 +16,5 @@ FINISHED FEATURES
   - properly displayed/ updated, terminates game when either player reaches a score of 5 with a GG message (after a short pause)
 - ball collision with paddles
 
-TEST THE GAME USING THE FOLLOWING LINK: https://johnearnest.github.io/Octo/index.html?key=D4UvJ3cV
+TEST THE GAME USING THE FOLLOWING LINK: https://johnearnest.github.io/Octo/index.html?key=Eg0TTWkl
 or RUN IT ON OUR EMULATOR
