@@ -201,3 +201,8 @@ margin-bottom: 30px;
 #programDescription {
   background: #474a54;
 }
+
+.aboutDiv {
+  max-width: 800px;
+  margin: auto;
+}
