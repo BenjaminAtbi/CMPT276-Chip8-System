@@ -121,8 +121,8 @@ class RangeStateValue {
 
 //represents specifically chosen state values
 class CondensedState {
-    values = []
     constructor(initialVals) {
+        this.values = []
         for ( i in initialVals){
             this.values.push(i)
         }
@@ -141,9 +141,10 @@ class CondensedState {
 // base class for an instruction
 class Instruction {
 
-    stateRecord = []
+    
 
     constructor(opcode) {
+        this.stateRecord = []
         this.opcode = opcode
     }
 
