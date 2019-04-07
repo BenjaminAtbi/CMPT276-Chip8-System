@@ -14,5 +14,5 @@ FINISHED FEATURES
 KNOWN BUGS
 - Bullet collisions
 
-GO TO THIS LINK TO TEST: https://johnearnest.github.io/Octo/index.html?key=wQf5nzUK
+GO TO THIS LINK TO TEST: https://johnearnest.github.io/Octo/index.html?key=Vl50uDF3
 or RUN IT ON OUR EMULATOR
