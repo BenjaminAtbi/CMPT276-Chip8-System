@@ -68,10 +68,6 @@ function fileInputReader(theEvent) {
   }
 }
 
-function updateDescription(program_name) {
-  document.getElementById("programDescription").innerHTML = preloadedScripts[program_name].description
-}
-
 // event listener for whenever the file button changes
 document.getElementById("inputFile").addEventListener("change", fileInputReader, false);
 document.getElementById("game_option").addEventListener("change",selectGame,false)
