@@ -31,9 +31,6 @@ function selectGame(e){
 
 
 function loadProgramByName(name){
-  if (name != "zoom" && name != "team" && name != "fighters" && name != "invaders" && name != "pong") {
-    name = "zoom";
-  }
   var text = preloadedScripts[name].code
   printProgram(text)
   chip8.loadProgram(name, parseFile(text));
