@@ -1,10 +1,11 @@
- # <center> Project Document - RELEASE 2 </center>
+ # <center> Project Document - RELEASE 4 </center>
  
  ## Updates since Release 4
 - Updated sections (software methodology, risk management, project progress, testing) with new information from Release 4
 - Updated list of uses cases and completed features
 - Updated work breakdown to have member roles for release
 - New project schedule, showing planned vs. actual schedule
+- Added project post-mortem discussion
 
 ## Introduction
 <p> Our project is to develop a virtual machine that can run CHIP-8 programs (games, tools, etc.). Furthermore, we will be developing at least 2 CHIP-8 games, a debugger, and one other tool that would be useful for a software developer. The virtual machine will be put on an interactive website for people to use.</p>
@@ -34,7 +35,7 @@ Communication will be done through weekly meetings, Github, and Discord.
 - Can hold unofficial meetings
 
 ## Software Methodology
-<p>Our software development will follow the incremental model,since our software is divided in many smaller versions,it grows incrementaly. This means we will perform analysis, design, coding, and testing for every release cycle. In addition, we have implemented agile-like development practices such as setting short term deliverables and continuous integration. We as a whole team always prioritized working software and team collaboration. There were no prescribed standards; rather, all the team members got to work over the software parts that they wanted to. Trying to be as close to agile like development, we always kept the manifesto, "Plan to Replan", in mind in order to have good risk management.</p>
+<p>Our software development will follow the incremental model, since our software is divided in many smaller versions, it grows incrementaly. This means we will perform analysis, design, coding, and testing for every release cycle. In addition, we have implemented agile-like development practices such as setting short term deliverables and continuous integration. We as a whole team always prioritized working software and team collaboration. There were no prescribed standards; rather, all the team members got to work over the software parts that they wanted to. Trying to be as close to agile like development, we always kept the manifesto, "Plan to Replan", in mind in order to have good risk management.</p>
 <p>We will use git as our version control software, with a github repository. Typescript, HTML, and the CHIP-8 instruction set are our languages of choice to develop the games and tools necessary. In addition, we may use JQuery while integrating the presentation website. We will develop automated tests using Jest, and use CircleCI to aid us in continuous integration. Finally, we will use Octo to help us with programming the games.</p>
 <p>Our team of 5 is divided into separate groups for the work that needs to be done. There is one main project manager (who has the most experience with Git), 3 people specializing in emulator design and 2 general programmers (responsible for the games and tools). Furthermore, there are 3 people dedicated to design the website for the emulator and keeping track of the documentation of our project. Each person has more than one role that they are not necessarily limited to.</p>
 The following table shows the roles that each group member has.
@@ -63,9 +64,9 @@ Due to the nature of the project, we may run into problems such as:
 
 ## Project Progress
 **RELEASE 4**
-<p>Since this is the final release, we planned to finish up everything that was left over from last release. We were successful in completing all of the features that we promised. However, we were unable to complete Space Invaders, but opted to make a new game instead.</p>
+<p>Since this is the final release, we planned to finish up everything that was left over from last release. We were successful in completing all of the features that we promised. However, we were unable to complete Space Invaders and opted to make a new game instead. We were also unable to complete the step-back function of the emulator and have decided to remove the feature altogether.</p>
 <p>In our development for Space Invaders, we ran into some problems. Due to time restraints, a lack of experience with Octo, and CHIP-8 limitations, we were unable to complete the game. There were some bugs that we were unable to fix. We used this failure as an inspiration to create Space Fighters, an original game inspired by Outlaw and Space Invaders. We created two versions of the game: vs AI and 2-player. The sprites for this program were creating using our own sprite editor. However, since we lost a lot of time, we had to follow a guide to implement the AI for the vs. AI version of the game.</p>
-<p>In terms of our emulator, all features are completed (key input, opcodes, etc.). We are able to play our own games, as well as roms found online. Furthermore, we have successfully implemented binary file reading, meaning our emulator now supports .ch8 files. Our visualizer displays the correct values for the stacks and registers. Furthermore, programs can be pasued, stepped back/forward, and reset. As a bonus feature, we added the option to change the cycle speed of the emulator.</p>
+<p>In terms of our emulator, we managed to complete all features but one. Due to the complexity of the feature, we were unable to implement the step back function of the emulator. Though we had multiple attempts at implementing it, including two prototypes, we decided it was too buggy and subsequently not ready for the final release. The rest of the features (key input, opcodes, etc.) were successfully completed such that we are able to play our own games, as well as roms found online. Also, we have successfully implemented binary file reading, meaning our emulator now supports .ch8 files. Our visualizer displays the correct values for the stacks and registers and programs can be paused, stepped forward, and reset. As a bonus feature, we added the option to change the cycle speed of the emulator.</p>
 <p>In this release, we began and finished development for a sprite editor. Users can create an 8x15 sprite, with features including drawing and erasing pixels, along with the option to clear the canvas. The sprite data is available in 3 different styles: binary, hex, and hex with 0x prefix. We used our own tool to create the sprites for our final game, Space Fighters, to test the editor.</p>
 <p>Our website design is finalized and functional. It allows users to upload their own programs or pick from pre-existing programs. Furthermore, we have connected the sprite editor and "About" pages with the main html page.</p>
 
@@ -76,19 +77,21 @@ Due to the nature of the project, we may run into problems such as:
 <p>In Release 3, we only managed to implement one new feature which is program loading (only works with .txt files). To test this feature, upload the file named "test.txt" from the emulator directory. If the test is passed, a sprite will appear on the emulator screen. Otherwise, nothing will be displayed.</p>
 <p>For Release 4, we originally planned to do our automated testing using CircleCI and Jest, however we ran into problems getting those to work. Our project underwent a refactoring where we separated all non-related code into their own files, and reorganized the structure of the entire project. Because of this we started getting errors from Jest that we were unable to deal with. We decided to prioritize the organization of our project, over the use of Jest, because it made it much easier for us to modify and read our code. Instead of Jest, we modified our original test program. The program tests each of our emulator's commands, and now outputs results to it's own webpage, named testPage.html.</p>
 
-## Use Cases
-<p>Our emulator is functional and can play pre-loaded games, as well as roms found online. There are a variety of games for users to pick from, including classics like Pong. Furthermore, we have implemented various debugging options for users that may want to learn more about the CHIP-8 architecture. Furthermore, we have developed a sprite editor that can be used to program games or apps for a CHIP-8 emulator. Additionally, all of these programs have working, interactable websites that are associated with them.</p>
+## Features/Use Cases
+<p>Our emulator is functional and can play pre-loaded games, as well as roms found online. There are a variety of games for users to pick from, including classics like Pong. Furthermore, we have implemented various debugging options for users that may want to learn more about the CHIP-8 architecture. Furthermore, we have developed a sprite editor that can be used to program games or apps for a CHIP-8 emulator. All of these programs have working, interactable websites that are associated with them.</p>
+
 <p>Below is a list of our finished features:</p>
 
 **FINISHED**
 - Emulator
-  - All opcodes are complete and working
+  - All CHIP-8 opcodes are complete and working
   - Able to read and parse .txt and binary files, and run programs
   - Emulator runs and can play any game found online, uploaded by users, or preloaded games
-- Visualier/ Debugger
+- Visualizer/Debugger
   - Contents of the stack, registers, timers, memory are visible
   - Every instruction is displayed as it is executed
-  - Execution of a program can be paused, and stepped back/forward
+  - Log of recently executed opcodes can be seen
+  - Execution of a program can be paused, and stepped forward
 - Games
   - Pong is fully complete and playable, will be optimized in future releases
   - Space Invaders prototype, with movement and sprite animations
@@ -106,7 +109,7 @@ Due to the nature of the project, we may run into problems such as:
 <p> Here is a list of every member and the role they played in our project</p>
 
 - Nic - implemented the emulator, portion of emulator commands, visualizer, pause and step forward functions, sprite editor, about page
-- Marko - 
+- Marko - Developed emulator functionality, file loading and reading, and worked on documentation (release documents, presentations)
 - Ben - implemented a portion of emulator commands, key input for emulator, refactor and reorganization, bug fixes, website css
 - Rakim - developed games (Pong, Space Fighters, Space Invaders), worked on documentation (release documents, presentations, and demo video), sprite editor, websites
 - Ronit - early website design, games (mostly Space Invaders), documentation (release documents)
@@ -114,3 +117,7 @@ Due to the nature of the project, we may run into problems such as:
 ## Project Schedule
 ![Project Schedule](images/project_schedule.PNG?raw=true)
 <p>The lighter bars show our originally planned work schedule, the darker bars show the additional time we needed to complete each part. Our emulator and visualizer were mostly completed by their respective deadlines but they both had difficult features that took longer to complete. The emulator’s input features and the visualizer step back feature both had to be pushed back to after release. Also both had to be continuously modified and fixed throughout the semester. Originally both games had an equal amount of time spent on them, but we failed to account for the time it would take us to learn how to program with CHIP-8. As a result the first game’s completion was pushed back, but the second game was completed in a much shorter time frame once we were comfortable with CHIP-8.</p>
+
+## Project Post-Mortem
+<p>During development we encountered a number of issues with our original plans. Our work breakdown and work distribution wasn't detailed enough and as a result a lot of work was driven by deadlines rather than our schedule or requirements. This led to less-than desired quality of code and rushed releases which compiled into further problems later down the road. Our advice to other groups in this regard is to make as detailed of a plan as possible early that includes specific features and goals that are broken down as much as possible. </p>
+<p>As for things that went well, we found that our online forum for communication, Discord, was particularly useful in managing all aspects of the project. We were able to contact most members on short notice, as well as relay information that may have been missed during the in-person meetings. It also allowed us to implement a bot that would notify us whenever a member pushed to the project Git repository. GitHub was also invaluable to our project management as it handled practically everything regarding code update and code distribution. Lastly, Octo proved to be absolutely invaluable in helping us develop the games. This high level assembler reduced the learning time for Chip8 coding and saved a lot of man-hours. We would highly recommend these tools to future groups.</p>
