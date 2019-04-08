@@ -29,7 +29,7 @@ var testrun = function(){
     flag = 0;
     chip8.reset();
     chip8.SP++;
-    chip8.STACK[1] = 123;
+    chip8.STACK[0] = 123;
     chip8.execute(0x00EE);
     if (chip8.SP != 0) flag = 1;
     if (chip8.PC != 123) flag = 1;
