@@ -12,26 +12,17 @@ Group Members:
 - Marko Miletic
 
 # HOW TO RUN THE TESTS AND GAMES
-- When index.html is opened in the Chip8EmulatorProject directory, tests are automatically run from test.js 
-  - results are printed in the console of the browser 
-  - there are tests for every opcode in our interpreter except for the ones that deal with key input (those tests have not been implemented, and as a result show up as FAIL) 
+- Open the "testPage.html" file found in /Chip8EmulatorProject
+  - results are printed in a list
+  - every opcode has a test program; however, the input opcodes must be tested manually as they require user input (test them using our games)
   - different opcodes can also be inputted into test.js in order to test our emulator manually
-  - if the test passes, the console displays the result along with the name of the opcode
-- The display functions are tested automatically when the html file is opened; a sprite can be shown endlessly scrolling on the canvas display
-- Although our interface is not final, the functionality of the visualizer can also be tested
-  - the execution of the scrolling sprite program can be paused using the "Toggle Pause" button
-  - can be stepped forward using "next", "previous" has not been implemented yet
+  - if the test passes, the webpage displays the result along with the name of the opcode
+  - the display opcode can be seen in motion when programs are loaded
+- The visualizer can be manually tested
+  - the execution of the program can be paused using the "Toggle Pause" button
+  - can be stepped forward using "next"
   - the contents of the registers, stack, and memory can be seen as they update throughout the program
   - the instructions can also be seen as they are executed
-  - our current cycle speed is set fairly high, so it is recommended to step through the program to get a good grasp on the functionality of our visualizer
-- The README files for both games contain links to a browser version of Octo which can be used to test them
-- The "Game" dropdown menu on the website is currently just for show, it does not actually load any programs. This is a planned feature for next release, along with the user being able to upload and test their own CHIP-8 programs
-
-**NEW WEBSITE**
-- New HTML page named "index_new.html" has been created; it is a **prototype** for our new website
-  - not complete yet, but supports most features (program loading, memory/stack/register display, etc)
-  - will be completed for final release
-
-**HOW TO TEST PROGRAM LOADING AND READING**
-- On the website, press the "Choose File" button and select the file named "ProgramLoadTest.txt" found in the "Chip8EmulatorProject\TEST" directory
-  - a sprite will display on the canvas to show that the program has been loaded and read successfully
+  - cycle speed can be manually changed to aid in debugging
+- The README files for all CHIP-8 apps contain a link to Octo, where they can be tested; furthermore, they can be tested using our own emulator
+- The game dropdown menu has a list of preloaded games, and users can also upload their own games to play as well
