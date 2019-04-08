@@ -14,5 +14,7 @@ FINISHED FEATURES
 KNOWN BUGS
 - Bullet collisions
 
+<p>The AI for this game was programmed using this guide (https://github.com/JohnEarnest/Octo/blob/gh-pages/docs/IntermediateGuide.md) as a reference.</p>
+
 GO TO THIS LINK TO TEST: https://johnearnest.github.io/Octo/index.html?key=Vl50uDF3
 or RUN IT ON OUR EMULATOR
