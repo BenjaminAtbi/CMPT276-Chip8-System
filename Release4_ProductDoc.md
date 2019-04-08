@@ -105,7 +105,7 @@ Due to the nature of the project, we may run into problems such as:
 ## Work Breakdown
 <p> Here is a list of every member and the role they played in our project</p>
 
-- Nic - continued working on completing the step back portion of the visualizer and general bug fixing
+- Nic - implemented the emulator, portion of emulator commands, visualizer, pause and step forward functions, sprite editor, about page
 - Marko - 
 - Ben -
 - Rakim - developed games (Pong, Space Fighters, Space Invaders), worked on documentation (release documents, presentations, and demo video), sprite editor, websites
