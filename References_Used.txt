@@ -1,0 +1,13 @@
+https://www.youtube.com/watch?v=CPlh12blHSY&index=14&t=0s&list=PL5PyurErl12czoLyYD8za68d61T_OZsP2
+
+https://github.com/reu/chip8.js/blob/master/src/cpu.js
+
+http://blog.alexanderdickson.com/javascript-chip-8-emulator
+
+https://raduangelescu.com/chip8emulatorjavascript.html
+
+https://www.youtube.com/watch?v=EO6OkltgudE
+
+http://devernay.free.fr/hacks/chip8/C8TECH10.HTM
+
+https://www.youtube.com/watch?v=EO6OkltgudE
