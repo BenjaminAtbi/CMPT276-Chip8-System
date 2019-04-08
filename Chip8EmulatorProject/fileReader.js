@@ -76,6 +76,6 @@ document.getElementById("game_option").addEventListener("change",selectGame,fals
 chip8.createLog()
 
 //game loaded on pageload
-var defaultGame = 'zoom'
+var defaultGame = 'team'
 
 chip8.loadProgram(defaultGame, parseFile(preloadedScripts[defaultGame].code))
