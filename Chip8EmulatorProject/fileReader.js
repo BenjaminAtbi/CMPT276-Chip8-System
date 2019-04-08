@@ -31,6 +31,9 @@ function selectGame(e){
 
 
 function loadProgramByName(name){
+  if (name != "zoom" && name != "team" && name != "fighters" && name != "invaders" && name != "pong") {
+    name = "zoom";
+  }
   var text = preloadedScripts[name].code
   printProgram(text)
   chip8.loadProgram(name, parseFile(text));
@@ -76,6 +79,6 @@ document.getElementById("game_option").addEventListener("change",selectGame,fals
 chip8.createLog()
 
 //game loaded on pageload
-var defaultGame = 'team'
+var defaultGame = 'zoom'
 
 chip8.loadProgram(defaultGame, parseFile(preloadedScripts[defaultGame].code))
