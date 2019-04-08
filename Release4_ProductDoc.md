@@ -1,6 +1,6 @@
  # <center> Project Document - RELEASE 4 </center>
  
- ## Updates since Release 4
+ ## Updates since Release 3
 - Updated sections (software methodology, risk management, project progress, testing) with new information from Release 4
 - Updated list of uses cases and completed features
 - Updated work breakdown to have member roles for release
