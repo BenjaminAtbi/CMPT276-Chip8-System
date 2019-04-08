@@ -77,7 +77,7 @@ Due to the nature of the project, we may run into problems such as:
 <p>For Release 4, we originally planned to do our automated testing using CircleCI and Jest, however we ran into problems getting those to work. Our project underwent a refactoring where we separated all non-related code into their own files, and reorganized the structure of the entire project. Because of this we started getting errors from Jest that we were unable to deal with. We decided to prioritize the organization of our project, over the use of Jest, because it made it much easier for us to modify and read our code. Instead of Jest, we modified our original test program. The program tests each of our emulator's commands, and now outputs results to it's own webpage, named testPage.html.</p>
 
 ## Use Cases
-<p>RESERVED FOR RONIT/MARKO</p>
+<p>Our emulator is functional and can play pre-loaded games, as well as roms found online. There are a variety of games for users to pick from, including classics like Pong. Furthermore, we have implemented various debugging options for users that may want to learn more about the CHIP-8 architecture. Furthermore, we have developed a sprite editor that can be used to program games or apps for a CHIP-8 emulator. Additionally, all of these programs have working, interactable websites that are associated with them.</p>
 <p>Below is a list of our finished features:</p>
 
 **FINISHED**
