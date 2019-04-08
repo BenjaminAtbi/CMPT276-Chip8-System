@@ -178,7 +178,6 @@
           <canvas id="emulator_screen" width="768" height="384"></canvas>
         </div>
         <div id="play_buttons">
-          <button type="button">Previous</button>
           <button type="button" onclick="chip8.togglePause()">Toggle Pause</button>
           <button type="button" onclick="chip8.nextCycle()">Next</button>
           <button type="button" onclick="loadProgramByName(chip8.PROGRAM_NAME)">Reset</button>
@@ -188,11 +187,7 @@
 
     <div class=rightcolumn>
       <div id="command_log_div"> </div>
-
       <textarea id="MemoryTextarea" rows="21" cols="100" style="display:none" readonly style +> </textarea>
-
-      
-
       <br/><br/>
     </div>
   </div>
