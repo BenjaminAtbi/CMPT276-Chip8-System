@@ -201,22 +201,16 @@ var testrun = function(){
     updateLabel("test20", flag);
 
     // Test Cxkk
-    // This command must be tested manually
+    // This command must be tested manually (generates a random number that can't be predicted)
 
     // Test Dxyn
-    // This command must be tested manually
+    // This command must be tested manually (requires user to see the screen)
 
     // Test Ex9E
-    // UNFINISHED
-    flag = 1;
-    chip8.reset();
-    updateLabel("testEx9E", flag);
+    // This command must be tested manually (requires user input)
 
     // Test ExA1
-    // UNFINISHED
-    flag = 1;
-    chip8.reset();
-    updateLabel("testExA1", flag);
+    // This command must be tested manually (requires user input)
 
     // Test Fx07
     flag = 0;
@@ -227,10 +221,7 @@ var testrun = function(){
     updateLabel("test21", flag);
 
     // Test Fx0A
-    // UNFINISHED
-    flag = 1;
-    chip8.reset();
-    updateLabel("testFx0A", flag);
+    // This command must be tested manually (requires user input)
 
     // Test Fx15
     flag = 0;
