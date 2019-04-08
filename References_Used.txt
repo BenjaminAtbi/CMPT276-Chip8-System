@@ -1,18 +1,23 @@
-Tutorial for a chip 8 game:
+CHIP-8 reference:
+http://devernay.free.fr/hacks/chip8/C8TECH10.HTM
+
+CHIP-8 Sprite Information
+http://www.emulator101.com/chip-8-sprites.html
+
+Tutorial for a CHIP-8 game:
 https://www.youtube.com/watch?v=CPlh12blHSY&index=14&t=0s&list=PL5PyurErl12czoLyYD8za68d61T_OZsP2
 
-Chip 8 emulator github:
+CHIP-8 emulator github:
 https://github.com/reu/chip8.js/blob/master/src/cpu.js
 
-Tutorial on chip 8 emulators:
+Tutorial on CHIP-8 emulators:
 http://blog.alexanderdickson.com/javascript-chip-8-emulator
 
-Tutorial on chip 8 emulators:
+Tutorial on CHIP-8 emulators:
 https://raduangelescu.com/chip8emulatorjavascript.html
 
 HTML canvas tutorial:
 https://www.youtube.com/watch?v=EO6OkltgudE
 
-Chip 8 reference:
-http://devernay.free.fr/hacks/chip8/C8TECH10.HTM
-
+Octo (includes all the guides and examples that were used)
+https://github.com/JohnEarnest/Octo
