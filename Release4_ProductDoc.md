@@ -109,7 +109,7 @@ Due to the nature of the project, we may run into problems such as:
 - Marko - 
 - Ben - implemented a portion of emulator commands, key input for emulator, refactor and reorganization, bug fixes, website css
 - Rakim - developed games (Pong, Space Fighters, Space Invaders), worked on documentation (release documents, presentations, and demo video), sprite editor, websites
-- Ronit - continued working on game 2 (tank movement, shooting, title screen)
+- Ronit - early website design, games (mostly Space Invaders), documentation (release documents)
 
 ## Project Schedule
 ![Project Schedule](images/project_schedule.PNG?raw=true)
